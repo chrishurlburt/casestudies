@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaggedStudyTable extends Migration
+class CreateTaggedStudiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateTaggedStudyTable extends Migration
      */
     public function up()
     {
-        Schema::create('tagged_study', function (Blueprint $table) {
+        Schema::create('tagged_studies', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->integer('study_id')->unsigned()->index();
             $table->integer('keyword_id')->unsigned()->index();
             $table->integer('outcome_id')->unsigned()->index();
-            $table->integer('class_id')->unsigned()->index();
+            $table->integer('course_id')->unsigned()->index();
 
 
             // Foreign key constraints -- nullable because some studies might have more of one content type than another.
@@ -27,7 +27,7 @@ class CreateTaggedStudyTable extends Migration
             $table->foreign('study_id')->references('id')->on('studies');
             $table->foreign('keyword_id')->references('id')->on('keywords')->nullable();
             $table->foreign('outcome_id')->references('id')->on('outcomes')->nullable();
-            $table->foreign('class_id')->references('id')->on('classes')->nullable();
+            $table->foreign('course_id')->references('id')->on('courses')->nullable();
 
         });
     }
@@ -39,6 +39,6 @@ class CreateTaggedStudyTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tagged_study');
+        Schema::drop('tagged_studies');
     }
 }

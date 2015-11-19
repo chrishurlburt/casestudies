@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
-class ClassesTableSeeder extends Seeder
+class CoursesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class ClassesTableSeeder extends Seeder
     {
         $faker = Faker::create();
         foreach(range(1,12) as $index) {
-            DB::table('classes')->insert([
+            DB::table('courses')->insert([
                 'name'         => $faker->sentence($nbWords = rand(3, 6)),
                 'description'  => $faker->sentence($nbWords = rand(6, 12))
             ]);

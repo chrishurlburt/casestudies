@@ -15,9 +15,10 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
             $this->call(StudiesTableSeeder::class);
-            $this->call(ClassesTableSeeder::class);
+            $this->call(CoursesTableSeeder::class);
             $this->call(KeywordsTableSeeder::class);
             $this->call(OutcomesTableSeeder::class);
+            $this->call(TaggedStudiesTableSeeder::class);
 
         Model::reguard();
     }

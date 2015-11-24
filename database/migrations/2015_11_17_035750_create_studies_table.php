@@ -18,6 +18,7 @@ class CreateStudiesTable extends Migration
             $table->string('problem');
             $table->string('solution');
             $table->string('analysis');
+            $table->string('slug');
             $table->timestamps();
         });
     }

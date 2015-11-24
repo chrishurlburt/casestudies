@@ -1,6 +1,40 @@
 <?php
 
 /*
+|-----------------------------------
+| Admin Dashboard Routes
+|-----------------------------------
+|
+| These routes are only accessible by an authenticated
+| user and must appear before the app routes to
+| avoid wildcard route conflicts.
+|
+*/
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+
+    Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']);
+    Route::get('cases', ['as' => 'admin.studies', 'uses' => 'AdminController@studies']);
+    Route::get('cases/new', ['as' => 'admin.studies.new', 'uses' => 'AdminController@newstudy']);
+
+});
+
+/*
+|-----------------------------------
+| Built-in authentication routes
+|-----------------------------------
+|
+| Routes point to auth controllers.
+|
+*/
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
+
+
+/*
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
@@ -12,6 +46,6 @@
 */
 
 Route::get('/', ['as' => 'home', 'uses' => 'AppController@index']);
-Route::get('/case/{slug}', ['as' => 'home.casestudy', 'uses' => 'AppController@casestudy']);
+Route::get('/{filter}', ['as' => 'home.filter', 'uses' => 'AppController@filter']);
+Route::get('/case/{slug}', ['as' => 'home.casestudy', 'uses' => 'AppController@study']);
 
-Route::get('/admin/cases/add','AdminController@addstudy');

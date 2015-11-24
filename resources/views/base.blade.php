@@ -17,14 +17,7 @@
     <body>
 
         <div class="container">
-            @foreach($studies as $study)
-                <h2><a href="/case/{{ $study->name }}">{{ $study->name }}</a></h2>
-                <ul>
-                @foreach($study->keywords as $studykeyword)
-                    <li>{{ $studykeyword->name}}</li>
-                @endforeach
-                </ul>
-            @endforeach
+            @yield('content')
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

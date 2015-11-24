@@ -18,7 +18,8 @@ class StudiesTableSeeder extends Seeder
                 'name'     => $faker->sentence($nbWords = rand(3, 6)),
                 'problem'  => $faker->paragraph($nbSentences = rand(4,6)),
                 'solution' => $faker->paragraph($nbSentences = rand(7,15)),
-                'analysis' => $faker->paragraph($nbSentences = rand(4,6))
+                'analysis' => $faker->paragraph($nbSentences = rand(4,6)),
+                'slug'     => $faker->word
             ]);
         }
 

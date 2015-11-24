@@ -25,7 +25,14 @@ class AppController extends Controller
 
         $studies = Study::all();
 
-        return view('home')->with('studies', $studies);
+        return view('layouts.app.studies')->with('studies', $studies);
+    }
+
+
+    public function filter()
+    {
+        //gets the slug and returns a filtered listing.
+        dd('app controller');
     }
 
     /**
@@ -33,12 +40,14 @@ class AppController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function casestudy()
+    public function study($slug)
     {
 
         //get the slug, look up case in db and return view to display it.
-        dd('the case you clicked on goes here.');
 
+        $study = Study::where('slug', $slug)->first();
+
+        return view('layouts.app.single')->with('study', $study);
     }
 
 }

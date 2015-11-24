@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', ['as' => 'home', 'uses' => 'AppController@index']);
+Route::get('/case/{slug}', ['as' => 'home.casestudy', 'uses' => 'AppController@casestudy']);
+
+Route::get('/admin/cases/add','AdminController@addstudy');

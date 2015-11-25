@@ -14,8 +14,18 @@
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']);
-    Route::get('cases', ['as' => 'admin.studies', 'uses' => 'AdminController@studies']);
-    Route::get('cases/new', ['as' => 'admin.studies.new', 'uses' => 'AdminController@newstudy']);
+
+    Route::get('cases', ['as' => 'admin.studies', 'uses' => 'StudiesController@index']);
+    Route::get('cases/new', ['as' => 'admin.studies.create', 'uses' => 'StudiesController@create']);
+    Route::get('cases/case/{slug}', ['as' => 'admin.studies.update', 'uses' => 'StudiesController@update']);
+
+    Route::get('courses', ['as' => 'admin.courses', 'uses' => 'CoursesController@index']);
+    Route::get('courses/new', ['as' => 'admin.courses.create', 'uses' => 'CoursesController@create']);
+    Route::get('courses/course/{slug}', ['as' => 'admin.courses.update', 'uses' => 'CoursesController@update']);
+
+    Route::get('outcomes', ['as' => 'admin.outcomes', 'uses' => 'OutcomesController@index']);
+    Route::get('outcomes/new', ['as' => 'admin.outcomes.create', 'uses' => 'OutcomesController@create']);
+    Route::get('outcomes/outcome/{slug}', ['as' => 'admin.outcomes.update', 'uses' => 'OutcomesController@update']);
 
 });
 

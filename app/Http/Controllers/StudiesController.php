@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Study;
 
 class StudiesController extends Controller
 {
@@ -17,7 +19,26 @@ class StudiesController extends Controller
 
     public function create()
     {
-        dd('create a new case study -- studies controller');
+        return view('layouts.admin.studies.create');
+    }
+
+    public function store()
+    {
+        $input = Request::all();
+
+        $study = new Study;
+
+        $study->name = $input['title'];
+        $study->problem = $input['problem'];
+        $study->solution = $input['solution'];
+        $study->analysis = $input['analysis'];
+        $study->slug = $input['slug'];
+
+        // dd($study);
+
+        $study->save();
+
+        return redirect('/');
     }
 
     public function update()

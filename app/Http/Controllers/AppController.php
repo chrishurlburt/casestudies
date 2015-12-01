@@ -23,7 +23,7 @@ class AppController extends Controller
     public function index()
     {
 
-        $studies = Study::all();
+        $studies = Study::latest()->get();
 
         return view('layouts.app.studies')->with('studies', $studies);
     }

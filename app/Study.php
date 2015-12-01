@@ -16,6 +16,20 @@ class Study extends Model
 
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'problem',
+        'solution',
+        'analysis',
+        'slug',
+    ];
+
+
+    /**
      * A case study can have many keywords.
      *
      * Get the keywords associated with a given case study.

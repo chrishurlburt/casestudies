@@ -27,6 +27,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('outcomes/new', ['as' => 'admin.outcomes.create', 'uses' => 'OutcomesController@create']);
     Route::get('outcomes/outcome/{slug}', ['as' => 'admin.outcomes.update', 'uses' => 'OutcomesController@update']);
 
+    /*
+    |-----------------------------------
+    | Admin POST, UPDATE, and DELETE routes
+    |-----------------------------------
+    |
+    | These routes are for adding, updating and deleting
+    | new cases, keywords and outcomes.
+    |
+    */
+
+    Route::post('cases', ['as' => 'admin.studies.store', 'uses' => 'StudiesController@store']);
+
 });
 
 /*

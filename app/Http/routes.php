@@ -68,6 +68,7 @@ Route::controllers([
 */
 
 Route::get('/', ['as' => 'home', 'uses' => 'AppController@index']);
+Route::get('studies', ['as' => 'home.studies', 'uses' => 'AppController@studies']);
 Route::get('/{filter}', ['as' => 'home.filter', 'uses' => 'AppController@filter']);
 Route::get('/case/{slug}', ['as' => 'home.casestudy', 'uses' => 'AppController@study']);
 

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             $this->call(KeywordsTableSeeder::class);
             $this->call(OutcomesTableSeeder::class);
             $this->call(TaggedStudiesTableSeeder::class);
-            $this->call(UsersTableSeeder::class);
+            // $this->call(UsersTableSeeder::class);
 
         Model::reguard();
     }

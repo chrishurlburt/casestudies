@@ -16,13 +16,25 @@ class AppController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
+     * The landing page.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
 
+        return view('layouts.app.landing');
+
+    }
+
+
+    /**
+     * All the case studies in the DB.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function studies()
+    {
         $studies = Study::latest()->get();
 
         return view('layouts.app.studies')->with('studies', $studies);

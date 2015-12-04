@@ -6,13 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use \Sentinel;
 
 class AdminController extends Controller
 {
 
     public function index()
     {
-        dd('admin dashboard -- AdminController');
+
+        // dd(Sentinel::findById(1));
+
+        return view('layouts.admin.dashboard');
     }
 
 }

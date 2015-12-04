@@ -7,14 +7,6 @@
                         <h1 class="page-header">
                             Dashboard
                         </h1>
-                        <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="/admin">Dashboard</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-wrench"></i> Dashboard
-                            </li>
-                        </ol>
                     </div>
                 </div>
                 <!-- /.row -->

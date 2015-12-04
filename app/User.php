@@ -36,4 +36,15 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+
+    /**
+     * A user can have many case studies.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function studies()
+    {
+        return $this->hasMany('App\Study');
+    }
 }

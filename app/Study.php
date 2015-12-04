@@ -26,6 +26,7 @@ class Study extends Model
         'solution',
         'analysis',
         'slug',
+        'draft',
     ];
 
 
@@ -43,6 +44,7 @@ class Study extends Model
 
     }
 
+
     /**
      * A case study may have many courses.
      *
@@ -56,6 +58,7 @@ class Study extends Model
         return $this->belongsToMany('App\Course', 'tagged_studies', 'study_id', 'course_id');
 
     }
+
 
     /**
      * A case study may have many outcomes.
@@ -72,5 +75,16 @@ class Study extends Model
     }
 
 
+    /**
+     * A study may have one author.
+     *
+     * Get the author for a given case study.
+     *
+     * @return [\Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 
 }

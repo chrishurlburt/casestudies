@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use App\User;
 
 class StudiesTableSeeder extends Seeder
 {
@@ -13,13 +14,17 @@ class StudiesTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+
+        $users = User::all()->lists('id')->toArray();
+
         foreach(range(1,50) as $index) {
             DB::table('studies')->insert([
                 'name'     => $faker->sentence($nbWords = rand(3, 6)),
                 'problem'  => $faker->paragraph($nbSentences = rand(4,6)),
                 'solution' => $faker->paragraph($nbSentences = rand(7,15)),
                 'analysis' => $faker->paragraph($nbSentences = rand(4,6)),
-                'slug'     => $faker->word
+                'slug'     => $faker->word,
+                'user_id'  => $faker->randomElement($users)
             ]);
         }
 

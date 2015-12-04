@@ -13,10 +13,12 @@ class AdminController extends Controller
 
     public function index()
     {
-
-        // dd(Sentinel::findById(1));
-
         return view('layouts.admin.dashboard');
+    }
+
+    public function accounts()
+    {
+        dd('account managament goes here');
     }
 
 }

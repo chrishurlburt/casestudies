@@ -19,7 +19,13 @@ class CreateStudiesTable extends Migration
             $table->string('solution');
             $table->string('analysis');
             $table->string('slug');
+            $table->boolean('draft');
+            $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
+
+            // Foreign key constraints
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

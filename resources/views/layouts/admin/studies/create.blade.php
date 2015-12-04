@@ -2,9 +2,24 @@
 
 @section('content')
 
-    <h1>Add a New Case Study</h1>
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Add New Case Study</h1>
+    </div>
+</div>
 
-    <hr />
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li>
+                <i class="fa fa-dashboard"></i> <a href="/admin">Dashboard</a>
+            </li>
+            <li class="active">
+                <i class="fa fa-wrench"></i> Add New Case Study
+            </li>
+        </ol>
+    </div>
+</div>
 
     {!! Form::open(['route' => 'admin.studies.store']) !!}
 
@@ -79,7 +94,8 @@
         </div>
 
         <div class="form-group">
-            {!! Form::submit('Add Case Study', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit('Publish Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'publish']) !!}
+            {!! Form::submit('Save Draft', ['class' => 'btn btn-primary form-control', 'name' => 'draft']) !!}
         </div>
     {!! Form::close() !!}
 @stop

@@ -14,9 +14,11 @@
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']);
+    Route::get('accounts', ['as' => 'admin.accounts', 'uses' => 'AdminController@accounts']);
 
     Route::get('cases', ['as' => 'admin.studies', 'uses' => 'StudiesController@index']);
     Route::get('cases/new', ['as' => 'admin.studies.create', 'uses' => 'StudiesController@create']);
+    Route::get('cases/drafts', ['as' => 'admin.studies.drafts', 'uses' => 'StudiesController@drafts']);
     Route::get('cases/case/{slug}', ['as' => 'admin.studies.update', 'uses' => 'StudiesController@update']);
 
     Route::get('courses', ['as' => 'admin.courses', 'uses' => 'CoursesController@index']);

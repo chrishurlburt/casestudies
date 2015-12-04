@@ -21,7 +21,7 @@ class StudiesController extends Controller
     public function index()
     {
 
-        $studies = Study::latest()->get();
+        $studies = Study::where('draft', false)->latest()->get();
 
         return view('layouts.admin.studies.manage')->with('studies', $studies);
     }
@@ -45,29 +45,45 @@ class StudiesController extends Controller
     */
     public function store()
     {
-        $input = Request::all();
 
-        $keywords = $this->getKeywords($input);
-        $this->storeKeywords($keywords);
+        if(Request::has('draft')) {
 
-        // get the ids of the keywords by name that were just added, then pass the array
-        // of ids to $study->keywords()->attach($keywordIds)
-        // dd($errors);
+            $this->storeStudy(Request::all(), true);
+
+            return redirect(route('admin.studies.drafts'));
+
+        } else if(Request::has('publish')) {
 
 
-        $study = new Study;
+            // @TODO: Check the user's permissions before allowing them to publish...
+            // even if user does not have publish button available on view, they
+            // could change the name attribute to 'publish' and hit this condtional.
+            $this->storeStudy(Request::all(), false);
 
-        $study->name = $input['title'];
-        $study->problem = $input['problem'];
-        $study->solution = $input['solution'];
-        $study->analysis = $input['analysis'];
-        $study->slug = $input['slug'];
+            return redirect(route('admin.studies'));
 
-        // dd($study);
+        } else {
 
-        $study->save();
+            // @TODO: Someone messed with the name attribute and it doesn't have
+            // draft or publish. redirect with error.
 
-        return redirect('/');
+        }
+
+    }
+
+
+    /**
+    * Show all the drafts.
+    *
+    * @return  \Illuminate\Http\Response
+    */
+    public function drafts()
+    {
+
+        $drafts = Study::where('draft', true)->latest()->get();
+
+        return view('layouts.admin.studies.drafts')->with('drafts', $drafts);
+
     }
 
 
@@ -107,6 +123,35 @@ class StudiesController extends Controller
             $keyword->name = $k;
             $keyword->save();
         }
+    }
+
+
+    /**
+     * Store a case study in the DB.
+     * @param  array $input
+     * @param  bool $isDraf
+     * @return null
+     */
+    private function storeStudy($input, $isDraft)
+    {
+        $keywords = $this->getKeywords($input);
+        $this->storeKeywords($keywords);
+
+        // @TODO: attach keywords with case study
+        // get the ids of the keywords by name that were just added, then pass the array
+        // of ids to $study->keywords()->attach($keywordIds)
+
+        $study = new Study;
+
+        $study->name = $input['title'];
+        $study->problem = $input['problem'];
+        $study->solution = $input['solution'];
+        $study->analysis = $input['analysis'];
+        $study->slug = $input['slug'];
+        $study->draft = $isDraft;
+
+        $study->save();
+
     }
 
 }

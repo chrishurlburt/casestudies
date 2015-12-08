@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-dashboard"></i> <a href="/admin">Dashboard</a>
+                <i class="fa fa-dashboard"></i> <a href="{{ route('admin')}}">Dashboard</a>
             </li>
             <li class="active">
                 <i class="fa fa-wrench"></i> Add New Case Study
@@ -21,7 +21,17 @@
     </div>
 </div>
 
-    {!! Form::open(['route' => 'admin.studies.store']) !!}
+     @if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
+
+            <li>{{ $error }}</li>
+
+            @endforeach
+        </ul>
+    @endif
+
+    {!! Form::open(['route' => 'admin.cases.store']) !!}
 
         <div class="form-group">
             {!! Form::label('title', 'Title') !!}
@@ -98,4 +108,5 @@
             {!! Form::submit('Save Draft', ['class' => 'btn btn-primary form-control', 'name' => 'draft']) !!}
         </div>
     {!! Form::close() !!}
+
 @stop

@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use Request;
 
 use App\Http\Requests;
+use App\Http\Requests\StoreStudyRequest;
+use App\Http\Requests\StorePublishRequest;
+
 use App\Http\Controllers\Controller;
+use \Auth;
 
 use App\Study;
 use App\Keyword;
+use App\User;
 
 class StudiesController extends Controller
 {
@@ -23,7 +28,40 @@ class StudiesController extends Controller
 
         $studies = Study::where('draft', false)->latest()->get();
 
-        return view('layouts.admin.studies.manage')->with('studies', $studies);
+        return view('layouts.admin.cases.manage')->with('studies', $studies);
+    }
+
+
+    /**
+    * Store a new case study.
+    *
+    * @param StoreDraftRequest $StoreDraftRequest
+    * @return Response
+    */
+    public function store(StoreStudyRequest $StoreStudyRequest)
+    {
+
+        if($StoreStudyRequest->has('draft')) {
+
+            $this->storeStudy($StoreStudyRequest->all(), true);
+
+            return redirect(route('admin.cases.drafts'));
+
+        } else if($StoreStudyRequest->has('publish')) {
+
+            $this->storeStudy($StoreStudyRequest->all(), false);
+
+            return redirect(route('admin.cases.index'));
+
+        } else {
+
+            // @TODO: Someone messed with the name attribute and it doesn't have
+            // draft or publish. redirect with error.
+
+            dd('studies controller');
+
+        }
+
     }
 
 
@@ -34,41 +72,90 @@ class StudiesController extends Controller
     */
     public function create()
     {
-        return view('layouts.admin.studies.create');
+        return view('layouts.admin.cases.create');
     }
 
 
     /**
-    * Store a new case study.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function store()
+     * Delete a case study.
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function destroy()
+    {
+        dd('delete a case study.');
+    }
+
+
+    /**
+     * Update a case study.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update($slug)
     {
 
-        if(Request::has('draft')) {
+        if(Request::has('publish-draft')) {
 
-            $this->storeStudy(Request::all(), true);
+            $study = Study::where('slug', $slug)->firstOrFail();
+            $input = Request::all();
 
-            return redirect(route('admin.studies.drafts'));
+            $study->name = $input['name'];
+            $study->problem = $input['problem'];
+            $study->solution = $input['solution'];
+            $study->analysis = $input['analysis'];
+            $study->slug = $input['slug'];
+            $study->draft = false;
 
-        } else if(Request::has('publish')) {
+            $study->save();
+
+            return redirect(route('admin.cases.index'));
+
+        } else if(Request::has('update-draft') || Request::has('update')) {
+
+            $study = Study::where('slug', $slug)->firstOrFail();
+            $input = Request::all();
+
+            $study->name = $input['name'];
+            $study->problem = $input['problem'];
+            $study->solution = $input['solution'];
+            $study->analysis = $input['analysis'];
+            $study->slug = $input['slug'];
+
+            $study->save();
 
 
-            // @TODO: Check the user's permissions before allowing them to publish...
-            // even if user does not have publish button available on view, they
-            // could change the name attribute to 'publish' and hit this condtional.
-            $this->storeStudy(Request::all(), false);
-
-            return redirect(route('admin.studies'));
-
-        } else {
-
-            // @TODO: Someone messed with the name attribute and it doesn't have
-            // draft or publish. redirect with error.
-
+            if(Request::has('update')) {
+                return redirect(route('admin.cases.index'));
+            } else {
+                return redirect(route('admin.cases.drafts'));
+            }
         }
 
+    }
+
+
+    /**
+     * Show a case study.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        dd('show a case study');
+    }
+
+
+    /**
+     * Edit a case study
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($slug)
+    {
+        $study = Study::where('slug', $slug)->firstOrFail();
+
+        return view('layouts.admin.cases.edit')->with('study', $study);
     }
 
 
@@ -82,19 +169,8 @@ class StudiesController extends Controller
 
         $drafts = Study::where('draft', true)->latest()->get();
 
-        return view('layouts.admin.studies.drafts')->with('drafts', $drafts);
+        return view('layouts.admin.cases.drafts')->with('drafts', $drafts);
 
-    }
-
-
-    /**
-    * Update an existing case study.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function update()
-    {
-        dd('update a case study -- studies controller');
     }
 
 
@@ -150,7 +226,7 @@ class StudiesController extends Controller
         $study->slug = $input['slug'];
         $study->draft = $isDraft;
 
-        $study->save();
+        Auth::user()->studies()->save($study);
 
     }
 

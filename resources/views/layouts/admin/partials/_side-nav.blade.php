@@ -9,13 +9,13 @@
             <a href="javascript:;" data-toggle="collapse" data-target="#studies"><i class="fa fa-fw fa-area-chart"></i> Case Studies <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="studies" class="collapse in">
                 <li>
-                    <a href="{{ route('admin.studies') }}">Manage Case Studies</a>
+                    <a href="{{ route('admin.cases.index') }}">Manage Case Studies</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.studies.create') }}">New Case Study</a>
+                    <a href="{{ route('admin.cases.create') }}">New Case Study</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.studies.drafts') }}">Review Drafts</a>
+                    <a href="{{ route('admin.cases.drafts') }}">Review Drafts</a>
                 </li>
             </ul>
         </li>
@@ -24,10 +24,10 @@
             <a href="javascript:;" data-toggle="collapse" data-target="#outcomes"><i class="fa fa-fw fa-cube"></i> Learning Outcomes <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="outcomes" class="collapse in">
                 <li>
-                    <a href="{{ route('admin.outcomes') }}">Manage Outcomes</a>
+                    <a href="#">Manage Outcomes</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.outcomes.create') }}">New Outcome</a>
+                    <a href="#">New Outcome</a>
                 </li>
             </ul>
         </li>
@@ -36,10 +36,10 @@
             <a href="javascript:;" data-toggle="collapse" data-target="#classes"><i class="fa fa-fw fa-university"></i> Classes <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="classes" class="collapse in">
                 <li>
-                    <a href="{{ route('admin.courses') }}">Manage Classes</a>
+                    <a href="#">Manage Classes</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.courses.create') }}">New Class</a>
+                    <a href="#">New Class</a>
                 </li>
             </ul>
         </li>

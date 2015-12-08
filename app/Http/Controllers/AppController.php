@@ -55,8 +55,6 @@ class AppController extends Controller
     public function study($slug)
     {
 
-        //get the slug, look up case in db and return view to display it.
-
         $study = Study::where('slug', $slug)->first();
 
         return view('layouts.app.single')->with('study', $study);

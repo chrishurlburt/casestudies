@@ -10,6 +10,7 @@ use App\Http\Requests\StorePublishRequest;
 
 use App\Http\Controllers\Controller;
 use \Auth;
+use \Sentinel;
 
 use App\Study;
 use App\Keyword;
@@ -41,24 +42,31 @@ class StudiesController extends Controller
     public function store(StoreStudyRequest $StoreStudyRequest)
     {
 
-        if($StoreStudyRequest->has('draft')) {
+        if($StoreStudyRequest->has('publish')) {
 
-            $this->storeStudy($StoreStudyRequest->all(), true);
+            $user = Sentinel::findById(Auth::user()->id);
 
-            return redirect(route('admin.cases.drafts'));
+            // check if user has permissions to publish.
+            if($user->hasAccess(['publish'])) {
 
-        } else if($StoreStudyRequest->has('publish')) {
+                // user is authorized to publish
+                $this->storeStudy($StoreStudyRequest->all(), false);
+                return redirect(route('admin.cases.index'));
 
-            $this->storeStudy($StoreStudyRequest->all(), false);
+            } else {
 
-            return redirect(route('admin.cases.index'));
+                //user is not authorized to publish. Flash request to session and redirect with error.
+                return redirect(route('admin.cases.create'))->withErrors('You do not have permission to publish.')->withInput($StoreStudyRequest->all());
+
+            }
 
         } else {
 
-            // @TODO: Someone messed with the name attribute and it doesn't have
-            // draft or publish. redirect with error.
+            // must be a draft if not publish. request validation will have
+            // already determined it must be either publish or draft.
+            $this->storeStudy($StoreStudyRequest->all(), true);
 
-            dd('studies controller');
+            return redirect(route('admin.cases.drafts'));
 
         }
 

@@ -43,9 +43,11 @@
                 </li>
             </ul>
         </li>
+        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['admin.accounts']))
         <li>
             <a href="{{ route('admin.accounts') }}"><i class="fa fa-fw fa-users"></i> Accounts</a>
         </li>
+        @endif
 
     </ul>
 </div>

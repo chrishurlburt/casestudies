@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use \Sentinel;
+use \Auth;
+use \Route;
 
 class AdminController extends Controller
 {
@@ -18,7 +20,17 @@ class AdminController extends Controller
 
     public function accounts()
     {
-        dd('account managament goes here');
+
+        $user = Sentinel::findById(Auth::user()->id);
+
+        dd($user->hasAccess(['admin.accounts']));
+
+
+
+        // if (!$user->hasAccess(Route::currentRouteName())) {
+        //     return redirect('admin')->withErrors(['auth'=>'Permission Denied.']);
+        // }
+
     }
 
 }

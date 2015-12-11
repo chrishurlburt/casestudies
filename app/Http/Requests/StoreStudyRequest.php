@@ -14,9 +14,10 @@ class StoreStudyRequest extends Request
     public function authorize()
     {
 
-        // @TODO: Check the user's permissions before allowing them to publish
-
         return true;
+
+        // user's permissions checked on StudiesController after data validation.
+
     }
 
     /**
@@ -36,7 +37,10 @@ class StoreStudyRequest extends Request
         } else if(Request::has('publish')) {
 
             return [
-                'title' => 'required|unique:studies,name|min:10'
+                'title' => 'required|unique:studies,name|min:10',
+                'problem' => 'required',
+                'solution' => 'required',
+                'analysis' => 'required'
             ];
 
         }
@@ -44,7 +48,6 @@ class StoreStudyRequest extends Request
         // Name attribute was changed on the form and publish or draft do not exist.
         // Since one of two are required, return an error. Only need to check
         // for the existence of one or the other.
-        //
         return [
             'draft' => 'required'
         ];
@@ -52,7 +55,7 @@ class StoreStudyRequest extends Request
     }
 
     /**
-     * Custom error messages
+     * Custom error messages.
      *
      * @return array
      */
@@ -60,7 +63,8 @@ class StoreStudyRequest extends Request
     {
 
         return [
-            'draft.required' => 'Something went wrong, please try resubimiting.'
+            'draft.required' => 'Something went wrong, please try resubimiting.',
+            'title.unique' => 'The title has already been taken. Please Choose a different one.'
         ];
 
     }

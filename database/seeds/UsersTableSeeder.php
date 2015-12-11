@@ -20,5 +20,15 @@ class UsersTableSeeder extends Seeder
             'last_name'  => 'Hurlburt',
             'remember_token' => NULL
         ]);
+
+        DB::table('users')->insert([
+            'email'      => 'analyst@example.com',
+            'password'   =>  bcrypt('test'),
+            'permissions' => NULL,
+            'last_login'  => NULL,
+            'first_name' => 'Analyst',
+            'last_name'  => 'Test User',
+            'remember_token' => NULL
+        ]);
     }
 }

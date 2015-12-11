@@ -104,7 +104,10 @@
         </div>
 
         <div class="form-group">
+
+        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
             {!! Form::submit('Publish Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'publish']) !!}
+        @endif
             {!! Form::submit('Save Draft', ['class' => 'btn btn-primary form-control', 'name' => 'draft']) !!}
         </div>
     {!! Form::close() !!}

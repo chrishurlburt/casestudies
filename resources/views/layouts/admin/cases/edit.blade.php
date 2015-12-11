@@ -76,7 +76,11 @@
         <div class="form-group">
             @if($study->draft)
             {!! Form::submit('Update Draft', ['class' => 'btn btn-primary form-control', 'name' => 'update-draft'] ) !!}
-            {!! Form::submit('Publish Draft', ['class' => 'btn btn-primary form-control', 'name' => 'publish-draft'] ) !!}
+
+                @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
+                {!! Form::submit('Publish Draft', ['class' => 'btn btn-primary form-control', 'name' => 'publish-draft'] ) !!}
+                @endif
+
             @else
             {!! Form::submit('Update Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'update']) !!}
             @endif

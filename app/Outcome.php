@@ -22,5 +22,4 @@ class Outcome extends Model
     }
 
 
-
 }

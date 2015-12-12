@@ -183,47 +183,50 @@ class StudiesController extends Controller
 
 
     /**
-    * Get the keyword string from $input and format to an array.
-    *
-    * @param array $input
-    * @return array
-    */
-    private function getKeywords($input)
-    {
-        return array_map('trim', explode(',',$input['keywords']));
-    }
-
-
-    /**
-    * Get the keyword string from $input and format to an array.
+    * Check if the keyword already exists in the DB and build up
+    * an array of ID's to be attached to a study.
     *
     * @param array $keywords
     * @return null
     */
     private function storeKeywords($keywords)
     {
-        foreach($keywords as $k) {
-            $keyword = new Keyword;
-            $keyword->name = $k;
-            $keyword->save();
+
+        $keywords = array_map('trim', explode(',',$keywords));
+
+        $keywordIds = [];
+        foreach($keywords as $keyword) {
+
+            if(Keyword::where('name', $keyword)->first()) {
+
+                array_push($keywordIds, Keyword::where('name', $keyword)->first()->id);
+
+            } else {
+
+                $k = new Keyword;
+                $k->name = $keyword;
+                $k->save();
+                $lastInsertId = $k->id;
+
+                array_push($keywordIds, $lastInsertId);
+            }
         }
+
+        return array_map('intval', $keywordIds);
     }
 
 
     /**
      * Store a case study in the DB.
+     *
      * @param  array $input
-     * @param  bool $isDraf
+     * @param  bool $isDraft
      * @return null
      */
     private function storeStudy($input, $isDraft)
     {
-        $keywords = $this->getKeywords($input);
-        $this->storeKeywords($keywords);
 
-        // @TODO: attach keywords with case study
-        // get the ids of the keywords by name that were just added, then pass the array
-        // of ids to $study->keywords()->attach($keywordIds)
+        $keywordIds = $this->storeKeywords($input['keywords']);
 
         $study = new Study;
 
@@ -235,6 +238,8 @@ class StudiesController extends Controller
         $study->draft = $isDraft;
 
         Auth::user()->studies()->save($study);
+
+        // $study->keywords()->attach($keywordIds);
 
     }
 

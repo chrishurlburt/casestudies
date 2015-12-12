@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Keyword extends Model
 {
 
+
+    protected $fillable = [
+        'name',
+    ];
+
     /**
      * A keyword can have many case studies.
      *

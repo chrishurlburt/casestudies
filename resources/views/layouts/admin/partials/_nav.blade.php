@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ route('admin') }}">Dashboard</a>
+        <a class="navbar-brand" href="{{ route('admin') }}">{{ $role->name }}</a>
     </div>
 
     <!-- Top Menu Items -->

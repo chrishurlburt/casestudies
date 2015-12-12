@@ -14,7 +14,7 @@ class CreateStudiesTable extends Migration
     {
         Schema::create('studies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 150);
+            $table->string('title', 150);
             $table->string('problem');
             $table->string('solution');
             $table->string('analysis');

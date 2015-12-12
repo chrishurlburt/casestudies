@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Taggedstudy extends Model
+class Keywordstudy extends Model
 {
     /**
      * The table associated with this model.
      *
      * @var string
      */
-    protected $table = 'tagged_studies';
+    protected $table = 'keyword_study';
 
 }

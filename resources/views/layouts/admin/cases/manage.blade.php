@@ -32,7 +32,7 @@
     <tbody>
         @foreach($studies as $study)
             <tr>
-                <td><a href="{{ route('admin.cases.edit', ['slug' => $study->slug]) }}">{{ $study->name }}</a></td>
+                <td><a href="{{ route('admin.cases.edit', ['slug' => $study->slug]) }}">{{ $study->title }}</a></td>
                 <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
             </tr>
         @endforeach

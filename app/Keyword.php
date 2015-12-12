@@ -22,7 +22,7 @@ class Keyword extends Model
     public function studies()
     {
 
-        return $this->belongsToMany('App\Study', 'tagged_studies', 'keyword_id', 'study_id');
+        return $this->belongsToMany('App\Study', 'keyword_study', 'keyword_id', 'study_id');
 
     }
 

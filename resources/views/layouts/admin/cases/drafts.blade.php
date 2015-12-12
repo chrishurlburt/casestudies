@@ -35,7 +35,7 @@
 
         @foreach($drafts as $draft)
             <tr>
-                <td><a href="{{ route('admin.cases.edit', ['slug' => $draft->slug]) }}">{{ $draft->name }}</a></td>
+                <td><a href="{{ route('admin.cases.edit', ['slug' => $draft->slug]) }}">{{ $draft->title }}</a></td>
                 <td><a href="#">Review</a> | <a href="#">Delete</a></td>
             </tr>
         @endforeach

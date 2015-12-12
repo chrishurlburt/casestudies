@@ -108,7 +108,9 @@ class StudiesController extends Controller
             $study = Study::where('slug', $slug)->firstOrFail();
             $input = Request::all();
 
-            $study->name = $input['name'];
+            $keywordIds = $this->storeKeywords($input['keywords']);
+
+            $study->title = $input['title'];
             $study->problem = $input['problem'];
             $study->solution = $input['solution'];
             $study->analysis = $input['analysis'];
@@ -116,6 +118,7 @@ class StudiesController extends Controller
             $study->draft = false;
 
             $study->save();
+            $study->keywords()->sync($keywordIds);
 
             return redirect(route('admin.cases.index'));
 
@@ -124,14 +127,16 @@ class StudiesController extends Controller
             $study = Study::where('slug', $slug)->firstOrFail();
             $input = Request::all();
 
-            $study->name = $input['name'];
+            $keywordIds = $this->storeKeywords($input['keywords']);
+
+            $study->title = $input['title'];
             $study->problem = $input['problem'];
             $study->solution = $input['solution'];
             $study->analysis = $input['analysis'];
             $study->slug = $input['slug'];
 
             $study->save();
-
+            $study->keywords()->sync($keywordIds);
 
             if(Request::has('update')) {
                 return redirect(route('admin.cases.index'));
@@ -163,7 +168,9 @@ class StudiesController extends Controller
     {
         $study = Study::where('slug', $slug)->firstOrFail();
 
-        return view('layouts.admin.cases.edit')->with('study', $study);
+        $keywords = $this->stringifyKeywords($study->keywords()->get());
+
+        return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords);
     }
 
 
@@ -216,6 +223,23 @@ class StudiesController extends Controller
     }
 
 
+
+    /**
+    * Stringifies a collection of keywords.
+    *
+    * @return string
+    */
+    private function stringifyKeywords($keywords)
+    {
+        $keywordString = "";
+        foreach($keywords as $keyword) {
+            $keywordString = $keywordString . $keyword->name . ', ';
+        }
+
+        return $keywordString;
+    }
+
+
     /**
      * Store a case study in the DB.
      *
@@ -230,7 +254,7 @@ class StudiesController extends Controller
 
         $study = new Study;
 
-        $study->name = $input['title'];
+        $study->title = $input['title'];
         $study->problem = $input['problem'];
         $study->solution = $input['solution'];
         $study->analysis = $input['analysis'];
@@ -239,7 +263,7 @@ class StudiesController extends Controller
 
         Auth::user()->studies()->save($study);
 
-        // $study->keywords()->attach($keywordIds);
+        $study->keywords()->attach($keywordIds);
 
     }
 

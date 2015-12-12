@@ -31,13 +31,13 @@ class StoreStudyRequest extends Request
         if(Request::has('draft')) {
 
             return [
-                'title' => 'required|unique:studies,name|min:6'
+                'title' => 'required|unique:studies,title|min:6'
             ];
 
         } else if(Request::has('publish')) {
 
             return [
-                'title' => 'required|unique:studies,name|min:10',
+                'title' => 'required|unique:studies,title|min:10',
                 'problem' => 'required',
                 'solution' => 'required',
                 'analysis' => 'required'

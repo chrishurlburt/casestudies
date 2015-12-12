@@ -14,16 +14,16 @@ class Course extends Model
     protected $table = 'courses';
 
     /**
-     * A course may have many case studies.
+     * A course may have many outcomes.
      *
-     * Get the case studies for a given course.
+     * Get the outcomes for a given course.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function studies()
+    public function outcomes()
     {
 
-        return $this->belongsToMany('App\Study', 'tagged_studies', 'course_id', 'study_id');
+        return $this->belongsToMany('App\Outcome', 'course_outcome', 'course_id', 'outcome_id');
 
     }
 

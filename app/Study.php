@@ -40,22 +40,7 @@ class Study extends Model
     public function keywords()
     {
 
-        return $this->belongsToMany('App\Keyword', 'tagged_studies', 'study_id', 'keyword_id');
-
-    }
-
-
-    /**
-     * A case study may have many courses.
-     *
-     * Get the courses for a given case study.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function courses()
-    {
-
-        return $this->belongsToMany('App\Course', 'tagged_studies', 'study_id', 'course_id');
+        return $this->belongsToMany('App\Keyword', 'keyword_study', 'study_id', 'keyword_id');
 
     }
 
@@ -70,7 +55,7 @@ class Study extends Model
     public function outcomes()
     {
 
-        return $this->belongsToMany('App\Outcome', 'tagged_studies', 'study_id', 'outcome_id');
+        return $this->belongsToMany('App\Outcome', 'outcome_study', 'study_id', 'outcome_id');
 
     }
 

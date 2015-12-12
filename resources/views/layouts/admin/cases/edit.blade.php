@@ -25,7 +25,7 @@
 
         <div class="form-group">
             {!! Form::label('title', 'Title') !!}
-            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+            {!! Form::text('title', null, ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">
@@ -50,7 +50,7 @@
 
         <div class="form-group">
             {!! Form::label('keywords', 'Keywords (Separate each with comma)') !!}
-            {!! Form::text('keywords', null, ['class' => 'form-control']) !!}
+            {!! Form::text('keywords', $keywords, ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">

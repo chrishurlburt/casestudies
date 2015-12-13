@@ -8,9 +8,11 @@
         <li>
             <a href="javascript:;" data-toggle="collapse" data-target="#studies"><i class="fa fa-fw fa-area-chart"></i> Case Studies <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="studies" class="collapse in">
+                @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
                 <li>
                     <a href="{{ route('admin.cases.index') }}">Manage Case Studies</a>
                 </li>
+                @endif
                 <li>
                     <a href="{{ route('admin.cases.create') }}">New Case Study</a>
                 </li>

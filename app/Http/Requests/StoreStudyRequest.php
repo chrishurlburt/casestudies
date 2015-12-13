@@ -43,7 +43,7 @@ class StoreStudyRequest extends Request
                 'analysis' => 'required'
             ];
 
-        }
+        } else
 
         // Name attribute was changed on the form and publish or draft do not exist.
         // Since one of two are required, return an error. Only need to check

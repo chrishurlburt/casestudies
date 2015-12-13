@@ -21,6 +21,17 @@
     </div>
 </div>
 
+
+    @if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
+
+            <li>{{ $error }}</li>
+
+            @endforeach
+        </ul>
+    @endif
+
     {!! Form::model($study, ['method' => 'PATCH', 'route' => ['admin.cases.update', $study->slug]]) !!}
 
         <div class="form-group">
@@ -75,17 +86,22 @@
 
         <div class="form-group">
             @if($study->draft)
-            {!! Form::submit('Update Draft', ['class' => 'btn btn-primary form-control', 'name' => 'update-draft'] ) !!}
+
+                {!! Form::submit('Update Draft', ['class' => 'btn btn-primary form-control', 'name' => 'update-draft'] ) !!}
 
                 @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
                 {!! Form::submit('Publish Draft', ['class' => 'btn btn-primary form-control', 'name' => 'publish-draft'] ) !!}
                 @endif
 
             @else
-            {!! Form::submit('Update Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'update']) !!}
+                @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
+                {!! Form::submit('Update Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'update']) !!}
+                @endif
             @endif
+
 
 
         </div>
     {!! Form::close() !!}
 @stop
+

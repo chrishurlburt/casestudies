@@ -6,7 +6,7 @@ use Request;
 
 use App\Http\Requests;
 use App\Http\Requests\StoreStudyRequest;
-use App\Http\Requests\StorePublishRequest;
+use App\Http\Requests\UpdateStudyRequest;
 
 use App\Http\Controllers\Controller;
 use \Auth;
@@ -27,9 +27,20 @@ class StudiesController extends Controller
     public function index()
     {
 
-        $studies = Study::where('draft', false)->latest()->get();
+        // check if user has permission to access this page.
+        $user = Sentinel::findById(Auth::user()->id);
 
-        return view('layouts.admin.cases.manage')->with('studies', $studies);
+        if($user->hasAccess(['admin.cases.index'])) {
+
+            $studies = Study::where('draft', false)->latest()->get();
+
+            return view('layouts.admin.cases.manage')->with('studies', $studies);
+
+        } else {
+
+            return redirect(route('admin'))->withErrors('You do not have permission to access that location.');
+
+        }
     }
 
 
@@ -41,6 +52,9 @@ class StudiesController extends Controller
     */
     public function store(StoreStudyRequest $StoreStudyRequest)
     {
+
+        // @TODO: every study must always have a slug. if no custom url is present
+        // in the form, slugify the title.
 
         if($StoreStudyRequest->has('publish')) {
 
@@ -100,49 +114,88 @@ class StudiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update($slug)
+    public function update(UpdateStudyRequest $UpdateStudyRequest, $slug)
     {
 
-        if(Request::has('publish-draft')) {
+        // @TODO: every study must always have a slug. if no custom url is present
+        // in the form, slugify the title.
 
-            $study = Study::where('slug', $slug)->firstOrFail();
-            $input = Request::all();
 
-            $keywordIds = $this->storeKeywords($input['keywords']);
+        $user = Sentinel::findById(Auth::user()->id);
 
-            $study->title = $input['title'];
-            $study->problem = $input['problem'];
-            $study->solution = $input['solution'];
-            $study->analysis = $input['analysis'];
-            $study->slug = $input['slug'];
-            $study->draft = false;
+        if($UpdateStudyRequest->has('publish-draft')) {
+            // check if user has permissions to publish.
+            if($user->hasAccess(['publish'])) {
 
-            $study->save();
-            $study->keywords()->sync($keywordIds);
+                // user has permission to publish
+                $study = Study::where('slug', $slug)->firstOrFail();
+                $input = $UpdateStudyRequest->all();
 
-            return redirect(route('admin.cases.index'));
+                $keywordIds = $this->storeKeywords($input['keywords']);
 
-        } else if(Request::has('update-draft') || Request::has('update')) {
+                $study->title = $input['title'];
+                $study->problem = $input['problem'];
+                $study->solution = $input['solution'];
+                $study->analysis = $input['analysis'];
+                $study->slug = $input['slug'];
+                $study->draft = false;
 
-            $study = Study::where('slug', $slug)->firstOrFail();
-            $input = Request::all();
+                $study->save();
+                $study->keywords()->sync($keywordIds);
 
-            $keywordIds = $this->storeKeywords($input['keywords']);
-
-            $study->title = $input['title'];
-            $study->problem = $input['problem'];
-            $study->solution = $input['solution'];
-            $study->analysis = $input['analysis'];
-            $study->slug = $input['slug'];
-
-            $study->save();
-            $study->keywords()->sync($keywordIds);
-
-            if(Request::has('update')) {
                 return redirect(route('admin.cases.index'));
+
             } else {
-                return redirect(route('admin.cases.drafts'));
+                //user doesn't have permission to publish
+                return redirect(route('admin.cases.edit'))->withErrors('You do not have permission to publish.')->withInput($UpdateStudyRequest->all());
             }
+
+        } else if($UpdateStudyRequest->has('update-draft')) {
+
+            $study = Study::where('slug', $slug)->firstOrFail();
+            $input = $UpdateStudyRequest->all();
+
+            $keywordIds = $this->storeKeywords($input['keywords']);
+
+            $study->title = $input['title'];
+            $study->problem = $input['problem'];
+            $study->solution = $input['solution'];
+            $study->analysis = $input['analysis'];
+            $study->slug = $input['slug'];
+
+            $study->save();
+            $study->keywords()->sync($keywordIds);
+
+            return redirect(route('admin.cases.drafts'));
+
+        } else {
+            //UpdateStudyRequest->has('update')
+
+            if($user->hasAccess(['publish'])) {
+
+                $study = Study::where('slug', $slug)->firstOrFail();
+                $input = $UpdateStudyRequest->all();
+
+                $keywordIds = $this->storeKeywords($input['keywords']);
+
+                $study->title = $input['title'];
+                $study->problem = $input['problem'];
+                $study->solution = $input['solution'];
+                $study->analysis = $input['analysis'];
+                $study->slug = $input['slug'];
+
+                $study->save();
+                $study->keywords()->sync($keywordIds);
+
+                return redirect(route('admin.cases.index'));
+
+
+            } else {
+                //user doesn't have permission to update a pubished case study.
+                 return redirect(route('admin.cases.edit', $slug))->withErrors('You do not have permission to update a published study.')->withInput($UpdateStudyRequest->all());
+
+            }
+
         }
 
     }

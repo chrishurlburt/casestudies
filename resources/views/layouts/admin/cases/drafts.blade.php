@@ -21,7 +21,9 @@
     </div>
 </div>
 
-@if(!isset($drafts) || empty($drafts))
+@include('layouts.admin.partials._success')
+
+@if(empty($drafts))
     <h3>There are no drafts to show.</h3>
 @else
 <table class="table table-hover">

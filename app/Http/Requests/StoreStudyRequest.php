@@ -28,19 +28,22 @@ class StoreStudyRequest extends Request
     public function rules()
     {
 
-        if(Request::has('draft')) {
+        if($this->has('draft')) {
 
             return [
-                'title' => 'required|unique:studies,title|min:6'
+                'title' => 'required|unique:studies,title|min:6',
+                'slug'  => 'unique:studies,slug'
             ];
 
-        } else if(Request::has('publish')) {
+        } else if($this->has('publish')) {
 
             return [
-                'title' => 'required|unique:studies,title|min:10',
-                'problem' => 'required',
+                'title'    => 'required|unique:studies,title|min:10',
+                'problem'  => 'required',
                 'solution' => 'required',
-                'analysis' => 'required'
+                'analysis' => 'required',
+                'slug'     => 'unique:studies,slug',
+                'keywords' => 'required'
             ];
 
         } else
@@ -64,7 +67,8 @@ class StoreStudyRequest extends Request
 
         return [
             'draft.required' => 'Something went wrong, please try resubimiting.',
-            'title.unique' => 'The title has already been taken. Please Choose a different one.'
+            'title.unique'   => 'The title has already been taken. Please choose a different one.',
+            'slug.unique'    => 'The custom URL has already been taken. Please choose a different one.'
         ];
 
     }

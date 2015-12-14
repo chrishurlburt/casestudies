@@ -15,13 +15,13 @@ class RolesTableSeeder extends Seeder
         DB::table('roles')->insert([
                 'slug'         => 'admin',
                 'name'         => 'Admin',
-                'permissions'  => '{"publish": true, "admin.accounts": true}',
+                'permissions'  => '{"publish": true, "admin.accounts": true, "admin.cases.index": true}',
         ]);
 
         DB::table('roles')->insert([
                 'slug'         => 'analyst',
                 'name'         => 'Analyst',
-                'permissions'  => '{"publish": false, "admin.accounts": false}'
+                'permissions'  => '{"publish": false, "admin.accounts": false, "admin.cases.index": false}'
         ]);
 
     }

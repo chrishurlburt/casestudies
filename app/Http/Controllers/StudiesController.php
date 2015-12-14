@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateStudyRequest;
 use App\Http\Controllers\Controller;
 use \Auth;
 use \Sentinel;
+use \Session;
 
 use App\Study;
 use App\Keyword;
@@ -26,11 +27,8 @@ class StudiesController extends Controller
     */
     public function index()
     {
-
         // check if user has permission to access this page.
-        $user = Sentinel::findById(Auth::user()->id);
-
-        if($user->hasAccess(['admin.cases.index'])) {
+        if($this->checkAccess()) {
 
             $studies = Study::where('draft', false)->latest()->get();
 
@@ -65,6 +63,7 @@ class StudiesController extends Controller
 
                 // user is authorized to publish
                 $this->storeStudy($StoreStudyRequest->all(), false);
+
                 return redirect(route('admin.cases.index'));
 
             } else {
@@ -117,31 +116,16 @@ class StudiesController extends Controller
     public function update(UpdateStudyRequest $UpdateStudyRequest, $slug)
     {
 
-        // @TODO: every study must always have a slug. if no custom url is present
-        // in the form, slugify the title.
-
-
         $user = Sentinel::findById(Auth::user()->id);
+        $study = Study::where('slug', $slug)->firstOrFail();
+        $input = $UpdateStudyRequest->all();
 
         if($UpdateStudyRequest->has('publish-draft')) {
             // check if user has permissions to publish.
             if($user->hasAccess(['publish'])) {
-
                 // user has permission to publish
-                $study = Study::where('slug', $slug)->firstOrFail();
-                $input = $UpdateStudyRequest->all();
 
-                $keywordIds = $this->storeKeywords($input['keywords']);
-
-                $study->title = $input['title'];
-                $study->problem = $input['problem'];
-                $study->solution = $input['solution'];
-                $study->analysis = $input['analysis'];
-                $study->slug = $input['slug'];
-                $study->draft = false;
-
-                $study->save();
-                $study->keywords()->sync($keywordIds);
+                $this->updateStudy($study, $input, false);
 
                 return redirect(route('admin.cases.index'));
 
@@ -152,43 +136,19 @@ class StudiesController extends Controller
 
         } else if($UpdateStudyRequest->has('update-draft')) {
 
-            $study = Study::where('slug', $slug)->firstOrFail();
-            $input = $UpdateStudyRequest->all();
-
-            $keywordIds = $this->storeKeywords($input['keywords']);
-
-            $study->title = $input['title'];
-            $study->problem = $input['problem'];
-            $study->solution = $input['solution'];
-            $study->analysis = $input['analysis'];
-            $study->slug = $input['slug'];
-
-            $study->save();
-            $study->keywords()->sync($keywordIds);
+            $this->updateStudy($study, $input, true);
 
             return redirect(route('admin.cases.drafts'));
 
         } else {
-            //UpdateStudyRequest->has('update')
+            // UpdateStudyRequest->has('update')
+            // updating a published study
 
             if($user->hasAccess(['publish'])) {
 
-                $study = Study::where('slug', $slug)->firstOrFail();
-                $input = $UpdateStudyRequest->all();
-
-                $keywordIds = $this->storeKeywords($input['keywords']);
-
-                $study->title = $input['title'];
-                $study->problem = $input['problem'];
-                $study->solution = $input['solution'];
-                $study->analysis = $input['analysis'];
-                $study->slug = $input['slug'];
-
-                $study->save();
-                $study->keywords()->sync($keywordIds);
+                $this->updateStudy($study, $input, false);
 
                 return redirect(route('admin.cases.index'));
-
 
             } else {
                 //user doesn't have permission to update a pubished case study.
@@ -280,16 +240,53 @@ class StudiesController extends Controller
     /**
     * Stringifies a collection of keywords.
     *
+    * @param  object $keywords
     * @return string
     */
     private function stringifyKeywords($keywords)
     {
         $keywordString = "";
-        foreach($keywords as $keyword) {
-            $keywordString = $keywordString . $keyword->name . ', ';
-        }
+
+        if($keywords) {
+
+            foreach($keywords as $keyword) {
+                $keywordString = $keywordString . $keyword->name . ', ';
+            }
+
+            return trim($keywordString, ' ,');
+
+        } else {
 
         return $keywordString;
+
+        }
+
+    }
+
+
+    /**
+    * Slugifies a string.
+    *
+    * @param  string $text
+    * @return string
+    */
+    private function slugify($text)
+    {
+    // replace non letter or digits by -
+    $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+    // trim
+    $text = trim($text, '-');
+    // transliterate
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    // lowercase
+    $text = strtolower($text);
+    // remove unwanted characters
+    $text = preg_replace('~[^-\w]+~', '', $text);
+
+        if (empty($text)){
+            return false;
+        }
+      return $text;
     }
 
 
@@ -311,12 +308,84 @@ class StudiesController extends Controller
         $study->problem = $input['problem'];
         $study->solution = $input['solution'];
         $study->analysis = $input['analysis'];
-        $study->slug = $input['slug'];
         $study->draft = $isDraft;
+
+        if(empty($input['slug'])) {
+            $study->slug = $this->slugify($study->title);
+        } else {
+            $study->slug = $input['slug'];
+        }
 
         Auth::user()->studies()->save($study);
 
         $study->keywords()->attach($keywordIds);
+
+        if($study->draft) {
+            Session::flash('flash_message', 'The draft has been added.');
+        } else {
+            Session::flash('flash_message', 'The case study has been published.');
+        }
+
+    }
+
+
+    /**
+     * Update a case study in the DB.
+     *
+     * @param  object $study
+     * @param  array $input
+     * @param  bool $isDraft
+     * @return null
+     */
+    private function updateStudy($study, $input, $isDraft)
+    {
+
+        $keywordIds = $this->storeKeywords($input['keywords']);
+
+        $study->title = $input['title'];
+        $study->problem = $input['problem'];
+        $study->solution = $input['solution'];
+        $study->analysis = $input['analysis'];
+        $study->draft = $isDraft;
+
+        // Every study must have a slug in the DB. If no custom URL is present,
+        // slugify the title.
+        if(empty($input['slug'])) {
+            $study->slug = $this->slugify($study->title);
+        } else {
+            $study->slug = $input['slug'];
+        }
+
+        Auth::user()->studies()->save($study);
+
+        $study->keywords()->sync($keywordIds);
+
+        if(Request::has('update')) {
+            Session::flash('flash_message', 'The case study has been updated.');
+        } else if(Request::has('publish-draft')) {
+            Session::flash('flash_message', 'The draft has been published.');
+        } else {
+            Session::flash('flash_message', 'The draft has been updated.');
+        }
+
+    }
+
+
+    /**
+     * Check if a user has access to a route.
+     *
+     * @return bool
+     */
+    private function checkAccess()
+    {
+
+        $user = Sentinel::findById(Auth::user()->id);
+
+        if($user->hasAccess([Request::route()->getName()])) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 

@@ -31,28 +31,28 @@ class UpdateStudyRequest extends Request
 
         $study = Study::where('slug', $this->slug)->firstOrFail();
 
-        if(Request::has('publish-draft') || Request::has('update')) {
+        if($this->has('publish-draft') || $this->has('update')) {
 
             return [
                 // On update, the title must be unique to avoid changing a title to one
                 // that is already in use. However, the validation must exclude
                 // the current title from the uniqueness test so that it can
                 // be updated with the same title.
-                'title'    => 'required|unique:studies,title,'.$study->id.'|min:10',
+                'title'    => 'required|unique:studies,title,'.$study->id.'|min:10|string',
                 'problem'  => 'required',
                 'solution' => 'required',
                 'analysis' => 'required',
                 'keywords' => 'required'
             ];
 
-        } else if(Request::has('update-draft')) {
+        } else if($this->has('update-draft')) {
 
             return [
 
                 // See above. Need to be able to update a draft using the same title
                 // it was already added to the DB with while avoiding changing the
                 // title to one already in use.
-                'title'    => 'required|unique:studies,title,'.$study->id.'min:10',
+                'title'    => 'required|unique:studies,title,'.$study->id.'min:10|string',
             ];
 
         } else {

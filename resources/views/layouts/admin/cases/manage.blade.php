@@ -22,6 +22,8 @@
     </div>
 </div>
 
+@include('layouts.admin.partials._success')
+
 <table class="table table-hover">
     <thead>
         <tr>

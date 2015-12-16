@@ -25,4 +25,24 @@ class OutcomesController extends Controller
         dd('update an outcome -- outcomes controller');
     }
 
+    public function store()
+    {
+        dd('store an outcome');
+    }
+
+    public function destroy()
+    {
+        dd('delete an outcome');
+    }
+
+    public function show()
+    {
+        dd('show an outcome');
+    }
+
+    public function edit()
+    {
+        dd('edit an outcome');
+    }
+
 }

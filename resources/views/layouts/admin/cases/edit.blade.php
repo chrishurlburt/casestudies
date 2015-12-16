@@ -21,16 +21,7 @@
     </div>
 </div>
 
-
-    @if($errors->any())
-        <ul class="alert alert-danger">
-            @foreach($errors->all() as $error)
-
-            <li>{{ $error }}</li>
-
-            @endforeach
-        </ul>
-    @endif
+@include('layouts.admin.partials._errors')
 
     {!! Form::model($study, ['method' => 'PATCH', 'route' => ['admin.cases.update', $study->slug]]) !!}
 

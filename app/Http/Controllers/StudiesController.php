@@ -102,9 +102,22 @@ class StudiesController extends Controller
      *
      * @return  \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($slug)
     {
-        dd('delete a case study.');
+        // @TODO: allow analysts to delete drafts but not published studies.
+
+
+        if($this->checkAccess()) {
+        // user can delete
+            Study::where('slug', $slug)->firstOrFail()->delete();
+
+            Session::flash('flash_message', 'The case study has been deleted.');
+
+            return redirect(route('admin.cases.index'));
+
+        } else {
+            return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to delete case studies.');
+        }
     }
 
 
@@ -162,13 +175,21 @@ class StudiesController extends Controller
 
 
     /**
-     * Show a case study.
+     * Respond to an AJAX request with a study.
      *
-     * @return \Illuminate\Http\Response
+     * @return json
      */
-    public function show()
+    public function show($slug)
     {
-        dd('show a case study');
+        $study = Study::where('slug', $slug)->firstOrFail();
+        $keywords = $study->keywords()->get();
+
+        if(Request::ajax()) {
+            return array('study' => $study, 'keywords' => $keywords);
+        } else {
+            // url was entered manually, user is probably trying to edit.
+            return redirect(route('admin.cases.edit', $slug));
+        }
     }
 
 
@@ -179,11 +200,24 @@ class StudiesController extends Controller
      */
     public function edit($slug)
     {
+
         $study = Study::where('slug', $slug)->firstOrFail();
 
         $keywords = $this->stringifyKeywords($study->keywords()->get());
 
-        return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords);
+        if($study->draft) {
+        // any user can edit a draft, no permissions check.
+            return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords);
+        } else {
+        // it's not a draft, make sure the user has permission to edit non-drafts.
+            if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
+            // user can edit published studies
+                return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords);
+            } else {
+            // user cannot edit published studies.
+                return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to edit a published study.');
+            }
+        }
     }
 
 
@@ -313,7 +347,7 @@ class StudiesController extends Controller
         if(empty($input['slug'])) {
             $study->slug = $this->slugify($study->title);
         } else {
-            $study->slug = $input['slug'];
+            $study->slug = $this->slugify($input['slug']);
         }
 
         Auth::user()->studies()->save($study);

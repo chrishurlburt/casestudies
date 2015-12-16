@@ -31,8 +31,9 @@ class StoreStudyRequest extends Request
         if($this->has('draft')) {
 
             return [
-                'title' => 'required|unique:studies,title|min:6',
-                'slug'  => 'unique:studies,slug'
+                'title'    => 'required|unique:studies,title|min:6',
+                'slug'     => 'unique:studies,slug',
+                'keywords' => 'required'
             ];
 
         } else if($this->has('publish')) {

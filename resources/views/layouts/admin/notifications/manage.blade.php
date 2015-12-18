@@ -8,18 +8,7 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-12">
-        <ol class="breadcrumb">
-            <li>
-                <i class="fa fa-dashboard"></i> <a href="/admin">Dashboard</a>
-            </li>
-            <li class="active">
-                <i class="fa fa-wrench"></i> Notifications
-            </li>
-        </ol>
-    </div>
-</div>
+{!! Breadcrumbs::render('notifications') !!}
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

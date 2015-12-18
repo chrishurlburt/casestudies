@@ -1,3 +1,13 @@
-{-- create breadcrumbs dynamically based on routes
-    view composer pass current route
- --}
+@if ($breadcrumbs)
+<div class="row">
+    <ul class="breadcrumb">
+        @foreach ($breadcrumbs as $breadcrumb)
+            @if (!$breadcrumb->last)
+                <li><a href="{{{ $breadcrumb->url }}}">{{{ $breadcrumb->title }}}</a></li>
+            @else
+                <li class="active">{{{ $breadcrumb->title }}}</li>
+            @endif
+        @endforeach
+    </ul>
+</div>
+@endif

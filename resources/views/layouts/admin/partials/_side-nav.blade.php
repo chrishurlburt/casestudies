@@ -17,7 +17,7 @@
                     <a href="{{ route('admin.cases.create') }}">New Case Study</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.cases.drafts') }}">Review Drafts</a>
+                    <a href="{{ route('admin.cases.drafts') }}">Manage Drafts</a>
                 </li>
             </ul>
         </li>

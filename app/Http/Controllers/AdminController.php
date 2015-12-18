@@ -10,6 +10,9 @@ use \Sentinel;
 use \Auth;
 use \Route;
 
+use App\Notification;
+use App\Helpers\Helpers;
+
 class AdminController extends Controller
 {
 
@@ -20,6 +23,8 @@ class AdminController extends Controller
 
     public function accounts()
     {
+
+        // @TODO: authorization on admin.account resource routes
 
         $user = Sentinel::findById(Auth::user()->id);
 
@@ -33,4 +38,32 @@ class AdminController extends Controller
 
     }
 
+
+    /**
+     * Get a users notifications.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function notifications()
+    {
+        $notifications = Auth::user()->notifications()->get()->all();
+
+        return view('layouts.admin.notifications.manage')->with('notifications', $notifications);
+
+    }
+
+
+    /**
+     * Detach notifications from a user.
+     *
+     * @return  null
+     */
+    public function destroyNotification(Request $request)
+    {
+
+        Auth::user()->notifications()->detach($request->input('notifications'));
+
+        return redirect(route('admin.notifications'))->with(Helpers::flash('The selected notifications have been deleted.'));
+
+    }
 }

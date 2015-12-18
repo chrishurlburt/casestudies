@@ -14,12 +14,15 @@
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']);
-    Route::get('accounts', ['as' => 'admin.accounts', 'uses' => 'AdminController@accounts']);
     Route::get('cases/drafts', ['as' => 'admin.cases.drafts', 'uses' => 'StudiesController@drafts']);
+
+    route::get('notifications', ['as' => 'admin.notifications', 'uses' => 'AdminController@notifications']);
+    route::delete('notifications', ['as' => 'admin.notifications.destroy', 'uses' => 'AdminController@destroyNotification']);
 
     Route::resource('cases', 'StudiesController');
     Route::resource('outcomes', 'OutcomesController');
     Route::resource('classes', 'CoursesController');
+    Route::resource('users', 'UsersController');
 });
 
 /*

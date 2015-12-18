@@ -102,6 +102,8 @@ class StudiesController extends Controller
      */
     public function destroy($slug)
     {
+        // @TODO: soft deletes
+
         $study = Study::where('slug', $slug)->firstOrFail();
 
         if($study->draft) {

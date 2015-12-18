@@ -16,6 +16,7 @@ use \Session;
 use App\Study;
 use App\Keyword;
 use App\User;
+use App\Notification;
 
 class StudiesController extends Controller
 {
@@ -50,9 +51,6 @@ class StudiesController extends Controller
     */
     public function store(StoreStudyRequest $StoreStudyRequest)
     {
-
-        // @TODO: every study must always have a slug. if no custom url is present
-        // in the form, slugify the title.
 
         if($StoreStudyRequest->has('publish')) {
 
@@ -104,19 +102,30 @@ class StudiesController extends Controller
      */
     public function destroy($slug)
     {
-        // @TODO: allow analysts to delete drafts but not published studies.
+        $study = Study::where('slug', $slug)->firstOrFail();
 
+        if($study->draft) {
+        // study is a draft, any user can delete
 
-        if($this->checkAccess()) {
-        // user can delete
-            Study::where('slug', $slug)->firstOrFail()->delete();
+            $study->delete();
 
-            Session::flash('flash_message', 'The case study has been deleted.');
-
-            return redirect(route('admin.cases.index'));
+            Session::flash('flash_message', 'The draft has been deleted.');
+            return redirect(route('admin.cases.drafts'));
 
         } else {
-            return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to delete case studies.');
+        // study is not a draft, check user permissions
+
+            if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
+            // user can delete
+                $study->delete();
+
+                Session::flash('flash_message', 'The case study has been deleted.');
+
+                return redirect(route('admin.cases.index'));
+
+            } else {
+                return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to delete case studies.');
+            }
         }
     }
 
@@ -333,9 +342,7 @@ class StudiesController extends Controller
      */
     private function storeStudy($input, $isDraft)
     {
-
-        $keywordIds = $this->storeKeywords($input['keywords']);
-
+        // setup the study
         $study = new Study;
 
         $study->title = $input['title'];
@@ -344,22 +351,33 @@ class StudiesController extends Controller
         $study->analysis = $input['analysis'];
         $study->draft = $isDraft;
 
+        // make a slug
         if(empty($input['slug'])) {
             $study->slug = $this->slugify($study->title);
         } else {
             $study->slug = $this->slugify($input['slug']);
         }
 
+        // save the study
         Auth::user()->studies()->save($study);
 
+        // store and attach keywords
+        $keywordIds = $this->storeKeywords($input['keywords']);
         $study->keywords()->attach($keywordIds);
 
+        // set success messages and notifications
+        $notification = new Notification;
+
         if($study->draft) {
-            Session::flash('flash_message', 'The draft has been added.');
+            $this->flash('The draft has been added.');
+            $notification->notification = "A new draft has been added.";
         } else {
-            Session::flash('flash_message', 'The case study has been published.');
+            $this->flash('The case study has been published.');
+            $notification->notification = "A new case study has been published.";
         }
 
+        // send notifications
+        $this->notifier($notification, $study, Sentinel::findRoleBySlug('admin')->users()->get());
     }
 
 
@@ -373,37 +391,67 @@ class StudiesController extends Controller
      */
     private function updateStudy($study, $input, $isDraft)
     {
+        // @TODO: track revisions venturecraft/revisionable
 
-        $keywordIds = $this->storeKeywords($input['keywords']);
-
+        // setup the study
         $study->title = $input['title'];
         $study->problem = $input['problem'];
         $study->solution = $input['solution'];
         $study->analysis = $input['analysis'];
         $study->draft = $isDraft;
 
-        // Every study must have a slug in the DB. If no custom URL is present,
-        // slugify the title.
+        // make a slug
         if(empty($input['slug'])) {
             $study->slug = $this->slugify($study->title);
         } else {
             $study->slug = $input['slug'];
         }
 
-        Auth::user()->studies()->save($study);
+        // update the study
+        $study->save();
 
+        // update the keywords
+        $keywordIds = $this->storeKeywords($input['keywords']);
         $study->keywords()->sync($keywordIds);
 
+        //set success messages and notifications
+        $notification = new Notification;
+
         if(Request::has('update')) {
-            Session::flash('flash_message', 'The case study has been updated.');
+            $this->flash('The case study has been updated.');
+            $notification->notification = "A case study has been updated.";
         } else if(Request::has('publish-draft')) {
-            Session::flash('flash_message', 'The draft has been published.');
+            $this->flash('The draft has been published.');
+            $notification->notification = "A draft has been published.";
         } else {
-            Session::flash('flash_message', 'The draft has been updated.');
+            $this->flash('The draft has been updated.');
+            $notification->notification = "A draft has been updated.";
         }
+
+        $this->notifier($notification, $study, Sentinel::findRoleBySlug('admin')->users()->get());
 
     }
 
+    /**
+     * Send a notification to a group of a users.
+     *
+     * @param Notification $notification
+     * @param User $users
+     * @return null
+     */
+    private function notifier(Notification $notification, Study $study, $users)
+    {
+        $notification->study()->associate($study);
+        $notification->save();
+
+        //attaches notification to users
+        foreach($users as $user) {
+            // dont send a notification to the author
+            if($user->id !== Auth::user()->id) {
+                $notification->users()->attach($user->id);
+            }
+        }
+    }
 
     /**
      * Check if a user has access to a route.
@@ -423,4 +471,17 @@ class StudiesController extends Controller
 
     }
 
+    /**
+     * Flash a message to the session
+     *
+     * @param string $message
+     * @return null
+     */
+    private function flash($message)
+    {
+        return Session::flash('flash_message', $message);
+    }
+
 }
+
+

@@ -47,4 +47,15 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Study');
     }
+
+    /**
+     * A user may have many notifications.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function notifications()
+    {
+        return $this->belongsToMany('App\Notification');
+    }
+
 }

@@ -33,8 +33,6 @@ class Study extends Model
     /**
      * A case study can have many keywords.
      *
-     * Get the keywords associated with a given case study.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function keywords()
@@ -48,7 +46,6 @@ class Study extends Model
     /**
      * A case study may have many outcomes.
      *
-     * Get the outcomes for a given case study.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -63,13 +60,22 @@ class Study extends Model
     /**
      * A study may have one author.
      *
-     * Get the author for a given case study.
-     *
-     * @return [\Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+
+    /**
+     * A study may have one notification.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function notification()
+    {
+        return $this->hasOne('App\Notification');
     }
 
 }

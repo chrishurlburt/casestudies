@@ -20,11 +20,12 @@ class StudiesTableSeeder extends Seeder
         foreach(range(1,50) as $index) {
             DB::table('studies')->insert([
                 'title'     => $faker->sentence($nbWords = rand(3, 6)),
-                'problem'  => $faker->paragraph($nbSentences = rand(4,6)),
-                'solution' => $faker->paragraph($nbSentences = rand(7,15)),
-                'analysis' => $faker->paragraph($nbSentences = rand(4,6)),
-                'slug'     => $faker->word,
-                'user_id'  => $faker->randomElement($users)
+                'problem'   => $faker->paragraph($nbSentences = rand(4,6)),
+                'solution'  => $faker->paragraph($nbSentences = rand(7,15)),
+                'analysis'  => $faker->paragraph($nbSentences = rand(4,6)),
+                'slug'      => $faker->word,
+                'draft'     => $faker->numberBetween($min = 0, $max = 1),
+                'user_id'   => $faker->randomElement($users)
             ]);
         }
 

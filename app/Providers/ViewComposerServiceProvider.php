@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use \Sentinel;
 use \Auth;
+use App\User;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->userRole();
+        $this->userNotifications();
     }
 
     /**
@@ -34,4 +36,14 @@ class ViewComposerServiceProvider extends ServiceProvider
             $view->with('role', Sentinel::findById(Auth::user()->id)->roles()->first());
         });
     }
+
+    private function userNotifications()
+    {
+        view()->composer('layouts.admin.partials._nav', function($view) {
+            $view->with('notifications', Auth::user()->notifications()->latest()->take(5)->get());
+        });
+    }
 }
+
+
+

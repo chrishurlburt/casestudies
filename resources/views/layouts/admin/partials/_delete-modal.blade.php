@@ -2,7 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <h4>Are you sure you would like to delete this Case Study?</h4>
+        <h4 class="warning-message"></h4>
         <p>This operation cannot be undone.</p>
       </div>
       <div class="modal-footer">

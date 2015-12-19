@@ -14,7 +14,7 @@
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')
 
-<table class="table table-hover">
+<table class="table table-hover" data-resource="case study">
     <thead>
         <tr>
             <th>Title</th>

@@ -48,3 +48,24 @@ Breadcrumbs::register('notifications', function($breadcrumbs)
     $breadcrumbs->push('Notifications', route('admin.notifications'));
 
 });
+
+Breadcrumbs::register('create-course', function($breadcrumbs){
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Add New Course', route('admin.courses.create'));
+
+});
+
+Breadcrumbs::register('manage-courses', function($breadcrumbs){
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Manage Courses', route('admin.courses.index'));
+
+});
+
+Breadcrumbs::register('edit-course', function($breadcrumbs){
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Edit Course', route('admin.courses.index'));
+
+});

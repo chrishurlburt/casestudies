@@ -35,13 +35,13 @@
         </li>
 
         <li>
-            <a href="javascript:;" data-toggle="collapse" data-target="#classes"><i class="fa fa-fw fa-university"></i> Classes <i class="fa fa-fw fa-caret-down"></i></a>
+            <a href="javascript:;" data-toggle="collapse" data-target="#classes"><i class="fa fa-fw fa-university"></i> Courses <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="classes" class="collapse in">
                 <li>
-                    <a href="#">Manage Classes</a>
+                    <a href="{{ route('admin.courses.index') }}">Manage Courses</a>
                 </li>
                 <li>
-                    <a href="#">New Class</a>
+                    <a href="{{ route('admin.courses.create') }}">New Course</a>
                 </li>
             </ul>
         </li>

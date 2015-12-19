@@ -13,6 +13,18 @@ class Course extends Model
      */
     protected $table = 'courses';
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
+
     /**
      * A course may have many outcomes.
      *

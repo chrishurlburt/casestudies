@@ -29,6 +29,13 @@ class UpdateStudyRequest extends Request
     public function rules()
     {
 
+        // @TODO: If the slug is updated, request will be unable to find the study
+        // by the new slug because it doesn't exist in the DB yet. Figure out a way
+        // for a study to be updated with the same title but dont allow other studies
+        // to be updated to the same title.
+        //
+        // https://github.com/cviebrock/eloquent-sluggable
+
         $study = Study::where('slug', $this->slug)->firstOrFail();
 
         if($this->has('publish-draft') || $this->has('update')) {

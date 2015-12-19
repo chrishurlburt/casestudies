@@ -22,7 +22,7 @@ class StudiesController extends Controller
 {
 
     /**
-    * Show all of the case studies in the admin panel.
+    * Show all of the case studies.
     *
     * @return \Illuminate\Http\Response
     */

@@ -16,7 +16,7 @@
 @if($drafts->isEmpty())
     <h3>There are no drafts to show.</h3>
 @else
-<table class="table table-hover">
+<table class="table table-hover" data-resource="draft">
     <thead>
         <tr>
             <th>Title</th>

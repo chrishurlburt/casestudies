@@ -21,7 +21,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::resource('cases', 'StudiesController');
     Route::resource('outcomes', 'OutcomesController');
-    Route::resource('classes', 'CoursesController');
+    Route::resource('courses', 'CoursesController');
     Route::resource('users', 'UsersController');
 });
 

@@ -7,14 +7,7 @@ $(document).ready(function(){
 
         var url = $(this).attr('href');
 
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: "json",
-            success: function(data) {
-
-                // console.log(data.study);
-                // console.log(data.keywords);
+        ajax.get(url, function(data) {
 
                 $('.study-title').empty().append(data.study.title);
                 $('.problem').empty().append(data.study.problem);
@@ -31,7 +24,35 @@ $(document).ready(function(){
 
                 $('.edit').attr('href', url+'/edit');
 
+        });
+
+        return false;
+
+    });
+
+    $('.course').click(function(e){
+        e.preventDefault();
+
+        $('#course').modal('show');
+
+        var url = $(this).attr('href');
+
+        console.log(url);
+
+        ajax.get(url, function(data) {
+
+            console.log(data);
+
+            $('.course-name').empty().append(data.name);
+
+            if(!data.description) {
+                $('.course-description').closest('h4').detach();
+            } else {
+                $('.course-description').empty().append(data.description);
             }
+
+            $('.edit').attr('href', url+'/edit');
+
         });
 
         return false;
@@ -41,7 +62,11 @@ $(document).ready(function(){
     $('.delete').click(function(e){
         e.preventDefault();
 
+        var resource = $(this).closest('table').attr('data-resource');
+
         var route = $(this).attr('href');
+
+        $('.warning-message').append('Are you sure you want to delete this '+resource+'?');
 
         $('#delete').modal('show');
         $('form').attr('action', route);
@@ -49,3 +74,18 @@ $(document).ready(function(){
     });
 
 });
+
+
+var ajax = {
+
+    get: function(url, success, error) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            success: success,
+            error: error,
+        });
+    },
+
+}

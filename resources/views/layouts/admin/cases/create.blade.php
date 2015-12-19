@@ -47,42 +47,13 @@
 
         <div class="form-group">
 
-            {!! Form::label(null, 'Check all classes that apply') !!}<br />
-
-            {!! Form::label('class1', 'Class 1') !!}
-            {!! Form::checkbox('class1', 'class1'); !!}
-
-            {!! Form::label('class2', 'Class 2') !!}
-            {!! Form::checkbox('class2', 'class2'); !!}
-
-            {!! Form::label('class3', 'Class 3') !!}
-            {!! Form::checkbox('class3', 'class3'); !!}
-
-            {!! Form::label('class4', 'Class 4') !!}
-            {!! Form::checkbox('class4', 'class4'); !!}
-
-            {!! Form::label('class5', 'Class 5') !!}
-            {!! Form::checkbox('class5', 'class5'); !!}
-        </div>
-
-        <div class="form-group">
-
             {!! Form::label(null, 'Check all outcomes that apply') !!}<br />
 
-            {!! Form::label('outcome1', 'outcome 1') !!}
-            {!! Form::checkbox('outcome1', 'outcome1'); !!}
+            @foreach($outcomes as $outcome)
+                {!! Form::label('outcomes', $outcome->name) !!}
+                {!! Form::checkbox('outcomes[]', $outcome->id) !!}
+            @endforeach
 
-            {!! Form::label('outcome2', 'outcome 2') !!}
-            {!! Form::checkbox('outcome2', 'outcome2'); !!}
-
-            {!! Form::label('outcome3', 'outcome 3') !!}
-            {!! Form::checkbox('outcome3', 'outcome3'); !!}
-
-            {!! Form::label('outcome4', 'outcome 4') !!}
-            {!! Form::checkbox('outcome4', 'outcome4'); !!}
-
-            {!! Form::label('outcome5', 'outcome 5') !!}
-            {!! Form::checkbox('outcome5', 'outcome5'); !!}
         </div>
 
         <div class="form-group">

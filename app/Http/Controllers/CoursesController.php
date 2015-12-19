@@ -38,7 +38,9 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.courses.create');
+        $outcomes = Outcome::latest()->get()->all();
+
+        return view('layouts.admin.courses.create')->with('outcomes', $outcomes);
     }
 
 
@@ -50,8 +52,10 @@ class CoursesController extends Controller
     public function store(StoreCourseRequest $StoreCourseRequest)
     {
         // @TODO: user authorization
+        $course = Course::create($StoreCourseRequest->all());
 
-        Course::create($StoreCourseRequest->all());
+        $this->syncOutcomes($course, $StoreCourseRequest->input('outcomes'));
+
         Helpers::flash('The course has been successfully added.');
 
         return redirect(route('admin.courses.index'));
@@ -69,8 +73,10 @@ class CoursesController extends Controller
         // @TODO: user authorization
 
         $course = Course::findOrFail($id);
-
         $course->update($UpdateCourseRequest->all());
+
+        $this->syncOutcomes($course, $UpdateCourseRequest->input('outcomes'));
+
         Helpers::flash('The course has been successfully updated');
 
         return redirect(route('admin.courses.index'));
@@ -87,8 +93,9 @@ class CoursesController extends Controller
         // @TODO: user authorization
 
         $course = Course::findOrFail($id);
+        $outcomes = Outcome::latest()->get()->all();
 
-        return view('layouts.admin.courses.edit')->with('course', $course);
+        return view('layouts.admin.courses.edit')->with('course', $course)->with('outcomes', $outcomes);
 
     }
 
@@ -126,6 +133,17 @@ class CoursesController extends Controller
         Helpers::flash('The course has been successfully deleted.');
         return redirect(route('admin.courses.index'));
 
+    }
+
+    /**
+     * Sync outcomes with a course.
+     *
+     * @param  Course $course
+     * @param  array  $outcomes
+     */
+    private function syncOutcomes(Course $course, array $outcomes)
+    {
+        $course->outcomes()->sync($outcomes);
     }
 
 }

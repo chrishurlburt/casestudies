@@ -22,6 +22,4 @@
 
 {!! Form::close() !!}
 
-
-
 @stop

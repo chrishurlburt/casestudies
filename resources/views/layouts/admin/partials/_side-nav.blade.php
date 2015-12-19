@@ -26,10 +26,10 @@
             <a href="javascript:;" data-toggle="collapse" data-target="#outcomes"><i class="fa fa-fw fa-cube"></i> Learning Outcomes <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="outcomes" class="collapse in">
                 <li>
-                    <a href="#">Manage Outcomes</a>
+                    <a href="{{ route('admin.outcomes.index') }}">Manage Outcomes</a>
                 </li>
                 <li>
-                    <a href="#">New Outcome</a>
+                    <a href="{{ route('admin.outcomes.create') }}">New Outcome</a>
                 </li>
             </ul>
         </li>

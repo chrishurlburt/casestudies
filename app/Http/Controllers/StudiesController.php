@@ -17,6 +17,7 @@ use App\Study;
 use App\Keyword;
 use App\User;
 use App\Notification;
+use App\Outcome;
 
 class StudiesController extends Controller
 {
@@ -91,7 +92,9 @@ class StudiesController extends Controller
     */
     public function create()
     {
-        return view('layouts.admin.cases.create');
+        $outcomes = Outcome::latest()->get()->all();
+
+        return view('layouts.admin.cases.create')->with('outcomes', $outcomes);
     }
 
 
@@ -213,17 +216,18 @@ class StudiesController extends Controller
     {
 
         $study = Study::where('slug', $slug)->firstOrFail();
-
         $keywords = $this->stringifyKeywords($study->keywords()->get());
+        $outcomes = Outcome::latest()->get()->all();
+
 
         if($study->draft) {
         // any user can edit a draft, no permissions check.
-            return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords);
+            return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords)->with('outcomes', $outcomes);
         } else {
         // it's not a draft, make sure the user has permission to edit non-drafts.
             if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
             // user can edit published studies
-                return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords);
+                return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords)->with('outcomes', $outcomes);
             } else {
             // user cannot edit published studies.
                 return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to edit a published study.');
@@ -256,7 +260,6 @@ class StudiesController extends Controller
     */
     private function storeKeywords($keywords)
     {
-
         $keywords = array_map('trim', explode(',',$keywords));
 
         $keywordIds = [];
@@ -280,6 +283,29 @@ class StudiesController extends Controller
         return array_map('intval', $keywordIds);
     }
 
+
+    /**
+     * Sync learning outcomes with a study.
+     *
+     * @param Study $study
+     * @param array $outcomes
+     */
+
+    private function syncOutcomes(Study $study, array $outcomes)
+    {
+        $study->outcomes()->sync($outcomes);
+    }
+
+    /**
+     * Sync keywords with a study.
+     *
+     * @param  Study  $study
+     * @param  array  $keywords
+     */
+    private function syncKeywords(Study $study, array $keywords)
+    {
+        $study->keywords()->sync($keywords);
+    }
 
 
     /**
@@ -363,9 +389,11 @@ class StudiesController extends Controller
         // save the study
         Auth::user()->studies()->save($study);
 
-        // store and attach keywords
-        $keywordIds = $this->storeKeywords($input['keywords']);
-        $study->keywords()->attach($keywordIds);
+        // save keywords if not already in the DB and sync
+        $this->syncKeywords($study, $this->storeKeywords($input['keywords']));
+
+        // sync learning outcomes
+        $this->syncOutcomes($study, $input['outcomes']);
 
         // set success messages and notifications
         $notification = new Notification;
@@ -412,9 +440,11 @@ class StudiesController extends Controller
         // update the study
         $study->save();
 
-        // update the keywords
-        $keywordIds = $this->storeKeywords($input['keywords']);
-        $study->keywords()->sync($keywordIds);
+        // save keywords if not already in the DB and sync
+        $this->syncKeywords($study, $this->storeKeywords($input['keywords']));
+
+        // sync learning outcomes
+        $this->syncOutcomes($study, $input['outcomes']);
 
         //set success messages and notifications
         $notification = new Notification;

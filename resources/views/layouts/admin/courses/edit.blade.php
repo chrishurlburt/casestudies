@@ -8,7 +8,7 @@
     </div>
 </div>
 
-{!! Breadcrumbs::render('edit-course') !!}
+{!! Breadcrumbs::render('edit-course', $course->id) !!}
 
 @include('layouts.admin.partials._errors')
 

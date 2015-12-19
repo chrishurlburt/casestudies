@@ -37,8 +37,6 @@ $(document).ready(function(){
 
         var url = $(this).attr('href');
 
-        console.log(url);
-
         ajax.get(url, function(data) {
 
             console.log(data);
@@ -59,6 +57,33 @@ $(document).ready(function(){
 
     });
 
+    $('.outcome').click(function(e){
+        e.preventDefault();
+
+        $('#outcome').modal('show');
+
+        var url = $(this).attr('href');
+
+        ajax.get(url, function(data) {
+
+            console.log(data);
+
+            $('.outcome-name').empty().append(data.name);
+
+            if(!data.description) {
+                $('.course-description').closest('h4').detach();
+            } else {
+                $('.outcome-description').empty().append(data.description);
+            }
+
+            $('.edit').attr('href', url+'/edit');
+
+        });
+
+        return false;
+
+    });
+
     $('.delete').click(function(e){
         e.preventDefault();
 
@@ -66,7 +91,7 @@ $(document).ready(function(){
 
         var route = $(this).attr('href');
 
-        $('.warning-message').append('Are you sure you want to delete this '+resource+'?');
+        $('.warning-message').empty().append('Are you sure you want to delete this '+resource+'?');
 
         $('#delete').modal('show');
         $('form').attr('action', route);

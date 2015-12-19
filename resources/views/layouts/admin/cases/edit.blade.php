@@ -48,20 +48,11 @@
 
             {!! Form::label(null, 'Check all outcomes that apply') !!}<br />
 
-            {!! Form::label('outcome1', 'outcome 1') !!}
-            {!! Form::checkbox('outcome1', 'outcome1'); !!}
+            @foreach($outcomes as $outcome)
+                {!! Form::label('outcomes', $outcome->name) !!}
+                {!! Form::checkbox('outcomes[]', $outcome->id, in_array($outcome->id, $study->outcomes()->lists('outcome_id')->toArray())) !!}
+            @endforeach
 
-            {!! Form::label('outcome2', 'outcome 2') !!}
-            {!! Form::checkbox('outcome2', 'outcome2'); !!}
-
-            {!! Form::label('outcome3', 'outcome 3') !!}
-            {!! Form::checkbox('outcome3', 'outcome3'); !!}
-
-            {!! Form::label('outcome4', 'outcome 4') !!}
-            {!! Form::checkbox('outcome4', 'outcome4'); !!}
-
-            {!! Form::label('outcome5', 'outcome 5') !!}
-            {!! Form::checkbox('outcome5', 'outcome5'); !!}
         </div>
 
         <div class="form-group">

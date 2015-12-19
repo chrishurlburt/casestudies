@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Outcome extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
 
     /**
      * An outcome may have many case studies.

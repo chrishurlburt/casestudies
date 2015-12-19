@@ -63,9 +63,30 @@ Breadcrumbs::register('manage-courses', function($breadcrumbs){
 
 });
 
-Breadcrumbs::register('edit-course', function($breadcrumbs){
+Breadcrumbs::register('edit-course', function($breadcrumbs, $id){
+
+    $breadcrumbs->parent('manage-courses');
+    $breadcrumbs->push('Edit Course', route('admin.courses.edit', $id));
+
+});
+
+Breadcrumbs::register('create-outcome', function($breadcrumbs){
 
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push('Edit Course', route('admin.courses.index'));
+    $breadcrumbs->push('Add New Outcome', route('admin.outcomes.create'));
+
+});
+
+Breadcrumbs::register('manage-outcomes', function($breadcrumbs){
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Manage Outcomes', route('admin.outcomes.index'));
+
+});
+
+Breadcrumbs::register('edit-outcome', function($breadcrumbs, $id){
+
+    $breadcrumbs->parent('manage-outcomes');
+    $breadcrumbs->push('Edit Learning Outcome', route('admin.outcomes.index', $id));
 
 });

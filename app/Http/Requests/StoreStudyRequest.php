@@ -44,7 +44,8 @@ class StoreStudyRequest extends Request
                 'solution' => 'required',
                 'analysis' => 'required',
                 'slug'     => 'unique:studies,slug',
-                'keywords' => 'required'
+                'keywords' => 'required',
+                'outcomes' => 'required'
             ];
 
         } else

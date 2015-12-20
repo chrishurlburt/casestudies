@@ -54,7 +54,9 @@ class CoursesController extends Controller
         // @TODO: user authorization
         $course = Course::create($StoreCourseRequest->all());
 
-        $this->syncOutcomes($course, $StoreCourseRequest->input('outcomes'));
+        if($StoreCourseRequest->has('outcomes')) {
+            $this->syncOutcomes($course, $StoreCourseRequest->input('outcomes'));
+        }
 
         Helpers::flash('The course has been successfully added.');
 

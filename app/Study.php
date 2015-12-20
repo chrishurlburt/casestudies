@@ -4,8 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Study extends Model
 {
+    /**
+     * Enable revisioning for this model.
+     */
+    use \Venturecraft\Revisionable\RevisionableTrait;
+
+    protected $historyLimit = 5;
+
 
     /**
      * The table associated with this model.

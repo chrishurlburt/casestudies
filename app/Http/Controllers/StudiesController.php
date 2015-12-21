@@ -434,7 +434,7 @@ class StudiesController extends Controller
         if(empty($input['slug'])) {
             $study->slug = $this->slugify($study->title);
         } else {
-            $study->slug = $input['slug'];
+            $study->slug = $this->slugify($input['slug']);
         }
 
         // update the study

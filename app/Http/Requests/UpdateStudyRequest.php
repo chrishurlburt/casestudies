@@ -28,15 +28,14 @@ class UpdateStudyRequest extends Request
      */
     public function rules()
     {
+        // @TODO: identical titles can be added if extra spaces are added.
 
-        // @TODO: If the slug is updated, request will be unable to find the study
-        // by the new slug because it doesn't exist in the DB yet. Figure out a way
-        // for a study to be updated with the same title but dont allow other studies
-        // to be updated to the same title.
-        //
-        // https://github.com/cviebrock/eloquent-sluggable
+        // If the slug is updated, request will be unable to find the study
+        // by the new slug because it doesn't exist in the DB yet. To correct this,
+        // a hidden input is placed on the form containing the old slug so the
+        // study can still be found in the DB by the old slug.
 
-        $study = Study::where('slug', $this->slug)->firstOrFail();
+        $study = Study::where('slug', $this->_old_slug)->firstOrFail();
 
         if($this->has('publish-draft') || $this->has('update')) {
 
@@ -49,7 +48,8 @@ class UpdateStudyRequest extends Request
                 'problem'  => 'required',
                 'solution' => 'required',
                 'analysis' => 'required',
-                'keywords' => 'required'
+                'keywords' => 'required',
+                'slug'     => 'unique:studies,slug,'.$study->id.'|min:5|string'
             ];
 
         } else if($this->has('update-draft')) {
@@ -84,7 +84,8 @@ class UpdateStudyRequest extends Request
 
         return [
             'publish-draft.required' => 'Something went wrong, please try resubimiting.',
-            'title.unique' => 'The title has already been taken. Please Choose a different one.'
+            'title.unique'           => 'The title has already been taken. Please Choose a different one.',
+            'slug.unique'            => 'The custom URL is already in use by another case study. Please choose a different one.'
         ];
 
     }

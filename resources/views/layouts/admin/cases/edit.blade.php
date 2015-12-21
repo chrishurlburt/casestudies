@@ -48,6 +48,7 @@
         <div class="form-group">
             {!! Form::label('slug', 'Custom URL') !!}
             {!! Form::text('slug', null, ['class' => 'form-control']) !!}
+            {!! Form::hidden('_old_slug', $study->slug)!!}
         </div>
 
         <div class="form-group">

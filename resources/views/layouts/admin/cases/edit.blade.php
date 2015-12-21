@@ -8,9 +8,20 @@
     </div>
 </div>
 
-{!! Breadcrumbs::render('edit', $study->slug) !!}
+<div class="row">
+    <div class="col-lg-12">
+        {!! Breadcrumbs::render('edit', $study->slug) !!}
+    </div>
+</div>
 
-@include('layouts.admin.partials._errors')
+<div class="row">
+    <div class="col-lg-12">
+        @include('layouts.admin.partials._errors')
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
 
     {!! Form::model($study, ['method' => 'PATCH', 'route' => ['admin.cases.update', $study->slug]]) !!}
 
@@ -74,5 +85,30 @@
 
         </div>
     {!! Form::close() !!}
+
+    </div>
+</div>
+
+
+@if(!$study->revisionHistory->isEmpty())
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Revision History</h4>
+        <hr />
+
+        <ul>
+        @foreach($study->revisionHistory as $history )
+            <li>{{ $history->userResponsible()['first_name'] }} changed the {{ $history->fieldName() }}.</li>
+        @endforeach
+        </ul>
+
+    </div>
+</div>
+
+@endif
+
+
+
 @stop
 

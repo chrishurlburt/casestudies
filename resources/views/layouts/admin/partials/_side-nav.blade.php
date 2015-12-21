@@ -22,6 +22,7 @@
             </ul>
         </li>
 
+        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['admin.outcomes.index']))
         <li>
             <a href="javascript:;" data-toggle="collapse" data-target="#outcomes"><i class="fa fa-fw fa-cube"></i> Learning Outcomes <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="outcomes" class="collapse in">
@@ -33,7 +34,9 @@
                 </li>
             </ul>
         </li>
+        @endif
 
+        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['admin.courses.index']))
         <li>
             <a href="javascript:;" data-toggle="collapse" data-target="#classes"><i class="fa fa-fw fa-university"></i> Courses <i class="fa fa-fw fa-caret-down"></i></a>
             <ul id="classes" class="collapse in">
@@ -45,9 +48,23 @@
                 </li>
             </ul>
         </li>
-        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['admin.accounts']))
+        @endif
+
+        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['admin.users.index']))
         <li>
-            <a href="{{ route('admin.users.index') }}"><i class="fa fa-fw fa-users"></i> Users</a>
+            <a href="javascript:;" data-toggle="collapse" data-target="#users"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="users" class="collapse in">
+                <li>
+                    <a href="{{ route('admin.users.index') }}">Manage Users</a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.users.create') }}">New User</a>
+                </li>
+                <li>
+                    <a href="#">Announcements</a>
+                </li>
+
+            </ul>
         </li>
         @endif
 

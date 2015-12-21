@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Request;
+
 use \Auth;
 use \Session;
 use \Sentinel;

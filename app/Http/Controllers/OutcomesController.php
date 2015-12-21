@@ -12,11 +12,19 @@ use App\Http\Requests\UpdateOutcomeRequest;
 
 use App\Helpers\Helpers;
 
+use Redirect;
+
 use App\Outcome;
 use App\Course;
 
 class OutcomesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('authorize');
+    }
+
 
     /**
      * Show all of the outcomes.
@@ -25,9 +33,9 @@ class OutcomesController extends Controller
      */
     public function index()
     {
-        $outcomes = Outcome::latest()->get()->all();
+            $outcomes = Outcome::latest()->get()->all();
 
-        return view('layouts.admin.outcomes.manage')->with('outcomes', $outcomes);
+            return view('layouts.admin.outcomes.manage')->with('outcomes', $outcomes);
     }
 
 
@@ -38,9 +46,9 @@ class OutcomesController extends Controller
      */
     public function create()
     {
-        $courses = Course::latest()->get()->all();
+            $courses = Course::latest()->get()->all();
 
-        return view('layouts.admin.outcomes.create');
+            return view('layouts.admin.outcomes.create');
     }
 
 

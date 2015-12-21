@@ -18,6 +18,11 @@ use App\Outcome;
 class CoursesController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('authorize');
+    }
+
     /**
      * Show all of the courses.
      *

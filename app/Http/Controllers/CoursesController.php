@@ -56,7 +56,6 @@ class CoursesController extends Controller
      */
     public function store(StoreCourseRequest $StoreCourseRequest)
     {
-        // @TODO: user authorization
         $course = Course::create($StoreCourseRequest->all());
 
         if($StoreCourseRequest->has('outcomes')) {
@@ -77,7 +76,6 @@ class CoursesController extends Controller
     */
     public function update(UpdateCourseRequest $UpdateCourseRequest, $id)
     {
-        // @TODO: user authorization
 
         $course = Course::findOrFail($id);
         $course->update($UpdateCourseRequest->all());
@@ -97,7 +95,6 @@ class CoursesController extends Controller
      */
     public function edit($id)
     {
-        // @TODO: user authorization
 
         $course = Course::findOrFail($id);
         $outcomes = Outcome::latest()->get()->all();
@@ -132,7 +129,6 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-        // @TODO: user authorization
 
         $course = Course::findOrFail($id);
         $course->delete();

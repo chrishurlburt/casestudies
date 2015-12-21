@@ -59,7 +59,6 @@ class OutcomesController extends Controller
      */
     public function store(StoreOutcomeRequest $StoreOutcomeRequest)
     {
-        // @TODO: user authorization
 
         Outcome::create($StoreOutcomeRequest->all());
         Helpers::flash('The learning outcome has been successfully added.');
@@ -75,7 +74,6 @@ class OutcomesController extends Controller
      */
     public function update(UpdateOutcomeRequest $UpdateOutcomeRequest, $id)
     {
-        // @TODO: user authorization
 
         $outcome = Outcome::findOrFail($id);
         $outcome->update($UpdateOutcomeRequest->all());
@@ -93,8 +91,6 @@ class OutcomesController extends Controller
      */
     public function destroy($id)
     {
-        // @TODO: user authorization
-        //
         // @TODO: when an outcome is deleted, detach associated studies and courses.
 
         $outcome = Outcome::findOrFail($id);
@@ -130,7 +126,6 @@ class OutcomesController extends Controller
      */
     public function edit($id)
     {
-        // @TODO: user authorization
 
         $outcome = Outcome::findOrFail($id);
         $courses = Course::latest()->get()->all();

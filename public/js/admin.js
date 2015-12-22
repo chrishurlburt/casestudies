@@ -1,5 +1,12 @@
 $(document).ready(function(){
 
+    tinymce.init({
+        selector: '.editor',
+        menubar: false,
+        plugins: 'autolink link',
+        toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link unlink'
+    });
+
     $('.case-study').click(function(e){
         e.preventDefault();
 

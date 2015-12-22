@@ -14,7 +14,7 @@
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
 
-        @include('layouts.admin.partials._notifications-nav')
+        {-- @include('layouts.admin.partials._notifications-nav') --}
 
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Auth::user()->first_name }} <b class="caret"></b></a>

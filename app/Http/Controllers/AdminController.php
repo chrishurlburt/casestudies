@@ -18,7 +18,9 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('layouts.admin.dashboard');
+        $notifications = Auth::user()->notifications()->latest()->take(10)->get();
+
+        return view('layouts.admin.dashboard')->with('notifications', $notifications);
     }
 
     public function accounts()

@@ -1,1 +1,1 @@
-{"version":3,"sources":["admin.css"],"names":[],"mappings":"AAAA","file":"admin.css","sourceRoot":"/source/","sourcesContent":[]}
+{"version":3,"sources":["partials/_case-form.scss"],"names":[],"mappings":"AAAA;EAGQ,mBAAmB,EACtB","file":"admin.css","sourcesContent":["#cases-form {\n\n    .btn {\n        margin: 0 0 10px 0;\n    }\n\n}"],"sourceRoot":"/source/"}

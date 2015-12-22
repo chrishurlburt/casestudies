@@ -2,67 +2,67 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1>Add New Case Study</h1>
+<main id="cases-form">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Add New Case Study</h1>
+        </div>
     </div>
-</div>
 
-{!! Breadcrumbs::render('create') !!}
+    {!! Breadcrumbs::render('create') !!}
 
-@include('layouts.admin.partials._success')
-@include('layouts.admin.partials._errors')
+    @include('layouts.admin.partials._success')
+    @include('layouts.admin.partials._errors')
 
-    {!! Form::open(['route' => 'admin.cases.store']) !!}
+    <div class="row">
+            {!! Form::open(['route' => 'admin.cases.store']) !!}
+            <div class="col-lg-8">
 
-        <div class="form-group">
-            {!! Form::label('title', 'Title') !!}
-            {!! Form::text('title', null, ['class' => 'form-control']) !!}
-        </div>
+               @include('layouts.admin.partials._cases-form')
 
-        <div class="form-group">
-            {!! Form::label('problem', 'Problem') !!}
-            {!! Form::textarea('problem', null, ['class' => 'form-control']) !!}
-        </div>
+            </div>
 
-        <div class="form-group">
-            {!! Form::label('solution', 'Solution') !!}
-            {!! Form::textarea('solution', null, ['class' => 'form-control']) !!}
-        </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <h3>Custom URL</h3>
+                    {!! Form::text('slug', null, ['class' => 'form-control']) !!}
+                </div>
 
-        <div class="form-group">
-            {!! Form::label('analysis', 'Analysis') !!}
-            {!! Form::textarea('analysis', null, ['class' => 'form-control']) !!}
-        </div>
+                <div class="form-group">
+                    <h3>Keywords <small>(Separate each with a comma)</small></h3>
+                    {!! Form::text('keywords', null, ['class' => 'form-control']) !!}
+                </div>
 
-        <div class="form-group">
-            {!! Form::label('slug', 'Custom URL') !!}
-            {!! Form::text('slug', null, ['class' => 'form-control']) !!}
-        </div>
+                <div class="form-group">
 
-        <div class="form-group">
-            {!! Form::label('keywords', 'Keywords (Separate each with comma)') !!}
-            {!! Form::text('keywords', null, ['class' => 'form-control']) !!}
-        </div>
+                    <h3>Learning Outcomes <small>(Check all that apply)</small></h3>
 
-        <div class="form-group">
+                    @foreach($outcomes as $outcome)
+                        <div class="checkbox">
+                            <label>
+                                {!! Form::checkbox('outcomes[]', $outcome->id) !!}
+                                {!! $outcome->name !!}
+                            </label>
+                        </div>
+                    @endforeach
 
-            {!! Form::label(null, 'Check all outcomes that apply') !!}<br />
+                </div>
+            </div>
 
-            @foreach($outcomes as $outcome)
-                {!! Form::label('outcomes', $outcome->name) !!}
-                {!! Form::checkbox('outcomes[]', $outcome->id) !!}
-            @endforeach
+            <div class="col-lg-4">
+                <div class="form-group">
 
-        </div>
+                @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
+                    {!! Form::submit('Publish Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'publish']) !!}
+                @endif
+                    {!! Form::submit('Save Draft', ['class' => 'btn btn-primary form-control', 'name' => 'draft']) !!}
+                </div>
+            </div>
 
-        <div class="form-group">
+            {!! Form::close() !!}
+    </div>
 
-        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
-            {!! Form::submit('Publish Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'publish']) !!}
-        @endif
-            {!! Form::submit('Save Draft', ['class' => 'btn btn-primary form-control', 'name' => 'draft']) !!}
-        </div>
-    {!! Form::close() !!}
+</main>
 
 @stop

@@ -2,11 +2,8 @@
 
 @section('content')
 <main id="cases-form">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1>Edit Case Study</h1>
-        </div>
-    </div>
+
+    @include('layouts.admin.partials._heading', ['heading' => 'Edit Case Study'])
 
     <div class="row">
         <div class="col-lg-12">
@@ -21,7 +18,7 @@
     </div>
 
     <div class="row">
-        {!! Form::model($study, ['method' => 'PATCH', 'route' => ['admin.cases.update', $study->slug]]) !!}
+        {!! Form::model($study, ['method' => 'PUT', 'route' => ['admin.cases.update', $study->slug]]) !!}
             <div class="col-lg-8">
 
                 @include('layouts.admin.partials._cases-form')
@@ -30,7 +27,7 @@
 
             <div class="col-lg-4">
                 <div class="form-group">
-                    <h3>Custom Url</h3>
+                    <h3>Custom URL</h3>
                     {!! Form::text('slug', null, ['class' => 'form-control']) !!}
                     {!! Form::hidden('_old_slug', $study->slug)!!}
                 </div>
@@ -75,18 +72,8 @@
             </div>
 
         {!! Form::close() !!}
-        @if(!$study->revisionHistory->isEmpty())
-            <div class="col-lg-4">
-                <h4>Revision History</h4>
-                <hr />
 
-                <ul>
-                @foreach($study->revisionHistory as $history )
-                    <li>{{ $history->userResponsible()['first_name'] }} changed the {{ $history->fieldName() }}.</li>
-                @endforeach
-                </ul>
-            </div>
-        @endif
+        @include('layouts.admin.partials._revisions')
 
         </div>
     </div>

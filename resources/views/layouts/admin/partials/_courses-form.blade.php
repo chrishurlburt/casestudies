@@ -18,4 +18,5 @@
         {!! Form::checkbox('outcomes[]', $outcome->id) !!}
         @endif
     @endforeach
+
 </div>

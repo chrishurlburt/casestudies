@@ -2,17 +2,14 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1>Edit Learning Outcome</h1>
-    </div>
-</div>
+@include('layouts.admin.partials._heading', ['heading' => 'Edit Learning Outcome'])
+
 
 {!! Breadcrumbs::render('edit-outcome', $outcome->id) !!}
 
 @include('layouts.admin.partials._errors')
 
-{!! Form::model($outcome, ['method' => 'PATCH', 'route' => ['admin.outcomes.update', $outcome->id]]) !!}
+{!! Form::model($outcome, ['method' => 'PUT', 'route' => ['admin.outcomes.update', $outcome->id]]) !!}
 
 @include('layouts.admin.partials._outcomes-form')
 

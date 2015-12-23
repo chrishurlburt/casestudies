@@ -152,6 +152,7 @@ class StudiesController extends Controller
             if($user->hasAccess(['publish'])) {
                 // user has permission to publish
 
+                // @TODO: modify to recieve entire form request
                 $this->updateStudy($study, $input, false);
 
                 return redirect(route('admin.cases.index'));
@@ -443,8 +444,11 @@ class StudiesController extends Controller
         // save keywords if not already in the DB and sync
         $this->syncKeywords($study, $this->storeKeywords($input['keywords']));
 
+        // @TODO: once params are adjusted, use form request object not request facade.
+        if(Request::has('outcomes')) {
         // sync learning outcomes
-        $this->syncOutcomes($study, $input['outcomes']);
+            $this->syncOutcomes($study, $input['outcomes']);
+        }
 
         //set success messages and notifications
         $notification = new Notification;

@@ -2,11 +2,8 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1>Manage Learning Outcomes</h1>
-    </div>
-</div>
+@include('layouts.admin.partials._heading', ['heading' => 'Manage Learning Outcomes'])
+
 
 {!! Breadcrumbs::render('manage-outcomes') !!}
 

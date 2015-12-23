@@ -8,28 +8,28 @@ Breadcrumbs::register('dashboard', function($breadcrumbs)
     $breadcrumbs->push('Dashboard', route('admin'));
 });
 
-// Admin > Manage Case Studies
+
+/**
+ * Studies crumbs
+ */
 Breadcrumbs::register('manage', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Manage Case Studies', route('admin.cases.index'));
 });
 
-// Admin > Add New Case Study
 Breadcrumbs::register('create', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Add New Case Study', route('admin.cases.create'));
 });
 
-// Admin > Manage Drafts
 Breadcrumbs::register('drafts', function($breadcrumbs)
 {
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Manage Drafts', route('admin.cases.drafts'));
 });
 
-// Admin > Cases > edit
 Breadcrumbs::register('edit', function($breadcrumbs, $slug)
 {
     if(Study::where('slug', $slug)->firstOrFail()->draft) {
@@ -41,6 +41,10 @@ Breadcrumbs::register('edit', function($breadcrumbs, $slug)
     $breadcrumbs->push('Edit Case Study', route('admin.cases.edit', $slug));
 });
 
+
+/**
+ * Notifications crumbs
+ */
 Breadcrumbs::register('notifications', function($breadcrumbs)
 {
 
@@ -49,6 +53,10 @@ Breadcrumbs::register('notifications', function($breadcrumbs)
 
 });
 
+
+/**
+ * Courses crumbs
+ */
 Breadcrumbs::register('create-course', function($breadcrumbs){
 
     $breadcrumbs->parent('dashboard');
@@ -70,6 +78,10 @@ Breadcrumbs::register('edit-course', function($breadcrumbs, $id){
 
 });
 
+
+/**
+ * Outcomes crumbs
+ */
 Breadcrumbs::register('create-outcome', function($breadcrumbs){
 
     $breadcrumbs->parent('dashboard');
@@ -88,5 +100,30 @@ Breadcrumbs::register('edit-outcome', function($breadcrumbs, $id){
 
     $breadcrumbs->parent('manage-outcomes');
     $breadcrumbs->push('Edit Learning Outcome', route('admin.outcomes.index', $id));
+
+});
+
+
+/**
+ * Users crumbs
+ */
+Breadcrumbs::register('create-user', function($breadcrumbs){
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Add New User', route('admin.users.create'));
+
+});
+
+Breadcrumbs::register('manage-users', function($breadcrumbs){
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Manage Users', route('admin.users.index'));
+
+});
+
+Breadcrumbs::register('edit-user', function($breadcrumbs, $id){
+
+    $breadcrumbs->parent('manage-users');
+    $breadcrumbs->push('Edit Users', route('admin.outcomes.index', $id));
 
 });

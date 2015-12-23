@@ -4,11 +4,7 @@
 
 <main id="cases-form">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h1>Add New Case Study</h1>
-        </div>
-    </div>
+    @include('layouts.admin.partials._heading', ['heading' => 'Add New Case Study'])
 
     {!! Breadcrumbs::render('create') !!}
 

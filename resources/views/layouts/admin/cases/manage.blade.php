@@ -3,11 +3,7 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1>Manage Case Studies</h1>
-    </div>
-</div>
+@include('layouts.admin.partials._heading', ['heading' => 'Manage Case Studies'])
 
 {!! Breadcrumbs::render('manage') !!}
 

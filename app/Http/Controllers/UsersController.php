@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 
 use App\Helpers\Helpers;
 
@@ -136,17 +137,30 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $UpdateUserRequest, $id)
     {
+        if(is_array($UpdateUserRequest->role)) {
+            // only one role can be assigned
+            return redirect(route('admin.users.edit', ['id' => $id]))->withErrors('Something went wrong, please try again.');
+        } else {
+            $user = User::findOrFail($id);
+            $user->update($UpdateUserRequest->all());
+            $this->updateRole($user, Sentinel::findRoleById($UpdateUserRequest->role));
 
-        // @TODO: this shit is fucked
+            Helpers::flash('The user has been successfully updated');
+            return redirect(route('admin.users.index'));
+        }
+    }
 
-        $user = User::findOrFail($id);
 
-        $user->update($UpdateUserRequest->all());
-
-        $this->updateRole($id, Sentinel::findRoleById($UpdateUserRequest->role));
-
-        Helpers::flash('The user has been successfully updated');
-        return redirect(route('admin.users.index'));
+    /**
+     * Update a user's password.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return  \Illuminate\Http\Response
+     */
+    public function password(UpdatePasswordRequest $UpdatePasswordRequest, $id)
+    {
+        //update password
     }
 
 
@@ -158,24 +172,31 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        $role = Sentinel::findById($id)->roles()->first();
+        $role->users()->detach($id);
+
+        Helpers::flash('The user has been successfully deleted.');
+        return redirect(route('admin.users.index'));
     }
 
     /**
      * Sync a role to a user.
      *
      * @param  User  $user
-     * @param  array $role
+     * @param  $role
      * @return null
      */
-    private function updateRole($user, $role)
+    private function updateRole(User $user, $role)
     {
         // detach old role
+        $oldRole = Sentinel::findById($user->id)->roles()->first();
+        $oldRole->users()->detach($user->id);
+
         // attach new role
-
-        $oldRole = $user->roles()->first();
-         dd( $oldRole );
-
-        $role->users()->attach($user);
+        $role->users()->attach($user->id);
     }
+
 }

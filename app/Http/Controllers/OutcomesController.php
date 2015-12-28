@@ -91,9 +91,13 @@ class OutcomesController extends Controller
      */
     public function destroy($id)
     {
-        // @TODO: when an outcome is deleted, detach associated studies and courses.
-
         $outcome = Outcome::findOrFail($id);
+
+        $studies = $outcome->studies()->get()->lists('id');
+        $courses = $outcome->courses()->get()->lists('id');
+
+        $outcome->studies()->detach($studies);
+        $outcome->courses()->detach($courses);
         $outcome->delete();
 
         Helpers::flash('The learning outcome has been successfully deleted.');

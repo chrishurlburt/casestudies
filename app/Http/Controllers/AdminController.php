@@ -11,6 +11,7 @@ use \Auth;
 use \Route;
 
 use App\Notification;
+use App\User;
 use App\Helpers\Helpers;
 
 class AdminController extends Controller
@@ -19,8 +20,9 @@ class AdminController extends Controller
     public function index()
     {
         $notifications = Auth::user()->notifications()->latest()->take(10)->get();
+        $team = User::all();
 
-        return view('layouts.admin.dashboard')->with('notifications', $notifications);
+        return view('layouts.admin.dashboard')->with('notifications', $notifications)->with('team', $team);
     }
 
     public function accounts()

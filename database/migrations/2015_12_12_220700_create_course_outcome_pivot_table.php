@@ -19,7 +19,7 @@ class CreateCourseOutcomePivotTable extends Migration
             $table->timestamps();
 
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('outcome_id')->references('id')->on('keywords')->onDelete('cascade');
+            $table->foreign('outcome_id')->references('id')->on('outcomes')->onDelete('cascade');
 
         });
     }

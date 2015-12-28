@@ -9,7 +9,7 @@
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')
 
-<table class="table table-hover" data-resource="case study">
+<table class="table table-hover" data-resource="user">
     <thead>
         <tr>
             <th>User</th>
@@ -21,7 +21,7 @@
     <tbody>
         @foreach($users as $user)
             <tr>
-                <td><a href="{{ route('admin.users.show', ['id' => $user->id]) }}" data-toggle="modal" data-target="#user" class="user">{{ $user->first_name.' '.$user->last_name }}</a></td>
+                <td><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}" class="user">{{ $user->first_name.' '.$user->last_name }}</a></td>
                 <td>{{ $user->email }}</td>
                 <td>{{ \Sentinel::findById($user->id)->roles()->first()->name }}</td>
                 <td><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Edit</a> | <a href="{{ route('admin.users.destroy', ['id' => $user->id]) }}" class="delete">Delete</a></td>
@@ -31,3 +31,5 @@
 </table>
 
 @stop
+
+@include('layouts.admin.partials._delete-modal')

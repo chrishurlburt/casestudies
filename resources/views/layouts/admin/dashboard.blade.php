@@ -66,10 +66,12 @@
                     </thead>
 
                     <tbody>
+                        @foreach($team as $member)
                         <tr>
-                            <td>Chris Hurlburt</td>
-                            <td>churlburt132@g.rwu.edu</td>
+                            <td>{{ $member->first_name.' '.$member->last_name }}</td>
+                            <td>{{ $member->email }}</td>
                         <tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

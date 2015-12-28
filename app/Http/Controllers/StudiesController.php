@@ -422,8 +422,6 @@ class StudiesController extends Controller
      */
     private function updateStudy($study, $input, $isDraft)
     {
-        // @TODO: track revisions venturecraft/revisionable
-
         // setup the study
         $study->title = $input['title'];
         $study->problem = $input['problem'];

@@ -36,7 +36,7 @@
     @foreach($roles as $role)
         {!! Form::label('role', $role->name) !!}
         @if(isset($user))
-        {!! Form::radio('role', $role->id, in_array($role->id, \Sentinel::findById($user->id)->roles()->lists('user_id')->toArray())) !!}
+        {!! Form::radio('role', $role->id, in_array($role->id, \Sentinel::findById($user->id)->roles()->lists('role_id')->toArray())) !!}
         @else
         {!! Form::radio('role', $role->id) !!}
         @endif

@@ -18,7 +18,7 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     </head>
-    <body>
+    <body class="@yield('bodyclass')">
         <div id="wrapper">
 
             @include('layouts.admin.partials._nav')

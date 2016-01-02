@@ -1,5 +1,6 @@
 @extends('admin-base')
 
+@section('bodyclass', 'manage_case_studies')
 
 @section('content')
 

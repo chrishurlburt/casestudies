@@ -1,4 +1,5 @@
 @extends('admin-base')
+@section('bodyclass', 'manage_courses')
 
 @section('content')
 

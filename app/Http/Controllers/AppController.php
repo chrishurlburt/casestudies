@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Http\Requests\SearchKeywordRequest;
 
 use App\Study;
 use App\Keyword;
@@ -27,37 +29,62 @@ class AppController extends Controller
 
     }
 
-
     /**
-     * All the case studies in the DB.
+     * Search for case studies tagged with a given keyword.
      *
+     * @param  Request $SearchKeywordRequest
      * @return \Illuminate\Http\Response
      */
-    public function studies()
+    public function search(SearchKeywordRequest $SearchKeywordRequest)
     {
-        $studies = Study::latest()->get();
 
-        return view('layouts.app.studies')->with('studies', $studies);
+        $keywordIds = $this->keywordLookup($SearchKeywordRequest->input('keywords'));
+
+        if(empty($keywordIds)) {
+
+            return view('layouts.app.landing')->withErrors('No results could be found for the entered keywords.');
+
+        } else {
+
+            $studies = [];
+            foreach($keywordIds as $keywordId) {
+
+                array_push($studies, Keyword::find($keywordId)->studies()->get());
+
+            }
+
+            $studies_collapsed = collect($studies)->collapse();
+
+            $studies = $studies_collapsed->unique(function($item) {
+                return $item['id'];
+            });
+
+            return view('layouts.app.results')->with('studies', $studies);
+
+        }
+
     }
 
 
-    public function filter()
-    {
-        //gets the slug and returns a filtered listing.
-        dd('app controller');
-    }
-
     /**
-     * Display a specific case study from the slug.
+     * Lookup given keywords and get IDs if present.
      *
-     * @return \Illuminate\Http\Response
+     * @param  string $keywords
+     * @return Array $keywordIds
      */
-    public function study($slug)
+    private function keywordLookup($keywords)
     {
+        // explode string at commas and spaces and build array of keywords
+        $keywords = array_map('trim', preg_split('~[\s,]+~', $keywords));
 
-        $study = Study::where('slug', $slug)->first();
+        $keywordIds = [];
+        foreach($keywords as $keyword) {
 
-        return view('layouts.app.single')->with('study', $study);
+            if(Keyword::where('name', $keyword)->first()) {
+                array_push($keywordIds, Keyword::where('name', $keyword)->first()->id);
+            }
+        }
+        return $keywordIds;
     }
 
 }

@@ -25,6 +25,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('users', 'UsersController');
 });
 
+
+
+Route::get('/', ['as' => 'home', 'uses' => 'AppController@index']);
+Route::post('/results', ['as' => 'app.search', 'uses' => 'AppController@search']);
+
+
+
 /*
 |-----------------------------------
 | Built-in authentication routes
@@ -39,4 +46,3 @@ Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 
-Route::get('/', ['as' => 'home', 'uses' => 'AppController@index']);

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class SearchKeywordRequest extends Request
+class SearchRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class SearchKeywordRequest extends Request
     public function rules()
     {
         return [
-            'keywords' => 'required|min:4',
+            'keywords' => 'min:4',
         ];
     }
 }

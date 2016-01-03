@@ -26,10 +26,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 });
 
 
-
-Route::get('/', ['as' => 'home', 'uses' => 'AppController@index']);
+/*
+|-----------------------------------
+| App Routes
+|-----------------------------------
+|
+| These routes are accessible to any user visiting the
+| site and are used for general interaction with
+| the application.
+|
+*/
+Route::get('/', ['as' => 'app.landing', 'uses' => 'AppController@index']);
 Route::post('/results', ['as' => 'app.search', 'uses' => 'AppController@search']);
-
 
 
 /*

@@ -40,6 +40,7 @@ class AppController extends Controller
      */
     public function search(SearchRequest $SearchRequest)
     {
+        // @TODO: dont return drafts in search results
 
         // @TODO: if request is tampered with and has 2 inputs
         switch($SearchRequest->input()):
@@ -48,7 +49,7 @@ class AppController extends Controller
 
                 $studies = $this->keywordsSearch($SearchRequest);
 
-                if($studies) {
+                if($studies && !$studies->isEmpty()) {
                     return view('layouts.app.results')->with('studies', $studies);
                 } else {
                     return redirect(route('app.landing'))->withErrors('No results could be found for the entered keywords.');
@@ -58,15 +59,15 @@ class AppController extends Controller
 
             case $SearchRequest->has('outcomes'):
 
-                // $studies = $this->outcomesSearch($SearchRequest);
-                // return view('layouts.app.results')->with('studies', $studies);
+                $studies = $this->outcomesSearch($SearchRequest);
+                return view('layouts.app.results')->with('studies', $studies);
 
             break;
 
             case $SearchRequest->has('courses'):
 
-                // $studies = $this->coursesSearch($SearchRequest);
-                // return view('layouts.app.results')->with('studies', $studies);
+                $studies = $this->coursesSearch($SearchRequest);
+                return view('layouts.app.results')->with('studies', $studies);
 
             break;
 
@@ -94,15 +95,10 @@ class AppController extends Controller
         } else {
             $studies = [];
             foreach($keywordIds as $keywordId) {
-                array_push($studies, Keyword::find($keywordId)->studies()->get());
+                array_push($studies, Keyword::findOrFail($keywordId)->studies()->get());
             }
 
-            $studies_collapsed = collect($studies)->collapse();
-            $studies = $studies_collapsed->unique(function($item) {
-                return $item['id'];
-            });
-
-            return $studies;
+            return $this->processCollection($studies);
         }
     }
 
@@ -113,8 +109,37 @@ class AppController extends Controller
      * @param  SearchRequest $SearchRequest
      * @return Collection
      */
-    private function outcomesSearch(SearchRequest $SearchRequest)
+    private function outcomesSearch(SearchRequest $SearchRequest, $outcomes = null)
     {
+
+        if(!$outcomes && $SearchRequest->has('outcomes')) {
+
+            $outcomeIds = $SearchRequest->outcomes;
+
+            $studies = [];
+            foreach($outcomeIds as $outcomeId) {
+                array_push($studies, Outcome::find($outcomeId)->studies()->get());
+            }
+
+            return $this->processCollection($studies);
+
+        } elseif($outcomes && $SearchRequest->has('courses')) {
+            // this conditional is hit when this method is called from coursesSearch
+            // and is given a collection of outcomes to search studies for.
+
+            $studies = [];
+            foreach($outcomes as $outcome) {
+                array_push($studies, Outcome::find($outcome->id)->studies()->get());
+            }
+
+            return $this->processCollection($studies);
+
+        } else {
+
+            //something went wrong
+            dd('something went wrong');
+
+        }
 
     }
 
@@ -127,8 +152,19 @@ class AppController extends Controller
      */
     private function coursesSearch(SearchRequest $SearchRequest)
     {
+        $courseIds = $SearchRequest->courses;
+
+        $outcomes = [];
+        foreach($courseIds as $courseId) {
+            array_push($outcomes, Course::findOrFail($courseId)->outcomes()->get());
+        }
+
+        $outcomes = $this->processCollection($outcomes);
+
+        return $this->outcomesSearch($SearchRequest, $outcomes);
 
     }
+
 
     /**
      * Lookup given keywords and get IDs if present.
@@ -149,6 +185,23 @@ class AppController extends Controller
             }
         }
         return $keywordIds;
+    }
+
+
+    /**
+     * Collect, collapse, and eliminate duplicate models.
+     *
+     * @param  array $collection
+     * @return Collection
+     */
+    private function processCollection(array $array)
+    {
+        $array_collapsed = collect($array)->collapse();
+        $collection = $array_collapsed->unique(function($item) {
+            return $item['id'];
+        });
+
+        return $collection;
     }
 
 }

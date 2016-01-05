@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use \Sentinel;
 use \Auth;
 use App\User;
+use App\Outcome;
+use App\Course;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         $this->userRole();
         $this->userNotifications();
+        $this->filterOptions();
     }
 
     /**
@@ -43,6 +46,17 @@ class ViewComposerServiceProvider extends ServiceProvider
             $view->with('notifications', Auth::user()->notifications()->latest()->take(5)->get());
         });
     }
+
+    private function filterOptions()
+    {
+        view()->composer('layouts.app.results', function($view) {
+            $outcomes = Outcome::latest()->get()->all();
+            $courses = Course::latest()->get()->all();
+
+            $view->with('outcomes', $outcomes)->with('courses', $courses);
+        });
+    }
+
 }
 
 

@@ -14,6 +14,7 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Course;
 use App\Outcome;
 
+// @TODO: Eager loading queries
 
 class CoursesController extends Controller
 {

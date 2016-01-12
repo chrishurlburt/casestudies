@@ -17,6 +17,8 @@ use Redirect;
 use App\Outcome;
 use App\Course;
 
+// @TODO: Eager loading queries
+
 class OutcomesController extends Controller
 {
 

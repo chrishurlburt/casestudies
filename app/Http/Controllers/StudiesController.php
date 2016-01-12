@@ -19,6 +19,8 @@ use App\User;
 use App\Notification;
 use App\Outcome;
 
+// @TODO: Eager loading queries -- get rid of queries in loops.
+
 class StudiesController extends Controller
 {
 
@@ -32,7 +34,7 @@ class StudiesController extends Controller
         // check if user has permission to access this page.
         if($this->checkAccess()) {
 
-            $studies = Study::where('draft', false)->latest()->get();
+            $studies = Study::where('draft', false)->latest()->paginate(20);
 
             return view('layouts.admin.cases.manage')->with('studies', $studies);
 
@@ -371,7 +373,10 @@ class StudiesController extends Controller
      */
     private function storeStudy($input, $isDraft)
     {
-        // setup the study
+        // @TODO: keywords can be entered delimited by comma or space.
+        // on frontend search, spaces are delimiters so they must be
+        // on the backend, too.
+
         $study = new Study;
 
         $study->title = $input['title'];

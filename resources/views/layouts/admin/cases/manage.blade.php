@@ -28,6 +28,8 @@
     </tbody>
 </table>
 
+{!! $studies->render() !!}
+
 @include('layouts.admin.partials._study-modal')
 @include('layouts.admin.partials._delete-modal')
 

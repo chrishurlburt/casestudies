@@ -3,7 +3,7 @@
 @section('content')
 
 <h1>Search Results for: </h1>
-<h4>{{ $search_terms }}</h4>
+<h4>{{ $search['terms'] }}</h4>
 <hr />
 
 @if(!$studies->isEmpty())
@@ -21,37 +21,16 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Filter by Outcome</h3>
-                {!! Form::open(['route' => 'app.results.filter', 'method' => 'PUT']) !!}
-                @foreach($outcomes as $outcome)
-                    <div class="checkbox">
-                        <label>
-                            {!! Form::checkbox('outcomes[]', $outcome->id) !!}
-                            {!! $outcome->name !!}
-                        </label>
-                    </div>
-                @endforeach
-                <input class="btn btn-primary form-control" type="submit" value="Filter">
-                {!! Form::close() !!}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Filter by Course</h3>
 
-                @foreach($courses as $course)
-                    <div class="checkbox">
-                        <label>
-                            {!! Form::checkbox('courses[]', $course->id) !!}
-                            {!! $course->name !!}
-                        </label>
-                    </div>
-                @endforeach
-                <input class="btn btn-primary form-control" type="submit" value="Filter">
-            </div>
-        </div>
+        @if($search['type'] == 'outcomes')
+            @include('layouts.app.filters.courses')
+        @elseif($search['type'] == 'courses')
+            @include('layouts.app.filters.outcomes')
+        @elseif($search['type'] == 'keywords')
+            @include('layouts.app.filters.outcomes')
+            @include('layouts.app.filters.courses')
+        @endif
+
     </div>
 
 </div>

@@ -18,6 +18,8 @@ use \Sentinel;
 use App\User;
 use Cartalyst\Sentinel\Roles\EloquentRole;
 
+// @TODO: Eager loading queries
+
 class UsersController extends Controller
 {
 

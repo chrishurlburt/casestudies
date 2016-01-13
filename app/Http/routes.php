@@ -39,13 +39,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
 
 Route::get('/', ['as' => 'app.landing', 'uses' => 'AppController@index']);
-Route::post('/', ['as' => 'app.search.test', 'uses' => 'AppController@search']);
+Route::post('/', ['as' => 'app.search', 'uses' => 'AppController@search']);
 
-Route::get('/results', ['as' => 'app.search.results', 'uses' => 'AppController@results']);
-
-
-Route::post('/results', ['as' => 'app.search', 'uses' => 'AppController@search']);
+Route::get('/results', ['as' => 'app.results', 'uses' => 'AppController@results']);
 Route::put('/results', ['as' => 'app.results.filter', 'uses' => 'AppController@filter']);
+
 Route::get('/study/{slug}', ['as' => 'app.single', 'uses' => 'AppController@single']);
 
 /*

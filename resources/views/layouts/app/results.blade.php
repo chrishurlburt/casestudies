@@ -18,8 +18,6 @@
             </div>
         </div>
 
-    {!! $studies->render() !!}
-
     </div>
 
     <div class="col-lg-4">
@@ -35,6 +33,12 @@
 
     </div>
 
+</div>
+
+<div class="row">
+    <div class="col-lg-offset-3">
+        {!! $studies->render() !!}
+    </div>
 </div>
 
 @endif

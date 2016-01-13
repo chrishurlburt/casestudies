@@ -15,7 +15,7 @@ class KeywordsTableSeeder extends Seeder
         $faker = Faker::create();
         foreach(range(1,100) as $index) {
             DB::table('keywords')->insert([
-                'name' => $faker->word
+                'name' => $faker->unique()->word
             ]);
         }
     }

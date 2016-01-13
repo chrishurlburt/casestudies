@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Request;
 use Session;
+use Input;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -41,6 +42,36 @@ class AppController extends Controller
             'courses'  =>$courses
         ]);
 
+    }
+
+
+    /**
+     * Display results of a search.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function results()
+    {
+        // @TODO: changing page in results breaks filters
+        // because it just returns the given page
+        // of the original result set.
+        //
+        // this method must somehow account for there being a
+        // filter present.
+
+        $studies = Session::get('results');
+        $search = Session::get('search');
+
+        if(!$studies) {
+            return redirect(route('app.landing'));
+        }
+
+        $studies = $this->paginate($studies);
+
+        return view('layouts.app.results')->with([
+            'studies' => $studies,
+            'search'  => $search
+        ]);
     }
 
 
@@ -87,12 +118,7 @@ class AppController extends Controller
                         'search' => $search
                     ]);
 
-                    $studies = $this->paginate($studies);
-
-                    return view('layouts.app.results')->with([
-                        'studies' => $studies,
-                        'search'  => $search
-                    ]);
+                    return redirect(route('app.results'));
 
                 } else {
                     return redirect(route('app.landing'))->withErrors('No results could be found for the entered keywords.');
@@ -111,14 +137,12 @@ class AppController extends Controller
 
                 $studies = $this->outcomesSearch($SearchRequest);
 
-                Session::put(['results' => $studies, 'search' => $search]);
-
-                $studies = $this->paginate($studies);
-
-                return view('layouts.app.results')->with([
-                    'studies' => $studies,
-                    'search'  => $search
+                Session::put([
+                    'results' => $studies,
+                    'search' => $search
                 ]);
+
+                return redirect(route('app.results'));
 
             break;
 
@@ -134,14 +158,12 @@ class AppController extends Controller
                 $search_terms = "courses go here";
                 $studies = $this->coursesSearch($SearchRequest);
 
-                Session::put(['results' => $studies, 'search' => $search]);
-
-                $studies = $this->paginate($studies);
-
-                return view('layouts.app.results')->with([
-                    'studies' => $studies,
-                    'search'  => $search
+                Session::put([
+                    'results' => $studies,
+                    'search' => $search
                 ]);
+
+                return redirect(route('app.results'));
 
             break;
 
@@ -160,15 +182,9 @@ class AppController extends Controller
      */
     public function filter()
     {
-        // @TODO: preserve the state of the checked filters.
-        //
-        // @TODO: When blank form is submitted, undo all filters.
-
         $filter = Request::all();
         $studies_unfiltered = Session::get('results');
         $search = Session::get('search');
-
-        // dd(Request::all());
 
         switch(Request::input()):
 
@@ -180,9 +196,6 @@ class AppController extends Controller
 
                     $studies_by_course = Session::get('studies_by_course');
                     $study_ids = $studies_by_course->lists('id');
-
-                    // eager load studies_by_course from db
-                    // $studies_by_course = Study::with('outcomes')->findMany($study_ids);
 
                     $studies = $studies_by_course->filter(function($study){
 
@@ -198,15 +211,6 @@ class AppController extends Controller
                             }
                         }
                     });
-
-                    // @TODO: since studies_by_course will already be eager loaded and stored in the session,
-                    // it will not need to be eager loaded again.
-                    //
-                    // manually create pagintator using the $studies collection.
-                    // ex.
-                    // $test = new LengthAwarePaginator($studies,$studies->count(),5);
-                    //
-                    // results should always be returned as a paginator instance.
 
                     $courses_checked = Session::get('courses_checked');
                     $outcomes_checked = Request::input('outcomes');
@@ -235,8 +239,10 @@ class AppController extends Controller
 
                         $outcomes = Request::input('outcomes');
                         foreach($outcomes as $outcome) {
-                            if($study->outcomes()->where('outcome_id', $outcome)->get()->all()) {
-                                return $study;
+                            foreach($study->outcomes as $study_outcome) {
+                                if($study_outcome->id == $outcome) {
+                                    return $study;
+                                }
                             }
                         }
                     });
@@ -260,8 +266,7 @@ class AppController extends Controller
 
             break;
 
-            // @TODO: this chunk is ineffecient. refactor
-            // don't allow queries to be called in loops.
+            // @TODO: don't allow queries to be called in loops.
             case Request::has('courses'):
                 //filter studies by course
                 if(Session::has('studies_by_outcome') && $search['type'] == 'keywords'){
@@ -322,9 +327,6 @@ class AppController extends Controller
                         }
 
                     });
-
-                    // @TODO: these studies are sorted by course and may be sorted by outcomes,
-                    // eager load outcomes for future use.
 
                     $studies = Study::with('outcomes')->whereIn('id',$studies->lists('id'))->get();
                     $courses_checked = Request::input('courses');
@@ -401,6 +403,7 @@ class AppController extends Controller
 
     }
 
+    // @TODO: refactor search functions
 
     /**
      * Search case studies by keywords.
@@ -415,13 +418,16 @@ class AppController extends Controller
         if(empty($keywordIds)) {
             return false;
         } else {
-            $studies = [];
-            foreach($keywordIds as $keywordId) {
-                array_push($studies, Keyword::findOrFail($keywordId)->studies()->where('draft', false)->get());
-            }
 
-            return $this->processCollection($studies);
+            $keywords = Keyword::whereIn('id', $keywordIds)->with('studies')->get();
+            $studies = $keywords->pluck('studies');
 
+            $studies_processed = $this->processCollection($studies);
+
+            // eager load outcomes
+            $studies = Study::with('outcomes')->whereIn('id',$studies_processed->lists('id'))->get();
+
+            return $studies;
         }
     }
 
@@ -500,14 +506,10 @@ class AppController extends Controller
         // explode string at commas and spaces and build array of keywords
         $keywords = array_map('trim', preg_split('~[\s,]+~', $keywords));
 
-        $keywordIds = [];
-        foreach($keywords as $keyword) {
+        $keywords = Keyword::whereIn('name', $keywords)->get();
+        $keywordIds = $keywords->pluck('id');
 
-            if(Keyword::where('name', $keyword)->first()) {
-                array_push($keywordIds, Keyword::where('name', $keyword)->first()->id);
-            }
-        }
-        return $keywordIds;
+        return $keywordIds->toArray();
     }
 
     /**
@@ -517,9 +519,15 @@ class AppController extends Controller
      * @param int $items
      * @return LengthAwarePaginator
      */
-    private function paginate($studies, $items = 5)
+    private function paginate($items)
     {
-        return new LengthAwarePaginator($studies,$studies->count(),$items);
+        $page = Input::get('page', 1);
+        $perPage = 5;
+
+        $paginated = new LengthAwarePaginator($items->forPage($page,$perPage), $items->count(), $perPage, $page);
+        $paginated->setPath('/results');
+
+        return $paginated;
     }
 
 
@@ -529,7 +537,7 @@ class AppController extends Controller
      * @param  array $collection
      * @return Collection
      */
-    private function processCollection(array $array)
+    private function processCollection($array)
     {
         $array_collapsed = collect($array)->collapse();
         $collection = $array_collapsed->unique(function($item) {

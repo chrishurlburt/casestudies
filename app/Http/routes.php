@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 | the application.
 |
 */
+
 Route::get('/', ['as' => 'app.landing', 'uses' => 'AppController@index']);
 Route::post('/results', ['as' => 'app.search', 'uses' => 'AppController@search']);
 Route::put('/results', ['as' => 'app.results.filter', 'uses' => 'AppController@filter']);

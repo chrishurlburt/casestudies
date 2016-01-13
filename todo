@@ -1,0 +1,72 @@
+* = low priority
+! = high priority
+
+Overall:
+  -UI/UX design
+  -bug testing (on going)
+  !-refactor queries to leverage eager loading
+  -cache queries with redis to increase speed.
+  !-tighten up and finalize form validation
+  !-error handling
+  -refactor all code for effeciency, maintainability, scalability and best practices (on going)
+  !-think of a name
+
+
+Admin Dashboard:
+
+  CASE STUDIES
+    !-implement sort and filter options (jQuery datatables)
+    !-keyword entry to allow spaces as delimiters
+    -fix custom url form request error message
+    -when changing custom url, warn user that case study will 404 at old url.
+    -add feature to revert case study to draft
+    -add rollbacks via revision history
+    -soft deletes, “trashed studies” section
+    !-fix database schema bug to allow more characters on fields
+    -show character count on fields
+    !-add fields to match survey (completed on time, etc.)
+    *-qualtrics API integration
+
+  USERS:
+    !-fix user deletion bug
+    -more user permission layers(super admin, etc.)
+
+  NOTIFICATIONS:
+    -fix bugs in notification system
+    -add functionality to set message
+
+  SECURITY:
+    -rate limiting on login attempts
+
+
+Search Engine:
+
+  LANDING:
+    -clear session on page back
+    -"view all" studies option
+
+  RESULTS:
+    !-filters
+    -pagination
+    -include exceprt, date and other info for each study in results
+    -sort options(date, author, etc)
+    *-AJAX filter requests
+
+  SINGLE STUDY:
+    -what options should this page include?
+    -what should a case study look like?
+
+  OTHER PAGES:
+    *-case study submition page
+    *-about page
+
+
+Deployment:
+
+  DIGITALOCEAN
+    -provision for LAMP server and redis server
+    -develop automated deployment workflow via git
+
+  GOOGLE ANALYTICS
+    -set up google analytics
+    -SEO

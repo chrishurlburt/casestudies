@@ -18,6 +18,8 @@
             </div>
         </div>
 
+    {!! $studies->render() !!}
+
     </div>
 
     <div class="col-lg-4">

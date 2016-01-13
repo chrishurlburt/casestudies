@@ -5,7 +5,8 @@ Overall:
   -UI/UX design
   -bug testing (on going)
   !-refactor queries to leverage eager loading
-  -cache queries with redis to increase speed.
+  -rework app routing from search page to results page
+  -cache queries with redis to increase speed
   !-tighten up and finalize form validation
   !-error handling
   -refactor all code for effeciency, maintainability, scalability and best practices (on going)
@@ -18,7 +19,7 @@ Admin Dashboard:
     !-implement sort and filter options (jQuery datatables)
     !-keyword entry to allow spaces as delimiters
     -fix custom url form request error message
-    -when changing custom url, warn user that case study will 404 at old url.
+    -when changing custom url, warn user that case study will 404 at old url
     -add feature to revert case study to draft
     -add rollbacks via revision history
     -soft deletes, “trashed studies” section
@@ -47,6 +48,7 @@ Search Engine:
 
   RESULTS:
     !-filters
+    !-sessions cached in redis
     -pagination
     -include exceprt, date and other info for each study in results
     -sort options(date, author, etc)

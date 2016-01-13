@@ -149,6 +149,8 @@ class StudiesController extends Controller
         $study = Study::where('slug', $slug)->firstOrFail();
         $input = $UpdateStudyRequest->all();
 
+        // @TODO: refactor to switch
+
         if($UpdateStudyRequest->has('publish-draft')) {
             // check if user has permissions to publish.
             if($user->hasAccess(['publish'])) {

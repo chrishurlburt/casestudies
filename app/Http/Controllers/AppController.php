@@ -19,8 +19,6 @@ use App\Outcome;
 use App\Course;
 
 // @TODO: Eager loading queries -- get rid of queries in loops.
-//
-// @TODO: pagination
 
 class AppController extends Controller
 {
@@ -82,7 +80,6 @@ class AppController extends Controller
      */
     public function single($slug)
     {
-
         $study = Study::where('slug', $slug)->firstOrFail();
 
         return view('layouts.app.single')->with('study', $study);
@@ -121,7 +118,7 @@ class AppController extends Controller
                     return redirect(route('app.results'));
 
                 } else {
-                    return redirect(route('app.landing'))->withErrors('No results could be found for the entered keywords.');
+                    return redirect(route('app.landing'))->withErrors('No results could be found for the entered keyword(s).');
                 }
 
             break;
@@ -129,41 +126,50 @@ class AppController extends Controller
             case $SearchRequest->has('outcomes'):
 
                 $search_terms = "outcomes go here";
-
-                $search = [
-                    'terms' => $search_terms,
-                    'type'  => 'outcomes'
-                ];
-
                 $studies = $this->outcomesSearch($SearchRequest);
 
-                Session::put([
-                    'results' => $studies,
-                    'search' => $search
-                ]);
+                if($studies && !$studies->isEmpty()) {
 
-                return redirect(route('app.results'));
+                    $search = [
+                        'terms' => $search_terms,
+                        'type'  => 'outcomes'
+                    ];
+
+                    Session::put([
+                        'results' => $studies,
+                        'search' => $search
+                    ]);
+
+                    return redirect(route('app.results'));
+                } else {
+                    return redirect(route('app.landing'))->withErrors('No results could be found for the entered learning outcome(s).');
+                }
 
             break;
 
             case $SearchRequest->has('courses'):
 
                 $search_terms = "courses go here";
-
-                $search = [
-                    'terms' => $search_terms,
-                    'type'  => 'courses'
-                ];
-
-                $search_terms = "courses go here";
                 $studies = $this->coursesSearch($SearchRequest);
 
-                Session::put([
-                    'results' => $studies,
-                    'search' => $search
-                ]);
+                if($studies && !$studies->isEmpty()) {
 
-                return redirect(route('app.results'));
+                    $search = [
+                        'terms' => $search_terms,
+                        'type'  => 'courses'
+                    ];
+
+                    Session::put([
+                        'results' => $studies,
+                        'search' => $search
+                    ]);
+
+                    return redirect(route('app.results'));
+
+                } else {
+
+                    return redirect(route('app.landing'))->withErrors('No results could be found for the entered course(s).');
+                }
 
             break;
 
@@ -403,7 +409,6 @@ class AppController extends Controller
 
     }
 
-    // @TODO: refactor search functions
 
     /**
      * Search case studies by keywords.
@@ -445,29 +450,28 @@ class AppController extends Controller
 
             $outcomeIds = $SearchRequest->outcomes;
 
-            $studies = [];
-            foreach($outcomeIds as $outcomeId) {
-                array_push($studies, Outcome::find($outcomeId)->studies()->where('draft', false)->get());
-            }
-
-            return $this->processCollection($studies);
-
         } elseif($outcomes && $SearchRequest->has('courses')) {
-            // this conditional is hit when this method is called from coursesSearch
-            // and is given a collection of outcomes to search studies for.
 
-            $studies = [];
-            foreach($outcomes as $outcome) {
-                array_push($studies, Outcome::find($outcome->id)->studies()->where('draft', false)->get());
-            }
-
-            return $this->processCollection($studies);
+            $outcomeIds = $outcomes;
 
         } else {
+            //no results
+        }
 
-            //something went wrong
-            dd('something went wrong');
+        if(empty($outcomeIds)) {
+            return false;
+        } else {
 
+            // get studies from outcomes
+            $outcomes = Outcome::whereIn('id', $outcomeIds)->with('studies')->get();
+            $studies = $outcomes->pluck('studies');
+
+            $studies_processed = $this->processCollection($studies);
+
+            // eager load outcomes
+            $studies = Study::with('outcomes')->whereIn('id', $studies_processed->lists('id'))->get();
+
+            return $studies;
         }
 
     }
@@ -482,15 +486,18 @@ class AppController extends Controller
     private function coursesSearch(SearchRequest $SearchRequest)
     {
         $courseIds = $SearchRequest->courses;
+        $courses = Course::whereIn('id', $courseIds)->with('outcomes')->get();
 
-        $outcomes = [];
-        foreach($courseIds as $courseId) {
-            array_push($outcomes, Course::findOrFail($courseId)->outcomes()->get());
-        }
+        $outcomes = $this->processCollection($courses->pluck('outcomes'));
 
-        $outcomes = $this->processCollection($outcomes);
+        // dd($outcomes_courses->lists('id')->toArray());
 
-        return $this->outcomesSearch($SearchRequest, $outcomes);
+        $outcomeIds = $outcomes->lists('id')->toArray();
+
+        // eager load studies for these outcomes
+        // $outcomes = Outcome::whereIn('id', $outcomes_courses->lists('id'))->with('studies')->get();
+
+        return $this->outcomesSearch($SearchRequest, $outcomeIds);
 
     }
 

@@ -18,8 +18,6 @@ use App\Keyword;
 use App\Outcome;
 use App\Course;
 
-// @TODO: Eager loading queries -- get rid of queries in loops.
-
 class AppController extends Controller
 {
 
@@ -199,7 +197,6 @@ class AppController extends Controller
                 if(Session::has('studies_by_course') && $search['type'] == 'keywords') {
                     // the results have been filtered by course
                     // filter studies_by_course by learning outcome
-
                     $studies_by_course = Session::get('studies_by_course');
                     $study_ids = $studies_by_course->lists('id');
 
@@ -209,8 +206,7 @@ class AppController extends Controller
 
                         foreach($outcomes as $outcome){
                             foreach($study->outcomes as $study_outcome) {
-                                // check all of a study's outcomes against each of the
-                                // outcomes given.
+                                // check all of a study's outcomes against each of the outcomes given.
                                 if($study_outcome->id == $outcome){
                                     return $study;
                                 }
@@ -221,7 +217,7 @@ class AppController extends Controller
                     $courses_checked = Session::get('courses_checked');
                     $outcomes_checked = Request::input('outcomes');
 
-                    $studies = Study::with('outcomes')->whereIn('id',$studies->lists('id'))->get();
+                    $studies->unique();
 
                     Session::put([
                         'search'             => $search,
@@ -253,8 +249,8 @@ class AppController extends Controller
                         }
                     });
 
-                    $studies = Study::with('outcomes')->whereIn('id',$studies->lists('id'))->get();
                     $outcomes_checked = Request::input('outcomes');
+                    $studies->unique();
 
                     Session::put([
                         'studies_by_outcome' => $studies,
@@ -272,31 +268,27 @@ class AppController extends Controller
 
             break;
 
-            // @TODO: don't allow queries to be called in loops.
             case Request::has('courses'):
                 //filter studies by course
                 if(Session::has('studies_by_outcome') && $search['type'] == 'keywords'){
                     // the results have been filtered by outcome
                     // filter studies_by_outcome by course
-
                     $studies_by_outcome = Session::get('studies_by_outcome');
+                    $course_outcomes = $this->processCollection($studies_by_outcome->pluck('outcomes'));
 
-                    $studies = $studies_by_outcome->filter(function($study){
-
-                        $courses = Course::find(Request::input('courses'));
-
-                        // get all the outcomes for each study
-                        foreach($study->outcomes()->get() as $outcome) {
-                            // get studies by course
-                            foreach($courses as $course) {
-                                if($course->outcomes()->where('outcome_id', $outcome->id)->get()->all()) {
-                                    return $study;
+                    $studies = [];
+                    foreach($studies_by_outcome as $study) {
+                        foreach($study->outcomes as $study_outcome) {
+                            foreach($course_outcomes as $outcome) {
+                                if($outcome->id == $study_outcome->id) {
+                                    array_push($studies, $study);
                                 }
                             }
                         }
-                    });
+                    }
 
-                    $studies = Study::with('outcomes')->whereIn('id',$studies->lists('id'))->get();
+                    $studies = collect($studies)->unique();
+
                     $courses_checked = Request::input('courses');
                     $outcomes_checked = Session::get('outcomes_checked');
 
@@ -317,24 +309,30 @@ class AppController extends Controller
                     ]);
 
                 } else {
+                    // filter by course
 
-                    $studies = $studies_unfiltered->filter(function($study){
+                    // submitted filter
+                    $courses = Course::whereIn('id', Request::input('courses'))->with('outcomes')->get();
+                    $course_outcomes = $this->processCollection($courses->pluck('outcomes'));
 
-                        $courses = Course::find(Request::input('courses'));
-
-                        // get all the outcomes for each study
-                        foreach($study->outcomes()->get() as $outcome) {
-                            // get studies by course
-                            foreach($courses as $course) {
-                                if($course->outcomes()->where('outcome_id', $outcome->id)->get()->all()) {
-                                    return $study;
+                    // looks at each study
+                    // looks at each outcome the study has
+                    // for each outcome a study has, loop through
+                    // the outcomes given by the filter that and try to
+                    // find a match. If a match is found, add
+                    // it to the array of results ($studies).
+                    $studies = [];
+                    foreach($studies_unfiltered as $study) {
+                        foreach($study->outcomes as $study_outcome) {
+                            foreach($course_outcomes as $outcome) {
+                                if($outcome->id == $study_outcome->id) {
+                                    array_push($studies, $study);
                                 }
                             }
                         }
+                    }
 
-                    });
-
-                    $studies = Study::with('outcomes')->whereIn('id',$studies->lists('id'))->get();
+                    $studies = collect($studies)->unique();
                     $courses_checked = Request::input('courses');
 
                     Session::put([
@@ -349,7 +347,6 @@ class AppController extends Controller
                         'search'          => $search,
                         'courses_checked' => $courses_checked
                     ]);
-
                 }
 
             break;
@@ -357,7 +354,6 @@ class AppController extends Controller
             default:
             // reset filters
             // @TODO: filter resets are fucked
-
                 $courses_checked = [];
                 $outcomes_checked =[];
 
@@ -455,7 +451,7 @@ class AppController extends Controller
             $outcomeIds = $outcomes;
 
         } else {
-            //no results
+            return false;
         }
 
         if(empty($outcomeIds)) {
@@ -489,16 +485,9 @@ class AppController extends Controller
         $courses = Course::whereIn('id', $courseIds)->with('outcomes')->get();
 
         $outcomes = $this->processCollection($courses->pluck('outcomes'));
-
-        // dd($outcomes_courses->lists('id')->toArray());
-
         $outcomeIds = $outcomes->lists('id')->toArray();
 
-        // eager load studies for these outcomes
-        // $outcomes = Outcome::whereIn('id', $outcomes_courses->lists('id'))->with('studies')->get();
-
         return $this->outcomesSearch($SearchRequest, $outcomeIds);
-
     }
 
 
@@ -518,6 +507,7 @@ class AppController extends Controller
 
         return $keywordIds->toArray();
     }
+
 
     /**
      * Paginate a collection of studies.

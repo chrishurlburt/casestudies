@@ -5,7 +5,6 @@ Overall:
   -UI/UX design
   -bug testing (on going)
   !-refactor queries to leverage eager loading
-  -rework app routing from search page to results page
   -cache queries with redis to increase speed
   !-tighten up and finalize form validation
   !-error handling
@@ -48,7 +47,6 @@ Search Engine:
 
   RESULTS:
     !-filters
-    !-sessions cached in redis
     -pagination
     -include exceprt, date and other info for each study in results
     -sort options(date, author, etc)
@@ -72,3 +70,10 @@ Deployment:
   GOOGLE ANALYTICS
     -set up google analytics
     -SEO
+
+
+Completed:
+  -rework app routing from search page to results page
+  !-sessions cached in redis
+
+

@@ -227,12 +227,19 @@ class StudiesController extends Controller
 
         if($study->draft) {
         // any user can edit a draft, no permissions check.
-            return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords)->with('outcomes', $outcomes);
+            return view('layouts.admin.cases.edit')->with('study', $study)->with([
+                'keywords' => $keywords,
+                'outcomes' => $outcomes
+            ]);
         } else {
         // it's not a draft, make sure the user has permission to edit non-drafts.
             if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
             // user can edit published studies
-                return view('layouts.admin.cases.edit')->with('study', $study)->with('keywords', $keywords)->with('outcomes', $outcomes);
+                return view('layouts.admin.cases.edit')->with([
+                    'study'    => $study,
+                    'keywords' => $keywords,
+                    'outcomes' => $outcomes
+                ]);
             } else {
             // user cannot edit published studies.
                 return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to edit a published study.');

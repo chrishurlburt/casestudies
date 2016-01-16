@@ -17,13 +17,13 @@ class StudiesTableSeeder extends Seeder
 
         $users = User::all()->lists('id')->toArray();
 
-        foreach(range(1,200) as $index) {
+        foreach(range(1,150) as $index) {
             DB::table('studies')->insert([
                 'title'     => $faker->sentence($nbWords = rand(3, 6)),
                 'problem'   => $faker->paragraph($nbSentences = rand(4,6)),
                 'solution'  => $faker->paragraph($nbSentences = rand(7,15)),
                 'analysis'  => $faker->paragraph($nbSentences = rand(4,6)),
-                'slug'      => $faker->word,
+                'slug'      => $faker->unique()->word,
                 'draft'     => $faker->numberBetween($min = 0, $max = 1),
                 'user_id'   => $faker->randomElement($users)
             ]);

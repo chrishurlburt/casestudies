@@ -15,7 +15,7 @@ class OutcomesTableSeeder extends Seeder
         $faker = Faker::create();
         foreach(range(1,8) as $index) {
             DB::table('outcomes')->insert([
-                'name'        => $faker->word,
+                'name'        => $faker->unique()->word,
                 'description' => $faker->sentence($nbWords = rand(4, 8))
             ]);
         }

@@ -48,15 +48,29 @@ class AppController extends Controller
      */
     public function results()
     {
-        // @TODO: changing page in results breaks filters
-        // because it just returns the given page
-        // of the original result set.
-        //
-        // this method must somehow account for there being a
-        // filter present.
+        // @TODO: tracking state of checked filters not working.
 
-        $studies = Session::get('results');
-        $search = Session::get('search');
+        // if a filter has been applied, pull that set from the session
+        // so they can be correctly paginated.
+        if(Session::has('studies_by_outcome')) {
+
+            $studies = Session::get('studies_by_outcome');
+            $outcomes_checked = Session::get('outcomes_checked');
+            $courses_checked = Session::get('courses_checked');
+
+        } elseif(Session::has('studies_by_course')) {
+
+            $studies = Session::get('studies_by_course');
+            $outcomes_checked = Session::get('outcomes_checked');
+            $courses_checked = Session::get('courses_checked');
+
+        } else {
+
+            $studies = Session::get('results');
+            $outcomes_checked = [];
+            $courses_checked = [];
+
+        }
 
         if(!$studies) {
             return redirect(route('app.landing'));
@@ -64,9 +78,13 @@ class AppController extends Controller
 
         $studies = $this->paginate($studies);
 
+        $search = Session::get('search');
+
         return view('layouts.app.results')->with([
-            'studies' => $studies,
-            'search'  => $search
+            'studies'          => $studies,
+            'search'           => $search,
+            'outcomes_checked' => $outcomes_checked,
+            'courses_checked'  => $courses_checked
         ]);
     }
 
@@ -310,8 +328,6 @@ class AppController extends Controller
 
                 } else {
                     // filter by course
-
-                    // submitted filter
                     $courses = Course::whereIn('id', Request::input('courses'))->with('outcomes')->get();
                     $course_outcomes = $this->processCollection($courses->pluck('outcomes'));
 
@@ -359,12 +375,11 @@ class AppController extends Controller
 
                 if(Request::has('outcomes_reset')) {
 
-                    Session::forget('studies_by_outcome');
+                    Session::forget(['studies_by_outcome', 'outcomes_checked']);
 
                     if(Session::has('studies_by_course') && $search['type'] == 'keywords') {
                         // reset the outcomes filter but leave courses filter intact
                         $studies = Session::get('studies_by_course');
-
                         $courses_checked = Session::get('courses_checked');
 
                     } else {
@@ -374,7 +389,7 @@ class AppController extends Controller
 
                 } elseif(Request::has('courses_reset')) {
 
-                    Session::forget('studies_by_course');
+                    Session::forget(['studies_by_course','courses_checked']);
 
                     if(Session::has('studies_by_outcome') && $search['type'] == 'keyword') {
                         // reset the courses filter but leave outcomes filter intact
@@ -399,7 +414,6 @@ class AppController extends Controller
                 ]);
 
             break;
-
 
         endswitch;
 
@@ -518,7 +532,7 @@ class AppController extends Controller
      */
     private function paginate($items)
     {
-        $page = Input::get('page', 1);
+        $page = Input::get('page');
         $perPage = 5;
 
         $paginated = new LengthAwarePaginator($items->forPage($page,$perPage), $items->count(), $perPage, $page);

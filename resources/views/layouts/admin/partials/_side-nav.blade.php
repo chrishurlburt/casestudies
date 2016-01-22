@@ -19,6 +19,9 @@
                 <li>
                     <a href="{{ route('admin.cases.drafts') }}">Manage Drafts</a>
                 </li>
+                <li>
+                    <a href="#">Trashed Studies</a>
+                </li>
             </ul>
         </li>
 

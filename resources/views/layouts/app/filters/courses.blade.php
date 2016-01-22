@@ -2,8 +2,6 @@
     <div class="col-lg-12">
         <h3>Filter by Course</h3>
         {!! Form::open(['route' => 'app.results.filter', 'method' => 'PUT']) !!}
-        <input name="courses_reset" type="hidden" value="1">
-
         @foreach($courses as $course)
             <div class="checkbox">
                 <label>
@@ -16,8 +14,7 @@
                 </label>
             </div>
         @endforeach
-
-        <input class="btn btn-primary form-control" type="submit" value="Filter">
+        {!! Form::submit('Filter', ['class' => 'btn btn-primary form-control', 'name' => 'courses_reset']) !!}
         {!! Form::close() !!}
     </div>
 </div>

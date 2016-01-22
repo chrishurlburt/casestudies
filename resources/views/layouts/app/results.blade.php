@@ -31,6 +31,8 @@
             @include('layouts.app.filters.courses')
         @endif
 
+        @include('layouts.app.filters.reset')
+
     </div>
 
 </div>

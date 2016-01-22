@@ -66,6 +66,7 @@
                     @else
                         @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
                         {!! Form::submit('Update Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'update']) !!}
+                        {!! Form::submit('Revert To Draft', ['class' => 'btn btn-primary form-control', 'name' => 'redraft']) !!}
                         @endif
                     @endif
                 </div>

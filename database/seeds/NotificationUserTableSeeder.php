@@ -21,7 +21,7 @@ class NotificationUserTableSeeder extends Seeder
         $users = Sentinel::findRoleBySlug('admin')->users()->lists('id')->toArray();
         $notifications  =  Notification::all()->lists('id')->toArray();
 
-        foreach(range(1, 5) as $index) {
+        foreach(range(1, 25) as $index) {
             DB::table('notification_user')->insert([
                 'user_id'          => $faker->randomElement($users),
                 'notification_id'  => $faker->randomElement($notifications),

@@ -46,8 +46,6 @@ Search Engine:
     -"view all" studies option
 
   RESULTS:
-    !-filters
-    -pagination
     -include exceprt, date and other info for each study in results
     -sort options(date, author, etc)
     *-AJAX filter requests
@@ -75,5 +73,8 @@ Deployment:
 Completed:
   -rework app routing from search page to results page
   !-sessions cached in redis
+  -pagination
+  !-filters
+
 
 

@@ -45,7 +45,11 @@
             </div>
 
             <div class="panel-body">
-                <h4>New drafts need to be revised by the end of the month!</h4>
+                <h4>Avoid the following:</h4>
+                <ul>
+                    <li>Deleting a user</li>
+                    <li>Changing a user's permissions</li>
+                </ul>
             </div>
         </div>
     </div>

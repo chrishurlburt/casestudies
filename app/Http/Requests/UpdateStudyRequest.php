@@ -53,7 +53,7 @@ class UpdateStudyRequest extends Request
                 'slug'     => 'unique:studies,slug,'.$study->id.'|min:5|string'
             ];
 
-        } else if($this->has('update-draft')) {
+        } else if($this->has('update-draft') || $this->has('redraft')) {
 
             return [
 

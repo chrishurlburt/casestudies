@@ -150,6 +150,7 @@ class StudiesController extends Controller
         $input = $UpdateStudyRequest->all();
 
         // @TODO: refactor to switch
+        // @TODO: make user sure permissions are being checked correctly.
 
         if($UpdateStudyRequest->has('publish-draft')) {
             // check if user has permissions to publish.
@@ -158,7 +159,6 @@ class StudiesController extends Controller
 
                 // @TODO: modify to recieve entire form request
                 $this->updateStudy($study, $input, false);
-
                 return redirect(route('admin.cases.index'));
 
             } else {
@@ -166,10 +166,9 @@ class StudiesController extends Controller
                 return redirect(route('admin.cases.edit'))->withErrors('You do not have permission to publish.')->withInput($UpdateStudyRequest->all());
             }
 
-        } else if($UpdateStudyRequest->has('update-draft')) {
-
+        } else if($UpdateStudyRequest->has('update-draft') || $UpdateStudyRequest->has('redraft')) {
+            // update a draft or revert a published one to a draft.
             $this->updateStudy($study, $input, true);
-
             return redirect(route('admin.cases.drafts'));
 
         } else {
@@ -255,6 +254,8 @@ class StudiesController extends Controller
     */
     public function drafts()
     {
+
+        // @TODO: pagination
 
         $drafts = Study::where('draft', true)->latest()->get();
 
@@ -407,8 +408,10 @@ class StudiesController extends Controller
         // save keywords if not already in the DB and sync
         $this->syncKeywords($study, $this->storeKeywords($input['keywords']));
 
-        // sync learning outcomes
-        $this->syncOutcomes($study, $input['outcomes']);
+        // sync learning outcomes (drafts might not have learning outcomes)
+        if(Request::has('outcomes')) {
+            $this->syncOutcomes($study, $input['outcomes']);
+        }
 
         // set success messages and notifications
         $notification = new Notification;
@@ -460,6 +463,8 @@ class StudiesController extends Controller
         if(Request::has('outcomes')) {
         // sync learning outcomes
             $this->syncOutcomes($study, $input['outcomes']);
+        } else {
+            $study->outcomes()->detach();
         }
 
         //set success messages and notifications

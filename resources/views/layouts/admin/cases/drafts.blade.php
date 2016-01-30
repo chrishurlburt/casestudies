@@ -1,5 +1,7 @@
 @extends('admin-base')
 
+@section('bodyclass', 'manage_case_studies')
+
 @section('content')
 
 @include('layouts.admin.partials._heading', ['heading' => 'Manage Drafts'])

@@ -4,7 +4,7 @@
 
 @include('layouts.admin.partials._heading', ['heading' => 'Edit User'])
 
-{!! Breadcrumbs::render('create-user') !!}
+{!! Breadcrumbs::render('edit-user', $user->id) !!}
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

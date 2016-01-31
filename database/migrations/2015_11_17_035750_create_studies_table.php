@@ -14,10 +14,10 @@ class CreateStudiesTable extends Migration
     {
         Schema::create('studies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 150);
-            $table->string('problem');
-            $table->string('solution');
-            $table->string('analysis');
+            $table->text('title', 150);
+            $table->text('problem');
+            $table->text('solution');
+            $table->text('analysis');
             $table->string('slug');
             $table->boolean('draft');
             $table->integer('user_id')->unsigned();

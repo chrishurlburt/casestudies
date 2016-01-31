@@ -99,7 +99,7 @@ Breadcrumbs::register('manage-outcomes', function($breadcrumbs){
 Breadcrumbs::register('edit-outcome', function($breadcrumbs, $id){
 
     $breadcrumbs->parent('manage-outcomes');
-    $breadcrumbs->push('Edit Learning Outcome', route('admin.outcomes.index', $id));
+    $breadcrumbs->push('Edit Learning Outcome', route('admin.outcomes.edit', $id));
 
 });
 
@@ -124,6 +124,6 @@ Breadcrumbs::register('manage-users', function($breadcrumbs){
 Breadcrumbs::register('edit-user', function($breadcrumbs, $id){
 
     $breadcrumbs->parent('manage-users');
-    $breadcrumbs->push('Edit Users', route('admin.outcomes.index', $id));
+    $breadcrumbs->push('Edit User', route('admin.users.edit', $id));
 
 });

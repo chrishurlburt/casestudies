@@ -23,6 +23,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('outcomes', 'OutcomesController');
     Route::resource('courses', 'CoursesController');
     Route::resource('users', 'UsersController');
+
+    Route::get('/users/activate/{id}', ['as' => 'admin.users.activate', 'uses' => 'UsersController@activate']);
+
 });
 
 

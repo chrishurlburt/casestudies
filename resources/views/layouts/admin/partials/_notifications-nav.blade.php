@@ -12,7 +12,7 @@
                         <div class="media-body">
                             <h5 class="media-heading"><strong>{{ $notification->notification }}</strong></h5>
                             <p class="small text-muted"><i class="fa fa-clock-o"></i> {{ date('F d, Y - h:i A', strtotime($notification->created_at)) }}</p>
-                            <p class="small text-muted"><i class="fa fa-user"></i> {{ $notification->study->user->first_name.' '.$notification->study->user->last_name }}</p>
+                            <p class="small text-muted"><i class="fa fa-user"></i> {{ $notification->study->user->withTrashed()->first_name.' '.$notification->study->user->withTrashed()->last_name }}</p>
                             <p>{{ $notification->study->title }}</p>
                         </div>
                     </div>

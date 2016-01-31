@@ -19,21 +19,19 @@ Admin Dashboard:
     !-keyword entry to allow spaces as delimiters
     -fix custom url form request error message
     -when changing custom url, warn user that case study will 404 at old url
-    -add feature to revert case study to draft
     -add rollbacks via revision history
     -soft deletes, “trashed studies” section
-    !-fix database schema bug to allow more characters on fields
-    -show character count on fields
     !-add fields to match survey (completed on time, etc.)
-    *-qualtrics API integration
+    -tooltips for outcomes
 
   USERS:
-    !-fix user deletion bug
     -more user permission layers(super admin, etc.)
 
   NOTIFICATIONS:
+    -when a user is deleted, notifications dont show properly because they dont include trashed users
     -fix bugs in notification system
     -add functionality to set message
+    -name attached to notifcation on main dashboard page
 
   SECURITY:
     -rate limiting on login attempts
@@ -48,7 +46,6 @@ Search Engine:
   RESULTS:
     -include exceprt, date and other info for each study in results
     -sort options(date, author, etc)
-    *-AJAX filter requests
 
   SINGLE STUDY:
     -what options should this page include?
@@ -61,10 +58,6 @@ Search Engine:
 
 Deployment:
 
-  DIGITALOCEAN
-    -provision for LAMP server and redis server
-    -develop automated deployment workflow via git
-
   GOOGLE ANALYTICS
     -set up google analytics
     -SEO
@@ -74,7 +67,10 @@ Completed:
   -rework app routing from search page to results page
   !-sessions cached in redis
   -pagination
+  -add feature to revert case study to draft
+  !-fix database schema bug to allow more characters on fields
   !-filters
-
-
-
+  !-fix user deletion bug
+    DIGITALOCEAN
+    -provision for LAMP server and redis server
+    -develop automated deployment workflow via git

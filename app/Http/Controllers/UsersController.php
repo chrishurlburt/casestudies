@@ -37,8 +37,12 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::latest()->get()->all();
+        $usersTrashed = User::onlyTrashed()->get();
 
-        return view('layouts.admin.users.manage')->with('users', $users);
+        return view('layouts.admin.users.manage')->with([
+            'users'        => $users,
+            'usersTrashed' => $usersTrashed
+        ]);
     }
 
 
@@ -77,7 +81,6 @@ class UsersController extends Controller
                 return redirect(route('admin.users.create'))->withErrors('The passwords provided did not match.');
             } else {
 
-                // setup credentials
                 $credentials = [
                     'email'      => $input['email'],
                     'password'   => $input['password'],
@@ -88,6 +91,9 @@ class UsersController extends Controller
                 // check creation validity
                 if( Sentinel::validForCreation($credentials) ){
                     // create the user, attach the role
+
+                    dd(Sentinel::all());
+
                     $user = Sentinel::register($credentials);
                     $role->users()->attach($user);
 
@@ -115,6 +121,7 @@ class UsersController extends Controller
         //
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -126,7 +133,25 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $roles = Sentinel::getRoleRepository()->all();
 
-        return view('layouts.admin.users.edit')->with('user', $user)->with('roles', $roles);
+        return view('layouts.admin.users.edit')->with([
+            'user' => $user,
+            'roles' => $roles
+        ]);
+    }
+
+
+    /**
+     * Activate a user account that's been deactivated.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activate($id)
+    {
+        $user = User::onlyTrashed()->where('id', $id)->restore();
+
+        Helpers::flash('The user has been successfully activated.');
+        return redirect(route('admin.users.index'));
     }
 
 
@@ -177,12 +202,10 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        $role = Sentinel::findById($id)->roles()->first();
-        $role->users()->detach($id);
-
-        Helpers::flash('The user has been successfully deleted.');
+        Helpers::flash('The user has been successfully deactivated.');
         return redirect(route('admin.users.index'));
     }
+
 
     /**
      * Sync a role to a user.

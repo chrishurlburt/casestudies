@@ -129,7 +129,7 @@
 
                     ajax.get(url, function(data) {
 
-                        console.log(data);
+                        // console.log(data);
 
                         $('.course-name').empty().append(data.name);
 
@@ -148,6 +148,28 @@
                 });
             },
             finalize : function(){ }
+        },
+        'manage_users' : {
+            init : function(){
+
+                $('.deactivate').click(function(e){
+                    e.preventDefault();
+
+                    var resource = $(this).closest('table').attr('data-resource');
+
+                    var route = $(this).attr('href');
+
+                    $('.warning-message').empty().append('Are you sure you want to deactivate '+resource+'?');
+                    $('.warning-desc').empty().append('This user can later be reactivated.');
+                    $('.btn-danger').empty().append('Deactivate');
+
+                    $('#delete').modal('show');
+                    $('form').attr('action', route);
+
+                });
+
+            },
+            finalize : function() {}
         }
     };
 

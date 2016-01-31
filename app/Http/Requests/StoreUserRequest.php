@@ -32,4 +32,16 @@ class StoreUserRequest extends Request
             'role'              => 'required'
         ];
     }
+
+    /**
+     * Custom error messages.
+     *
+     * @return array
+     */
+    public function  messages()
+    {
+        return [
+            'email.unique' => 'This email address is already in use. Please reactivate the user currently using this email.'
+        ];
+    }
 }

@@ -1,4 +1,5 @@
 @extends('admin-base')
+@section('bodyclass', 'manage_users')
 
 @section('content')
 
@@ -9,26 +10,20 @@
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')
 
-<table class="table table-hover" data-resource="user">
-    <thead>
-        <tr>
-            <th>User</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($users as $user)
-            <tr>
-                <td><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}" class="user">{{ $user->first_name.' '.$user->last_name }}</a></td>
-                <td>{{ $user->email }}</td>
-                <td>{{ \Sentinel::findById($user->id)->roles()->first()->name }}</td>
-                <td><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">Edit</a> | <a href="{{ route('admin.users.destroy', ['id' => $user->id]) }}" class="delete">Delete</a></td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+@include('layouts.admin.partials._users', ['users' => $users, 'deactivated' => false])
+
+@if(!$usersTrashed->isEmpty())
+    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#deactivated" aria-expanded="false" aria-controls="collapseExample">
+        Show Deactivated Users
+    </a>
+
+    <div class="collapse" id="deactivated">
+
+        @include('layouts.admin.partials._users', ['users' => $usersTrashed, 'deactivated' => true])
+
+    </div>
+@endif
+
 
 @stop
 

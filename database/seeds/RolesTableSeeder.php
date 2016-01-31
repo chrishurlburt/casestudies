@@ -48,6 +48,7 @@ class RolesTableSeeder extends Seeder
                         "admin.users.store": true,
                         "admin.users.edit": true,
                         "admin.users.update": true,
+                        "admin.users.activate": true,
                         "admin.users.destroy": true,
                         "admin.users.show": true
                     }',

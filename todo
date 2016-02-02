@@ -25,6 +25,7 @@ Admin Dashboard:
     -tooltips for outcomes
 
   USERS:
+    !-dont let logged in users deactivate themselves/change their permissions
     -more user permission layers(super admin, etc.)
 
   NOTIFICATIONS:

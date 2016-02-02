@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Request;
 use Session;
 use Input;
-
+use Redis;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -28,8 +28,6 @@ class AppController extends Controller
      */
     public function index()
     {
-
-
         Session::forget(['search','results','studies_by_outcome','studies_by_course','outcomes_checked','courses_checked']);
 
         $outcomes = Outcome::latest()->get()->all();

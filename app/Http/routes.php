@@ -14,16 +14,21 @@
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']);
-    Route::get('cases/drafts', ['as' => 'admin.cases.drafts', 'uses' => 'StudiesController@drafts']);
 
     route::get('notifications', ['as' => 'admin.notifications', 'uses' => 'AdminController@notifications']);
     route::delete('notifications', ['as' => 'admin.notifications.destroy', 'uses' => 'AdminController@destroyNotification']);
 
+
+    Route::get('cases/drafts', ['as' => 'admin.cases.drafts', 'uses' => 'StudiesController@drafts']);
+    Route::get('cases/trash', ['as' => 'admin.cases.trash', 'uses' => 'StudiesController@trash']);
+    Route::get('cases/restore/{slug}', ['as' => 'admin.cases.restore', 'uses' => 'StudiesController@restore']);
     Route::resource('cases', 'StudiesController');
+
+
     Route::resource('outcomes', 'OutcomesController');
     Route::resource('courses', 'CoursesController');
-    Route::resource('users', 'UsersController');
 
+    Route::resource('users', 'UsersController');
     Route::get('/users/activate/{id}', ['as' => 'admin.users.activate', 'uses' => 'UsersController@activate']);
 
 });

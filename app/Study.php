@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Study extends Model
 {
+    use SoftDeletes;
+
     /**
      * Enable revisioning for this model.
      */
@@ -21,6 +24,14 @@ class Study extends Model
      * @var string
      */
     protected $table = 'studies';
+
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
 
     /**

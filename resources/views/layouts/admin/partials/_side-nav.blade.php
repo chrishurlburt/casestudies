@@ -20,7 +20,7 @@
                     <a href="{{ route('admin.cases.drafts') }}">Manage Drafts</a>
                 </li>
                 <li>
-                    <a href="#">Trashed Studies</a>
+                    <a href="{{ route('admin.cases.trash') }}">Trashed Studies</a>
                 </li>
             </ul>
         </li>

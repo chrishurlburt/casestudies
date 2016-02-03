@@ -30,6 +30,12 @@ Breadcrumbs::register('drafts', function($breadcrumbs)
     $breadcrumbs->push('Manage Drafts', route('admin.cases.drafts'));
 });
 
+Breadcrumbs::register('trash', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Trashed Studies', route('admin.cases.trash'));
+});
+
 Breadcrumbs::register('edit', function($breadcrumbs, $slug)
 {
     if(Study::where('slug', $slug)->firstOrFail()->draft) {

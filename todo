@@ -1,6 +1,9 @@
 * = low priority
 ! = high priority
 
+todo now:
+-courses form
+
 Overall:
   -UI/UX design
   -bug testing (on going)
@@ -10,6 +13,7 @@ Overall:
   !-error handling
   -refactor all code for effeciency, maintainability, scalability and best practices (on going)
   !-think of a name
+  -tooltips
 
 
 Admin Dashboard:
@@ -20,9 +24,8 @@ Admin Dashboard:
     -fix custom url form request error message
     -when changing custom url, warn user that case study will 404 at old url
     -add rollbacks via revision history
-    -soft deletes, “trashed studies” section
     !-add fields to match survey (completed on time, etc.)
-    -tooltips for outcomes
+    -DRY out cases views
 
   USERS:
     !-dont let logged in users deactivate themselves/change their permissions
@@ -72,6 +75,7 @@ Completed:
   !-fix database schema bug to allow more characters on fields
   !-filters
   !-fix user deletion bug
+  -soft deletes, “trashed studies” section
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git

@@ -101,7 +101,7 @@ class StudiesController extends Controller
 
 
     /**
-     * Delete a case study.
+     * soft delete a case study.
      *
      * @return  \Illuminate\Http\Response
      */
@@ -191,6 +191,23 @@ class StudiesController extends Controller
 
     }
 
+    /**
+     * Restore a soft deleted study to a draft.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($slug)
+    {
+        $study = Study::withTrashed()->where('slug', $slug)->firstOrFail();
+        $study->draft = true;
+        $study->save();
+
+        $study->restore();
+
+        $this->flash('The case study has been restored.');
+        return redirect(route('admin.cases.drafts'));
+    }
+
 
     /**
      * Respond to an AJAX request with a study.
@@ -199,7 +216,7 @@ class StudiesController extends Controller
      */
     public function show($slug)
     {
-        $study = Study::where('slug', $slug)->firstOrFail();
+        $study = Study::withTrashed()->where('slug', $slug)->firstOrFail();
         $keywords = $study->keywords()->get();
 
         if(Request::ajax()) {
@@ -261,6 +278,19 @@ class StudiesController extends Controller
 
         return view('layouts.admin.cases.drafts')->with('drafts', $drafts);
 
+    }
+
+
+    /**
+    * Show all trashed studies.
+    *
+    * @return  \Illuminate\Http\Response
+    */
+    public function trash()
+    {
+        $studies = Study::onlyTrashed()->get();
+
+        return view('layouts.admin.cases.trash')->with('studies', $studies);
     }
 
 

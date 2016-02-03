@@ -21,6 +21,7 @@ class CreateStudiesTable extends Migration
             $table->string('slug');
             $table->boolean('draft');
             $table->integer('user_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
 
             // Foreign key constraints

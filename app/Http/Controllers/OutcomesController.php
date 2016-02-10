@@ -97,6 +97,8 @@ class OutcomesController extends Controller
 
 
         // this is the problem
+        // if there are no studies or courses attached,
+        // delete the outcome anyway.
 
         $studies = $outcome->studies()->get()->lists('id');
         $courses = $outcome->courses()->get()->lists('id');

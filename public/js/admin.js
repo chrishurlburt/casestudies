@@ -139,12 +139,12 @@
 
                         // console.log(data);
 
-                        $('.course-name').empty().append(data.name);
+                        $('.course-name').empty().append(data.subject_name+' '+data.course_number);
 
-                        if(!data.description) {
+                        if(!data.course_name) {
                             $('.course-description').closest('h4').detach();
                         } else {
-                            $('.course-description').empty().append(data.description);
+                            $('.course-description').empty().append(data.course_name);
                         }
 
                         $('.edit').attr('href', url+'/edit');

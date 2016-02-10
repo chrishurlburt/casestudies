@@ -28,7 +28,7 @@ class UpdateCourseRequest extends Request
         return [
             'subject_name'    => 'required|min:2|max:6',
             'course_number'   => 'required|max:5',
-            'course_name'     => 'required|min:5|max:75'
+            'course_name'     => 'required|min:5|max:75',
             'outcomes'        => 'required'
         ];
     }

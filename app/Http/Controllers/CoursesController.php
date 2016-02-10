@@ -46,7 +46,11 @@ class CoursesController extends Controller
     {
         $outcomes = Outcome::latest()->get()->all();
 
-        return view('layouts.admin.courses.create')->with('outcomes', $outcomes);
+        if(!$outcomes){
+            return redirect(route('admin'))->withErrors('You need to create some learning outcomes before you can create courses.');
+        } else {
+            return view('layouts.admin.courses.create')->with('outcomes', $outcomes);
+        }
     }
 
 
@@ -64,9 +68,7 @@ class CoursesController extends Controller
         }
 
         Helpers::flash('The course has been successfully added.');
-
         return redirect(route('admin.courses.index'));
-
     }
 
 
@@ -77,7 +79,6 @@ class CoursesController extends Controller
     */
     public function update(UpdateCourseRequest $UpdateCourseRequest, $id)
     {
-
         $course = Course::findOrFail($id);
         $course->update($UpdateCourseRequest->all());
 

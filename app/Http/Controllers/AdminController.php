@@ -17,29 +17,17 @@ use App\Helpers\Helpers;
 class AdminController extends Controller
 {
 
+    public function __construct(){
+        // check to see if there's learning outcomes, courses or case studies in the DB.
+        // If not, suggest creating them.
+    }
+
     public function index()
     {
         $notifications = Auth::user()->notifications()->latest()->take(10)->get();
         $team = User::all();
 
         return view('layouts.admin.dashboard')->with('notifications', $notifications)->with('team', $team);
-    }
-
-    public function accounts()
-    {
-
-        // @TODO: authorization on admin.account resource routes
-
-        $user = Sentinel::findById(Auth::user()->id);
-
-        dd($user->hasAccess(['admin.accounts']));
-
-
-
-        // if (!$user->hasAccess(Route::currentRouteName())) {
-        //     return redirect('admin')->withErrors(['auth'=>'Permission Denied.']);
-        // }
-
     }
 
 

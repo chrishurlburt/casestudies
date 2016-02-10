@@ -20,7 +20,7 @@
     <tbody>
         @foreach($courses as $course)
             <tr>
-                <td><a href="{{ route('admin.courses.show', ['id' => $course->id]) }}" data-toggle="modal" data-target="#course" class="course">{{ $course->name }}</a></td>
+                <td><a href="{{ route('admin.courses.show', ['id' => $course->id]) }}" data-toggle="modal" data-target="#course" class="course">{{ $course->subject_name.' '.$course->course_number }}</a></td>
                 <td><a href="{{ route('admin.courses.edit', ['id' => $course->id]) }}">Edit</a> | <a href="{{ route('admin.courses.destroy', ['id' => $course->id]) }}" class="delete">Delete</a></td>
             </tr>
         @endforeach

@@ -138,6 +138,26 @@ class StudiesController extends Controller
 
 
     /**
+     * Permanently delete case studies from the trash.
+     *
+     * @param  Request
+     * @return  \Illuminate\Http\Response
+     */
+    public function forceDestroy(\Illuminate\Http\Request $request)
+    {
+
+        $studies = Study::onlyTrashed()->findMany($request->input('studies'));
+
+        foreach($studies as $study) {
+            $study->forceDelete();
+        }
+
+        Session::flash('flash_message', 'The case studies have been permanently deleted.');
+        return redirect(route('admin.cases.trash'));
+    }
+
+
+    /**
      * Update a case study.
      *
      * @return \Illuminate\Http\Response

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use \Route;
 
 class UpdateCourseRequest extends Request
 {
@@ -25,10 +24,12 @@ class UpdateCourseRequest extends Request
     public function rules()
     {
 
-        $course = Route::current()->parameters();
 
         return [
-            'name'    => 'required|unique:courses,name,'.intval($course['courses']).'|min:4'
+            'subject_name'    => 'required|min:2|max:6',
+            'course_number'   => 'required|min:5|max:7',
+            'course_name'     => 'required|min:5|max:75'
+            'outcomes'        => 'required'
         ];
     }
 }

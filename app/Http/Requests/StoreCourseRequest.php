@@ -25,7 +25,10 @@ class StoreCourseRequest extends Request
     public function rules()
     {
         return [
-            'name'    => 'required|unique:courses,name|min:4',
+            'subject_name'  => 'required|min:2|max:6',
+            'course_number' => 'required|min:5|max:7',
+            'course_name'   => 'required|min:5|max:75',
+            'outcomes'      => 'required'
        ];
     }
 }

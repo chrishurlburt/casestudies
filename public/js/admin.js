@@ -48,6 +48,13 @@
 
                     $('.warning-message').empty().append('Are you sure you want to delete this '+resource+'?');
 
+                    if(resource == 'case study' || resource == 'draft') {
+                        $('.warning-desc').empty().append('The study will moved to the trash.');
+                    } else {
+                        $('.warning-desc').empty().append('It will be permanently deleted.');
+                    }
+
+
                     $('#delete').modal('show');
                     $('form').attr('action', route);
 

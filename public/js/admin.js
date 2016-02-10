@@ -34,6 +34,7 @@
 
                 tinymce.init({
                     selector: '.editor',
+                    min_height: 250,
                     menubar: false,
                     plugins: 'autolink link',
                     toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link unlink'

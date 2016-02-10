@@ -71,7 +71,7 @@
                 <div class="checkbox">
                     <label for="courses">
                         {!! Form::checkbox('courses[]', $course->id) !!}
-                        {!! $course->name !!}
+                        {!! $course->subject_name.' '.$course->course_number !!}
                     </label>
                 </div>
             @endforeach

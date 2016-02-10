@@ -95,6 +95,9 @@ class OutcomesController extends Controller
     {
         $outcome = Outcome::findOrFail($id);
 
+
+        // this is the problem
+
         $studies = $outcome->studies()->get()->lists('id');
         $courses = $outcome->courses()->get()->lists('id');
 

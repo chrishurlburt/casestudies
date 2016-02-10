@@ -26,7 +26,7 @@ class StoreCourseRequest extends Request
     {
         return [
             'subject_name'  => 'required|min:2|max:6',
-            'course_number' => 'required|min:5|max:7',
+            'course_number' => 'required|max:5',
             'course_name'   => 'required|min:5|max:75',
             'outcomes'      => 'required'
        ];

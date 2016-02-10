@@ -16,6 +16,7 @@ Overall:
 Admin Dashboard:
 
   CASE STUDIES
+    -pagination for trashed, drafts
     !-implement sort and filter options (jQuery datatables)
     !-keyword entry to allow spaces as delimiters
     -fix custom url form request error message
@@ -23,6 +24,11 @@ Admin Dashboard:
     -add rollbacks via revision history
     !-add fields to match survey (completed on time, etc.)
     -DRY out cases views
+
+
+  OUTCOMES:
+    -delete not working
+    -update not working
 
   USERS:
     !-dont let logged in users deactivate themselves/change their permissions
@@ -45,6 +51,8 @@ Search Engine:
     -"view all" studies option
 
   RESULTS:
+    -search terms
+    -handle situation with no results after filter
     -include exceprt, date and other info for each study in results
     -sort options(date, author, etc)
 

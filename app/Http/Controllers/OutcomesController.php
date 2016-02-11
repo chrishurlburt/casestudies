@@ -76,7 +76,6 @@ class OutcomesController extends Controller
      */
     public function update(UpdateOutcomeRequest $UpdateOutcomeRequest, $id)
     {
-
         $outcome = Outcome::findOrFail($id);
         $outcome->update($UpdateOutcomeRequest->all());
 
@@ -93,19 +92,7 @@ class OutcomesController extends Controller
      */
     public function destroy($id)
     {
-        $outcome = Outcome::findOrFail($id);
-
-
-        // this is the problem
-        // if there are no studies or courses attached,
-        // delete the outcome anyway.
-
-        $studies = $outcome->studies()->get()->lists('id');
-        $courses = $outcome->courses()->get()->lists('id');
-
-        $outcome->studies()->detach($studies);
-        $outcome->courses()->detach($courses);
-        $outcome->delete();
+        $outcome = Outcome::destroy($id);
 
         Helpers::flash('The learning outcome has been successfully deleted.');
         return redirect(route('admin.outcomes.index'));

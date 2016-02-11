@@ -27,7 +27,7 @@ class UpdateOutcomeRequest extends Request
         $outcome = Route::current()->parameters();
 
         return [
-            'name'    => 'required|unique:courses,name,'.intval($outcome['outcomes']).'|min:4'
+            'name'    => 'required|unique:outcomes,name,'.intval($outcome['outcomes']).'|min:4'
         ];
     }
 }

@@ -9,7 +9,6 @@ Overall:
   !-tighten up and finalize form validation
   !-error handling
   -refactor all code for effeciency, maintainability, scalability and best practices (on going)
-  !-think of a name
   -tooltips
 
 
@@ -24,11 +23,7 @@ Admin Dashboard:
     -add rollbacks via revision history
     !-add fields to match survey (completed on time, etc.)
     -DRY out cases views
-
-
-  OUTCOMES:
-    -delete not working
-    -update not working
+    -UI for case studies breaks with a lot outcomes
 
   USERS:
     !-dont let logged in users deactivate themselves/change their permissions
@@ -81,6 +76,11 @@ Completed:
   !-filters
   !-fix user deletion bug
   -soft deletes, “trashed studies” section
+  !-think of a name
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git
+
+
+Name
+  -RWU CM Case Studies to support Expernential Learning (CASTEL)

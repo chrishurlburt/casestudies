@@ -131,9 +131,7 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-
-        $course = Course::findOrFail($id);
-        $course->delete();
+        $course = Course::destroy($id);
 
         Helpers::flash('The course has been successfully deleted.');
         return redirect(route('admin.courses.index'));

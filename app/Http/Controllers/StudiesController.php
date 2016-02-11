@@ -177,7 +177,7 @@ class StudiesController extends Controller
             if($user->hasAccess(['publish'])) {
                 // user has permission to publish
 
-                // @TODO: modify to recieve entire form request
+                // @TODO: refactor to recieve entire form request
                 $this->updateStudy($study, $input, false);
                 return redirect(route('admin.cases.index'));
 

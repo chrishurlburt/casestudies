@@ -18,13 +18,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     route::get('notifications', ['as' => 'admin.notifications', 'uses' => 'AdminController@notifications']);
     route::delete('notifications', ['as' => 'admin.notifications.destroy', 'uses' => 'AdminController@destroyNotification']);
 
-
     Route::get('cases/drafts', ['as' => 'admin.cases.drafts', 'uses' => 'StudiesController@drafts']);
     Route::get('cases/trash', ['as' => 'admin.cases.trash', 'uses' => 'StudiesController@trash']);
     Route::get('cases/restore/{slug}', ['as' => 'admin.cases.restore', 'uses' => 'StudiesController@restore']);
     Route::delete('cases/trash', ['as' => 'admin.cases.forceDestroy', 'uses' => 'StudiesController@forceDestroy']);
     Route::resource('cases', 'StudiesController');
-
 
     Route::resource('outcomes', 'OutcomesController');
     Route::resource('courses', 'CoursesController');

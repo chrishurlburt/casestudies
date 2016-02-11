@@ -5,7 +5,6 @@ Overall:
   -UI/UX design
   -bug testing (on going)
   !-refactor queries to leverage eager loading
-  -cache queries with redis to increase speed
   !-tighten up and finalize form validation
   !-error handling
   -refactor all code for effeciency, maintainability, scalability and best practices (on going)
@@ -15,24 +14,19 @@ Overall:
 Admin Dashboard:
 
   CASE STUDIES
-    -pagination for trashed, drafts
     !-implement sort and filter options (jQuery datatables)
-    !-keyword entry to allow spaces as delimiters
     -fix custom url form request error message
-    -when changing custom url, warn user that case study will 404 at old url
-    -add rollbacks via revision history
     !-add fields to match survey (completed on time, etc.)
-    -DRY out cases views
-    -UI for case studies breaks with a lot outcomes
+    -DRY out cases views (create & edit forms)
 
   USERS:
-    !-dont let logged in users deactivate themselves/change their permissions
+    -password change
+    !-warn users before they deactivate themselves or change their own permissions. ajax to get logged in user, create warning modal`
     -more user permission layers(super admin, etc.)
 
   NOTIFICATIONS:
-    -when a user is deleted, notifications dont show properly because they dont include trashed users
+    -when a user is deleted, notifications dont show properly because they dont include trashed users (->withTrashed()?)
     -fix bugs in notification system
-    -add functionality to set message
     -name attached to notifcation on main dashboard page
 
   SECURITY:
@@ -42,7 +36,6 @@ Admin Dashboard:
 Search Engine:
 
   LANDING:
-    -clear session on page back
     -"view all" studies option
 
   RESULTS:
@@ -76,11 +69,16 @@ Completed:
   !-filters
   !-fix user deletion bug
   -soft deletes, “trashed studies” section
+  -pagination for trashed, drafts
   !-think of a name
+  !-keyword entry to allow spaces as delimiters
+  -cache queries with redis to increase speed
+  -when changing custom url, warn user that case study will 404 at old url
+  -UI for case studies breaks with a lot outcomes
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git
 
 
-Name
+Name:
   -RWU CM Case Studies to support Expernential Learning (CASTEL)

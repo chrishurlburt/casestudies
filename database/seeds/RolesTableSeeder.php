@@ -18,6 +18,9 @@ class RolesTableSeeder extends Seeder
                 'permissions'  => '{
 
                         "publish": true,
+                        "admin": true,
+                        "admin.notifications": true,
+                        "admin.notifications.destroy": true,
                         "admin.cases.index": true,
                         "admin.cases.create":true,
                         "admin.cases.store": true,
@@ -60,6 +63,9 @@ class RolesTableSeeder extends Seeder
                 'permissions'  => '{
 
                         "publish": false,
+                        "admin": true,
+                        "admin.notifications": true,
+                        "admin.notifications.destroy": true,
                         "admin.cases.index": true,
                         "admin.cases.create":true,
                         "admin.cases.store": true,

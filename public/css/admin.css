@@ -1,4 +1,11 @@
 #cases-form .btn {
   margin: 0 0 10px 0; }
 
+#cases-form .custom-url-warning {
+  display: none; }
+
+#cases-form .outcomes-wrapper {
+  max-height: 250px;
+  overflow: scroll; }
+
 /*# sourceMappingURL=admin.css.map */

@@ -33,6 +33,8 @@
 
     </tbody>
 </table>
+
+{!! $drafts->render() !!}
 @endif
 
 @include('layouts.admin.partials._study-modal')

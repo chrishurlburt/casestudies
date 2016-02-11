@@ -95,6 +95,14 @@
             },
             finalize : function(){ }
         },
+        'edit_case_study' : {
+            init     : function(){
+                $('.custom-url').click(function(){
+                    $('.custom-url-warning').slideDown('fast');
+                });
+            },
+            finalize : function(){ }
+        },
         'manage_outcomes' : {
             init     : function(){
                 $('.outcome').click(function(e){

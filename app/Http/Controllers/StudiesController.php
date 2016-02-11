@@ -294,7 +294,10 @@ class StudiesController extends Controller
 
         // @TODO: pagination
 
-        $drafts = Study::where('draft', true)->latest()->get();
+        $drafts = Study::where('draft', true)->latest()->paginate(20);
+
+
+        // $drafts = Study::where('draft', true)->latest()->get();
 
         return view('layouts.admin.cases.drafts')->with('drafts', $drafts);
 
@@ -323,7 +326,8 @@ class StudiesController extends Controller
     */
     private function storeKeywords($keywords)
     {
-        $keywords = array_map('trim', explode(',',$keywords));
+        // explode string at commas and spaces
+        $keywords = array_map('trim', preg_split('~[\s,]+~', $keywords));
 
         $keywordIds = [];
         foreach($keywords as $keyword) {

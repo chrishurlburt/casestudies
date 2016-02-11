@@ -4,4 +4,13 @@
         margin: 0 0 10px 0;
     }
 
+    .custom-url-warning {
+        display: none;
+    }
+
+    .outcomes-wrapper {
+        max-height: 250px;
+        overflow: scroll;
+    }
+
 }

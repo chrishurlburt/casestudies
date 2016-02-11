@@ -63,10 +63,6 @@
                 <li>
                     <a href="{{ route('admin.users.create') }}">New User</a>
                 </li>
-                <li>
-                    <a href="#">Message</a>
-                </li>
-
             </ul>
         </li>
         @endif

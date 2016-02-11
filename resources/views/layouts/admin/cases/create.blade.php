@@ -30,20 +30,8 @@
                     {!! Form::text('keywords', null, ['class' => 'form-control']) !!}
                 </div>
 
-                <div class="form-group">
+                @include('layouts.admin.partials._cases-form-outcomes', ['create' => true])
 
-                    <h3>Learning Outcomes <small>(Check all that apply)</small></h3>
-
-                    @foreach($outcomes as $outcome)
-                        <div class="checkbox">
-                            <label>
-                                {!! Form::checkbox('outcomes[]', $outcome->id) !!}
-                                {!! $outcome->name !!}
-                            </label>
-                        </div>
-                    @endforeach
-
-                </div>
             </div>
 
             <div class="col-lg-4">

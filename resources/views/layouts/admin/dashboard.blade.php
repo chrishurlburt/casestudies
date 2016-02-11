@@ -41,22 +41,6 @@
     <div class="col-sm-12 col-md-6 col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bullhorn fa-fw"></i> Message</h3>
-            </div>
-
-            <div class="panel-body">
-                <h4>Avoid the following:</h4>
-                <ul>
-                    <li>Deleting a user</li>
-                    <li>Changing a user's permissions</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-users fa-fw"></i> Our Team</h3>
             </div>
 

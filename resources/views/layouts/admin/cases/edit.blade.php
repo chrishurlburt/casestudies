@@ -1,5 +1,8 @@
 @extends('admin-base')
 
+@section('bodyclass', 'edit_case_study')
+
+
 @section('content')
 <main id="cases-form">
 
@@ -28,8 +31,12 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <h3>Custom URL</h3>
-                    {!! Form::text('slug', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('slug', null, ['class' => 'form-control custom-url']) !!}
                     {!! Form::hidden('_old_slug', $study->slug)!!}
+                    <div class="custom-url-warning alert alert-warning alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        Changing a custom URL will break all links to the case study at it's old URL.
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -37,23 +44,11 @@
                     {!! Form::text('keywords', $keywords, ['class' => 'form-control']) !!}
                 </div>
 
-                <div class="form-group">
+                @include('layouts.admin.partials._cases-form-outcomes', ['create' => false])
 
-                    <h3>Learning Outcomes <small>(Check all that apply)</small></h3>
-
-                    @foreach($outcomes as $outcome)
-                    <div class="checkbox">
-                        <label>
-                            {!! Form::checkbox('outcomes[]', $outcome->id, in_array($outcome->id, $study->outcomes()->lists('outcome_id')->toArray())) !!}
-                            {!! $outcome->name !!}
-                        </label>
-                    </div>
-                    @endforeach
-
-                </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-offset-8 col-lg-4">
                 <div class="form-group">
                     @if($study->draft)
 

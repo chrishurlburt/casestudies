@@ -40,4 +40,16 @@ class Course extends Model
 
     }
 
+
+    /**
+     * Subject name to upper case.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setSubjectNameAttribute($value)
+    {
+        $this->attributes['subject_name'] = strtoupper($value);
+    }
+
 }

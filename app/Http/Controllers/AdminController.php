@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SetMessageRequest;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use \Route;
 
 use App\Notification;
 use App\User;
+use App\Message;
 use App\Helpers\Helpers;
 
 class AdminController extends Controller
@@ -20,6 +22,8 @@ class AdminController extends Controller
     public function __construct(){
         // check to see if there's learning outcomes, courses or case studies in the DB.
         // If not, suggest creating them.
+
+        $this->middleware('authorize');
     }
 
     public function index()
@@ -52,10 +56,9 @@ class AdminController extends Controller
      */
     public function destroyNotification(Request $request)
     {
-
         Auth::user()->notifications()->detach($request->input('notifications'));
 
         return redirect(route('admin.notifications'))->with(Helpers::flash('The selected notifications have been deleted.'));
-
     }
+
 }

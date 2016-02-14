@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UpdatePasswordRequest extends Request
+class UsersPasswordRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class UpdatePasswordRequest extends Request
     public function rules()
     {
         return [
-            'old_password' => 'required',
             'password' => 'required|confirmed|min:6',
             'password_confirmation'  => 'required'
         ];
@@ -38,11 +37,9 @@ class UpdatePasswordRequest extends Request
     public function  messages()
     {
         return [
-            'old_password'              => 'You must provide your old password.',
             'password.required'         => 'The password field is required.',
             'password.confirmed'        => 'The passwords do not match.',
             'password_confirm.required' => 'You must confirm the new password.'
         ];
     }
-
 }

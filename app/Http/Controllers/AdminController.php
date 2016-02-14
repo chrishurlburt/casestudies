@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\SetMessageRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ use \Route;
 
 use App\Notification;
 use App\User;
-use App\Message;
+use App\Study;
 use App\Helpers\Helpers;
 
 class AdminController extends Controller
@@ -32,6 +32,60 @@ class AdminController extends Controller
         $team = User::all();
 
         return view('layouts.admin.dashboard')->with('notifications', $notifications)->with('team', $team);
+    }
+
+
+    /**
+     * Show the profile for the logged in user.
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        $user = Auth::user();
+        $studies = Study::where('user_id', $user->id)->get()->all();
+
+        return view('layouts.admin.profile.index')->with([
+            'user'    => $user,
+            'studies' => $studies
+        ]);
+    }
+
+
+    /**
+     * Change the user's password.
+     *
+     *
+     * @return Response
+     */
+    public function password()
+    {
+        return view('layouts.admin.profile.password');
+    }
+
+
+    /**
+     * Change the user's password.
+     *
+     *
+     * @return Response
+     */
+    public function updatePassword(UpdatePasswordRequest $UpdatePasswordRequest)
+    {
+        $user = Auth::user();
+
+        if (Auth::attempt(['email' => $user->email, 'password' => $UpdatePasswordRequest->old_password])) {
+            // old_password is correct
+            // $user = Auth::user();
+            $user->password = $UpdatePasswordRequest->password;
+            $user->save();
+
+            Helpers::flash('Your password has been successfully updated.');
+            return redirect(route('admin.profile'));
+
+        } else {
+            return redirect(route('admin.profile.password'))->withErrors(['The old password entered was incorrect.']);
+        }
     }
 
 

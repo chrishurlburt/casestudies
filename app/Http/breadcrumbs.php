@@ -49,18 +49,6 @@ Breadcrumbs::register('edit', function($breadcrumbs, $slug)
 
 
 /**
- * Notifications crumbs
- */
-Breadcrumbs::register('notifications', function($breadcrumbs)
-{
-
-    $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push('Notifications', route('admin.notifications'));
-
-});
-
-
-/**
  * Courses crumbs
  */
 Breadcrumbs::register('create-course', function($breadcrumbs){
@@ -131,5 +119,40 @@ Breadcrumbs::register('edit-user', function($breadcrumbs, $id){
 
     $breadcrumbs->parent('manage-users');
     $breadcrumbs->push('Edit User', route('admin.users.edit', $id));
+
+});
+
+
+Breadcrumbs::register('change-password', function($breadcrumbs, $id){
+
+    $breadcrumbs->parent('edit-user', $id);
+    $breadcrumbs->push('Change Password', route('admin.users.password.index', $id));
+
+});
+
+/**
+ * Profile crumbs
+ */
+Breadcrumbs::register('notifications', function($breadcrumbs)
+{
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Notifications', route('admin.notifications'));
+
+});
+
+Breadcrumbs::register('profile', function($breadcrumbs)
+{
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Profile', route('admin.profile'));
+
+});
+
+Breadcrumbs::register('profile-change-password', function($breadcrumbs)
+{
+
+    $breadcrumbs->parent('profile');
+    $breadcrumbs->push('Change Password', route('admin.profile.password'));
 
 });

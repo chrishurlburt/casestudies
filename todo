@@ -20,8 +20,7 @@ Admin Dashboard:
     -DRY out cases views (create & edit forms)
 
   USERS:
-    -password change
-    !-warn users before they deactivate themselves or change their own permissions. ajax to get logged in user, create warning modal`
+    !-warn users before they deactivate themselves or change their own permissions. ajax to get logged in user, create warning modal
     -more user permission layers(super admin, etc.)
 
   NOTIFICATIONS:
@@ -75,6 +74,7 @@ Completed:
   -cache queries with redis to increase speed
   -when changing custom url, warn user that case study will 404 at old url
   -UI for case studies breaks with a lot outcomes
+  -password change
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git

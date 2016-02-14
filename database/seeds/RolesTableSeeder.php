@@ -17,10 +17,14 @@ class RolesTableSeeder extends Seeder
                 'name'         => 'Admin',
                 'permissions'  => '{
 
-                        "publish": true,
                         "admin": true,
                         "admin.notifications": true,
                         "admin.notifications.destroy": true,
+                        "admin.profile": true,
+                        "admin.profile.password": true,
+                        "admin.profile.password.update": true,
+
+                        "publish": true,
                         "admin.cases.index": true,
                         "admin.cases.create":true,
                         "admin.cases.store": true,
@@ -53,7 +57,9 @@ class RolesTableSeeder extends Seeder
                         "admin.users.update": true,
                         "admin.users.activate": true,
                         "admin.users.destroy": true,
-                        "admin.users.show": true
+                        "admin.users.show": true,
+                        "admin.users.password.index": true,
+                        "admin.users.password.update": true
                     }',
         ]);
 

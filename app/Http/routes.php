@@ -18,6 +18,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     route::get('notifications', ['as' => 'admin.notifications', 'uses' => 'AdminController@notifications']);
     route::delete('notifications', ['as' => 'admin.notifications.destroy', 'uses' => 'AdminController@destroyNotification']);
 
+    route::get('profile', ['as' => 'admin.profile', 'uses' => 'AdminController@profile']);
+
+    route::get('profile/change-password', ['as' => 'admin.profile.password', 'uses' => 'AdminController@password']);
+    route::put('profile/change-password', ['as' => 'admin.profile.password.update', 'uses' => 'AdminController@updatePassword']);
+
     Route::get('cases/drafts', ['as' => 'admin.cases.drafts', 'uses' => 'StudiesController@drafts']);
     Route::get('cases/trash', ['as' => 'admin.cases.trash', 'uses' => 'StudiesController@trash']);
     Route::get('cases/restore/{slug}', ['as' => 'admin.cases.restore', 'uses' => 'StudiesController@restore']);
@@ -28,6 +33,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('courses', 'CoursesController');
 
     Route::resource('users', 'UsersController');
+    Route::get('users/change-password/{id}', ['as' => 'admin.users.password.index', 'uses' => 'UsersController@password']);
+    Route::put('users/change-password/{id}', ['as' => 'admin.users.password.update', 'uses' => 'UsersController@updatePassword']);
+
     Route::get('/users/activate/{id}', ['as' => 'admin.users.activate', 'uses' => 'UsersController@activate']);
 
 });

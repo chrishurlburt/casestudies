@@ -66,4 +66,15 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('App\Notification');
     }
 
+
+    /**
+    * Set the password to be hashed when saved.
+    *
+    * @return null
+    */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = \Hash::make($password);
+    }
+
 }

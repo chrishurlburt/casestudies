@@ -9,11 +9,12 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UsersPasswordRequest;
 
 use App\Helpers\Helpers;
 
 use \Sentinel;
+use Hash;
 
 use App\User;
 use Cartalyst\Sentinel\Roles\EloquentRole;
@@ -179,19 +180,6 @@ class UsersController extends Controller
 
 
     /**
-     * Update a user's password.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function password(UpdatePasswordRequest $UpdatePasswordRequest, $id)
-    {
-        //update password
-    }
-
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -203,6 +191,35 @@ class UsersController extends Controller
         $user->delete();
 
         Helpers::flash('The user has been successfully deactivated.');
+        return redirect(route('admin.users.index'));
+    }
+
+
+    /**
+     * Change a users password.
+     *
+     * @return  \Illuminate\Http\Response
+     */
+    public function password($id)
+    {
+        $user = User::find($id);
+
+        return view('layouts.admin.users.password')->with('user', $user);
+    }
+
+
+    /**
+     * Update a user's password.
+     *
+     * @return null
+     */
+    public function updatePassword(UsersPasswordRequest $UsersPasswordRequest, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->password = $UsersPasswordRequest->password;
+        $user->save();
+
+        Helpers::flash('The user\'s password has been successfully updated.');
         return redirect(route('admin.users.index'));
     }
 

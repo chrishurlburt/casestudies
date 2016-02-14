@@ -20,7 +20,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <a href="#"><button class="btn btn-primary form-control">Change Password</button></a>
+        <a href="{{ route('admin.users.password.index', $user->id) }}"><button class="btn btn-primary form-control">Change Password</button></a>
     </div>
 </div>
 

@@ -16,7 +16,7 @@
 @if(!$edit)
     <div class="form-group">
         <h3>Email</h3>
-        {!! Form::text('email', null, ['class' => 'form-control']) !!}
+        {!! Form::email('email', null, ['class' => 'form-control']) !!}
     </div>
 
 

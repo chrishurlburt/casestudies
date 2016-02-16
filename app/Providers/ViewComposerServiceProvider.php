@@ -20,6 +20,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         $this->userRole();
         $this->userNotifications();
+        $this->dashboardNotifications();
         $this->filterOptions();
     }
 
@@ -43,7 +44,21 @@ class ViewComposerServiceProvider extends ServiceProvider
     private function userNotifications()
     {
         view()->composer('layouts.admin.partials._nav', function($view) {
-            $view->with('notifications', Auth::user()->notifications()->latest()->take(5)->get());
+
+            $user = $this->prepareUserNotifications();
+
+            $view->with('user', $user);
+        });
+    }
+
+    private function dashboardNotifications()
+    {
+        view()->composer('layouts.admin.dashboard', function($view) {
+
+            $user = $this->prepareUserNotifications();
+
+            $view->with('user', $user);
+
         });
     }
 
@@ -55,6 +70,11 @@ class ViewComposerServiceProvider extends ServiceProvider
 
             $view->with('outcomes', $outcomes)->with('courses', $courses);
         });
+    }
+
+    private function prepareUserNotifications()
+    {
+        return User::withTrashed()->where('id', Auth::user()->id)->with('notifications')->first();
     }
 
 }

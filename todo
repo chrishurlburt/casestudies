@@ -24,13 +24,7 @@ Admin Dashboard:
     -more user permission layers(super admin, etc.)
 
   NOTIFICATIONS:
-    -when a user is deleted, notifications dont show properly because they dont include trashed users (->withTrashed()?)
     -fix bugs in notification system
-    -name attached to notifcation on main dashboard page
-
-  SECURITY:
-    -rate limiting on login attempts
-
 
 Search Engine:
 
@@ -75,6 +69,8 @@ Completed:
   -when changing custom url, warn user that case study will 404 at old url
   -UI for case studies breaks with a lot outcomes
   -password change
+  -when a user is deleted, notifications dont show properly because they dont include trashed users (->withTrashed()?)
+  -name attached to notifcation on main dashboard page
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git
@@ -82,3 +78,5 @@ Completed:
 
 Name:
   -RWU CM Case Studies to support Expernential Learning (CASTEL)
+
+

@@ -260,7 +260,6 @@ class StudiesController extends Controller
         $keywords = $this->stringifyKeywords($study->keywords()->get());
         $outcomes = Outcome::latest()->get()->all();
 
-
         if($study->draft) {
         // any user can edit a draft, no permissions check.
             return view('layouts.admin.cases.edit')->with('study', $study)->with([

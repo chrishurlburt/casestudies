@@ -14,7 +14,7 @@
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
 
-       {{-- @include('layouts.admin.partials._notifications-nav') --}}
+       @include('layouts.admin.partials._notifications-nav')
 
 
         <li class="dropdown">

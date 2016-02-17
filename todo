@@ -22,7 +22,6 @@ Admin Dashboard:
     !-warn users before they deactivate themselves or change their own permissions. ajax to get logged in user, create warning modal
     -more user permission layers(super admin, etc.)
 
-
   PROFILE:
     -see other users' profile and their case studies.
 

@@ -1,5 +1,8 @@
 @extends('admin-base')
 
+@section('bodyclass', 'case_study_editor')
+
+
 @section('content')
 
 <main id="cases-form">

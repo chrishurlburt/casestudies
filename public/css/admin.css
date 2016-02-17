@@ -8,4 +8,7 @@
   max-height: 250px;
   overflow: scroll; }
 
+#cases-form .popover-content {
+  word-break: break-all; }
+
 /*# sourceMappingURL=admin.css.map */

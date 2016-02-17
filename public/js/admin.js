@@ -95,6 +95,14 @@
             },
             finalize : function(){ }
         },
+        'case_study_editor' : {
+            init     : function(){
+
+                $('.learning-outcome').popover();
+
+            },
+            finalize : function(){ }
+        },
         'edit_case_study' : {
             init     : function(){
                 $('.custom-url').click(function(){

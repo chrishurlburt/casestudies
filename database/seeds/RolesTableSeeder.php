@@ -23,6 +23,7 @@ class RolesTableSeeder extends Seeder
                         "admin.profile": true,
                         "admin.profile.password": true,
                         "admin.profile.password.update": true,
+                        "admin.profile.user": true,
 
                         "publish": true,
                         "admin.cases.index": true,

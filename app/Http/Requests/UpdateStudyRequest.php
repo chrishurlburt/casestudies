@@ -61,6 +61,7 @@ class UpdateStudyRequest extends Request
                 // it was already added to the DB with while avoiding changing the
                 // title to one already in use.
                 'title'    => 'required|unique:studies,title,'.$study->id.'min:10|string',
+                'slug'     => 'unique:studies,slug,'.$study->id.'|min:5|string'
             ];
 
         } else {

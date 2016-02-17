@@ -51,6 +51,17 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * Show the profile for a specified user.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function userProfile($id)
+    {
+        $user = User::FindOrFail($id);
+
+        dd($user);
+    }
 
     /**
      * Change the user's password.
@@ -75,8 +86,6 @@ class AdminController extends Controller
         $user = Auth::user();
 
         if (Auth::attempt(['email' => $user->email, 'password' => $UpdatePasswordRequest->old_password])) {
-            // old_password is correct
-            // $user = Auth::user();
             $user->password = $UpdatePasswordRequest->password;
             $user->save();
 

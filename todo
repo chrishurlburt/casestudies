@@ -15,7 +15,6 @@ Admin Dashboard:
 
   CASE STUDIES
     !-implement sort and filter options (jQuery datatables)
-    -fix custom url form request error message
     !-add fields to match survey (completed on time, etc.)
     -DRY out cases views (create & edit forms)
 
@@ -23,8 +22,9 @@ Admin Dashboard:
     !-warn users before they deactivate themselves or change their own permissions. ajax to get logged in user, create warning modal
     -more user permission layers(super admin, etc.)
 
-  NOTIFICATIONS:
-    -fix bugs in notification system
+
+  PROFILE:
+    -see other users' profile and their case studies.
 
 Search Engine:
 
@@ -70,6 +70,7 @@ Completed:
   -UI for case studies breaks with a lot outcomes
   -password change
   -when a user is deleted, notifications dont show properly because they dont include trashed users (->withTrashed()?)
+  -fix custom url form request error message
   -name attached to notifcation on main dashboard page
     DIGITALOCEAN
     -provision for LAMP server and redis server

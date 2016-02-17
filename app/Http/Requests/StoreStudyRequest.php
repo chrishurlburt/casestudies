@@ -70,7 +70,7 @@ class StoreStudyRequest extends Request
         return [
             'draft.required' => 'Something went wrong, please try resubimiting.',
             'title.unique'   => 'The title has already been taken. Please choose a different one.',
-            'slug.unique'    => 'The custom URL has already been taken. Please choose a different one.'
+            'slug.unique'    => 'The custom URL is already in use by another case study. Please choose a different one.'
         ];
 
     }

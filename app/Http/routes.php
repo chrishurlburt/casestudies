@@ -22,6 +22,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     route::get('profile/change-password', ['as' => 'admin.profile.password', 'uses' => 'AdminController@password']);
     route::put('profile/change-password', ['as' => 'admin.profile.password.update', 'uses' => 'AdminController@updatePassword']);
+    route::get('profile/{id}', ['as' => 'admin.profile.user', 'uses' => 'AdminController@userProfile']);
 
     Route::get('cases/drafts', ['as' => 'admin.cases.drafts', 'uses' => 'StudiesController@drafts']);
     Route::get('cases/trash', ['as' => 'admin.cases.trash', 'uses' => 'StudiesController@trash']);

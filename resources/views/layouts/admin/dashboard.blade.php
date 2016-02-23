@@ -1,5 +1,7 @@
 @extends('admin-base')
 
+@section('bodyclass', 'dashboard')
+
 @section('content')
  <!-- Page Heading -->
                 <div class="row">
@@ -79,6 +81,16 @@
     </div>
 
 </div>
+
+<!-- <div class="row">
+    <div class="col-sm-12">
+
+        <section id="auth-button"></section>
+        <section id="view-selector"></section>
+        <section id="timeline"></section>
+
+    </div>
+</div> -->
 
 
 @stop

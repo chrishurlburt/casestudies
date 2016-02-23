@@ -2,6 +2,8 @@
 
 @section('content')
 
+@section('bodyclass', 'landing')
+
 @if($errors->any())
     <ul class="alert alert-danger">
         @foreach($errors->all() as $error)
@@ -46,14 +48,7 @@
                 <h3>Outcome Search</h3>
             </div>
 
-            @foreach($outcomes as $outcome)
-                <div class="checkbox">
-                    <label for="outcomes">
-                        {!! Form::checkbox('outcomes[]', $outcome->id) !!}
-                        {!! $outcome->name !!}
-                    </label>
-                </div>
-            @endforeach
+            @include('layouts.app.partials._outcomes')
 
         {!! Form::submit('Search Outcomes', ['class' => 'btn btn-primary form-control']) !!}
 

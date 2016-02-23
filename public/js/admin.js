@@ -63,6 +63,12 @@
             },
             finalize : function(){ }
         },
+        'dashboard' : {
+            init     : function(){
+
+            },
+            finalize : function(){ }
+        },
         'manage_case_studies' : {
             init     : function(){
 
@@ -194,6 +200,17 @@
 
             },
             finalize : function() {}
+        },
+
+        // front-end app js
+
+        'landing' : {
+            init     : function(){
+
+                $('.learning-outcome').popover();
+
+            },
+            finalize : function(){ }
         }
     };
 

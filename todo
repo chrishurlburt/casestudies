@@ -13,6 +13,10 @@ Overall:
 
 Admin Dashboard:
 
+  WIDGETS:
+    -Google analytics embed API serverside
+
+
   CASE STUDIES
     !-implement sort and filter options (jQuery datatables)
     !-add fields to match survey (completed on time, etc.)

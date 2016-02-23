@@ -2,6 +2,8 @@
 
 @section('content')
 
+@section('bodyclass', 'results')
+
 <h1>Search Results for: </h1>
 <h4>{{ $search['terms'] }}</h4>
 <hr />

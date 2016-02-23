@@ -5,7 +5,7 @@
 
         @foreach($outcomes as $outcome)
             <div class="checkbox">
-                <label>
+                <label for="outcomes" class="learning-outcome" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="left" data-content="{{ $outcome->description }}">
                     @if(isset($outcomes_checked))
                     {!! Form::checkbox('outcomes[]', $outcome->id, in_array($outcome->id, $outcomes_checked)) !!}
                     @else

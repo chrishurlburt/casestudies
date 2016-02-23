@@ -14,7 +14,7 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     </head>
-    <body>
+    <body class="@yield('bodyclass')">
 
         <div class="container">
             @yield('content')
@@ -35,5 +35,7 @@
           ga('send', 'pageview');
 
         </script>
+        <script src="/js/app.js"></script>
+
     </body>
 </html>

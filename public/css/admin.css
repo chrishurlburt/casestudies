@@ -11,4 +11,31 @@
 #cases-form .popover-content {
   word-break: break-all; }
 
+#profile table, #user-profile table {
+  width: 100%; }
+
+#profile thead, #profile tbody, #profile tr, #profile td, #profile th, #user-profile thead, #user-profile tbody, #user-profile tr, #user-profile td, #user-profile th {
+  display: block; }
+
+#profile tr:after, #user-profile tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both; }
+
+#profile thead th, #user-profile thead th {
+  height: 30px;
+  /*text-align: left;*/ }
+
+#profile tbody, #user-profile tbody {
+  height: 250px;
+  overflow-y: auto; }
+
+#profile thead, #user-profile thead {
+  /* fallback */ }
+
+#profile tbody td, #profile thead th, #user-profile tbody td, #user-profile thead th {
+  width: 50%;
+  float: left; }
+
 /*# sourceMappingURL=admin.css.map */

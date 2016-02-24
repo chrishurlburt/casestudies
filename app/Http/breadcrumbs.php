@@ -156,3 +156,11 @@ Breadcrumbs::register('profile-change-password', function($breadcrumbs)
     $breadcrumbs->push('Change Password', route('admin.profile.password'));
 
 });
+
+Breadcrumbs::register('user-profile', function($breadcrumbs, $user)
+{
+
+    $breadcrumbs->parent('dashboard', $user);
+    $breadcrumbs->push($user->first_name.'\'s'.' '.'Profile', route('admin.profile.user'));
+
+});

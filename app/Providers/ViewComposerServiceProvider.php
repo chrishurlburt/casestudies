@@ -46,7 +46,6 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer('layouts.admin.partials._nav', function($view) {
 
             $user = $this->prepareUserNotifications();
-
             $view->with('user', $user);
         });
     }
@@ -74,7 +73,9 @@ class ViewComposerServiceProvider extends ServiceProvider
 
     private function prepareUserNotifications()
     {
-        return User::withTrashed()->where('id', Auth::user()->id)->with('notifications')->first();
+        return User::withTrashed()->where('id', Auth::user()->id)->with(['notifications' => function($query){
+            $query->take(5);
+        }])->first();
     }
 
 }

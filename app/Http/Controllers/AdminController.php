@@ -26,12 +26,16 @@ class AdminController extends Controller
         $this->middleware('authorize');
     }
 
+    /**
+     * Show the home dashboard page.
+     *
+     * @return  \Illuminate\Http\Response
+     */
     public function index()
     {
-        $notifications = Auth::user()->notifications()->latest()->take(10)->get();
         $team = User::all();
 
-        return view('layouts.admin.dashboard')->with('notifications', $notifications)->with('team', $team);
+        return view('layouts.admin.dashboard')->with('team', $team);
     }
 
 
@@ -51,6 +55,7 @@ class AdminController extends Controller
         ]);
     }
 
+
     /**
      * Show the profile for a specified user.
      *
@@ -58,10 +63,19 @@ class AdminController extends Controller
      */
     public function userProfile($id)
     {
-        $user = User::FindOrFail($id);
+        if(Auth::user()->id == $id) {
+            return redirect(route('admin.profile'));
+        }
 
-        dd($user);
+        $user = User::FindOrFail($id);
+        $studies = $user->studies()->get()->all();
+
+        return view('layouts.admin.profile.profile')->with([
+            'user'    => $user,
+            'studies' => $studies
+        ]);
     }
+
 
     /**
      * Change the user's password.

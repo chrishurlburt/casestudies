@@ -2,9 +2,11 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Change Password for'.' '.$user->first_name.' '.$user->last_name])
 
-{!! Breadcrumbs::render('change-password', $user->id) !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Change Password for'.' '.$user->first_name.' '.$user->last_name])
+    {!! Breadcrumbs::render('change-password', $user->id) !!}
+</section>
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

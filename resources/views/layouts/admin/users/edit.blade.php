@@ -2,9 +2,10 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Edit User'])
-
-{!! Breadcrumbs::render('edit-user', $user->id) !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Edit User'])
+    {!! Breadcrumbs::render('edit-user', $user->id) !!}
+</section>
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

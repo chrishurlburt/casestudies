@@ -3,9 +3,10 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Manage Users'])
-
-{!! Breadcrumbs::render('manage-users') !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Manage Users'])
+    {!! Breadcrumbs::render('manage-users') !!}
+</section>
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

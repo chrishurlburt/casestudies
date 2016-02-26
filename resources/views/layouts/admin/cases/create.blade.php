@@ -7,9 +7,10 @@
 
 <main id="cases-form">
 
-    @include('layouts.admin.partials._heading', ['heading' => 'Add New Case Study'])
-
-    {!! Breadcrumbs::render('create') !!}
+    <section id="heading">
+        @include('layouts.admin.partials._heading', ['heading' => 'Add New Case Study'])
+        {!! Breadcrumbs::render('create') !!}
+    </section>
 
     @include('layouts.admin.partials._success')
     @include('layouts.admin.partials._errors')

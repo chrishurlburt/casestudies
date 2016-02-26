@@ -1,0 +1,28 @@
+.card {
+    padding: 25px 50px;
+    background-color: #fff;
+    box-shadow: $box-shadow;
+    .card-header {
+        display: flex;
+        justify-content: flex-start;
+        margin: 0 0 15px 0;
+    }
+    .pagination-wrap {
+        display: flex;
+        justify-content: flex-end;
+        .pagination li {
+            &.active {
+                span {
+                    background-color: $teal;
+                }
+            }
+            a {
+                border: none;
+                color: $teal;
+            }
+            span {
+                border: none;
+            }
+        }
+    }
+}

@@ -2,9 +2,10 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Add New User'])
-
-{!! Breadcrumbs::render('create-user') !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Add New User'])
+    {!! Breadcrumbs::render('create-user') !!}
+</section>
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

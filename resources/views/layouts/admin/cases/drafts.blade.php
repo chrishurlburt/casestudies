@@ -4,9 +4,10 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Manage Drafts'])
-
-{!! Breadcrumbs::render('drafts') !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Manage Drafts'])
+    {!! Breadcrumbs::render('drafts') !!}
+</section>
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

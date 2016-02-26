@@ -2,10 +2,10 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Edit Learning Outcome'])
-
-
-{!! Breadcrumbs::render('edit-outcome', $outcome->id) !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Edit Learning Outcome'])
+    {!! Breadcrumbs::render('edit-outcome', $outcome->id) !!}
+</section>
 
 @include('layouts.admin.partials._errors')
 

@@ -1,0 +1,60 @@
+body {
+    background-color: $gray;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a {
+    color: $teal;
+    &:hover{
+        color: $teal;
+    }
+}
+
+button {
+    &.btn {
+        border-radius: 2px;
+        margin: 10px;
+    }
+    &.btn-primary {
+        background-color: $cyan;
+        border: none;
+        color: #fff;
+        &:hover, &:focus, :active {
+            background-color: $cyan-hover !important;
+            border: none;
+        }
+    }
+    &.btn-secondary {
+        color: #000;
+        background-color: #fff;
+        border: 1px solid #e7eaec;
+        &:hover {
+            background-color: #eee;
+        }
+    }
+}
+
+table {
+    background-color: #fff;
+    thead {
+
+        tr {
+            th {
+                padding: 10px !important;
+                border-bottom: 0px !important;
+            }
+        }
+    }
+    tbody {
+        tr {
+            td {
+                padding: 10px !important;
+            }
+        }
+    }
+}
+
+#page-wrapper {
+    background-color: $gray;
+    padding-top: 0;
+}

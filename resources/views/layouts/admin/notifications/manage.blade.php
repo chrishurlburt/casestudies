@@ -2,9 +2,10 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Notifications'])
-
-{!! Breadcrumbs::render('notifications') !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Notifications'])
+    {!! Breadcrumbs::render('notifications') !!}
+</section>
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

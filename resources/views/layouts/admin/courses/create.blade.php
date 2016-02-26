@@ -3,8 +3,10 @@
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => 'Add New Course'])
-{!! Breadcrumbs::render('create-course') !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => 'Add New Course'])
+    {!! Breadcrumbs::render('create-course') !!}
+</section>
 
 @include('layouts.admin.partials._success')
 @include('layouts.admin.partials._errors')

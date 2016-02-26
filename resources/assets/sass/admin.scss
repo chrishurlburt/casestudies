@@ -1,8 +1,13 @@
 //Modules
-@import 'modules/variables';
-@import 'modules/mixins';
+@import 'admin/modules/variables';
+@import 'admin/modules/mixins';
 
 //admin interface partials
-@import 'partials/_scaffolding';
-@import 'partials/_case-form';
-@import 'partials/_profile';
+@import 'admin/partials/_scaffolding';
+@import 'admin/partials/_nav';
+@import 'admin/partials/_heading';
+@import 'admin/partials/_panel';
+@import 'admin/partials/_card';
+
+@import 'admin/partials/_case-form';
+@import 'admin/partials/_profile';

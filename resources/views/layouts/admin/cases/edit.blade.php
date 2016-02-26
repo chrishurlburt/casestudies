@@ -6,13 +6,11 @@
 @section('content')
 <main id="cases-form">
 
-    @include('layouts.admin.partials._heading', ['heading' => 'Edit Case Study'])
+    <section id="heading">
+        @include('layouts.admin.partials._heading', ['heading' => 'Edit Case Study'])
+        {!! Breadcrumbs::render('edit', $study->slug) !!}
+    </section>
 
-    <div class="row">
-        <div class="col-lg-12">
-            {!! Breadcrumbs::render('edit', $study->slug) !!}
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-lg-12">

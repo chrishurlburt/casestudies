@@ -13,6 +13,7 @@ a {
 button {
     &.btn {
         border-radius: 2px;
+        padding: 12px 24px;
         margin: 10px;
     }
     &.btn-primary {
@@ -25,7 +26,7 @@ button {
         }
     }
     &.btn-secondary {
-        color: #000;
+        color: #333;
         background-color: #fff;
         border: 1px solid #e7eaec;
         &:hover {

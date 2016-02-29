@@ -14,6 +14,7 @@ a {
 
 button.btn {
   border-radius: 2px;
+  padding: 12px 24px;
   margin: 10px; }
 
 button.btn-primary {
@@ -25,7 +26,7 @@ button.btn-primary {
     border: none; }
 
 button.btn-secondary {
-  color: #000;
+  color: #333;
   background-color: #fff;
   border: 1px solid #e7eaec; }
   button.btn-secondary:hover {
@@ -42,6 +43,40 @@ table {
 #page-wrapper {
   background-color: #E0E0E0;
   padding-top: 0; }
+
+.checkbox-custom {
+  opacity: 0;
+  position: absolute; }
+
+.checkbox-custom, .checkbox-custom-label {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px 0px;
+  cursor: pointer; }
+
+.checkbox-custom-label {
+  position: relative; }
+
+.checkbox-custom + .checkbox-custom-label:before {
+  content: '';
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  text-align: center; }
+
+.checkbox-custom:checked + .checkbox-custom-label:before {
+  content: "\f00c";
+  font-family: 'FontAwesome';
+  background-color: #4DB6AC;
+  border: none;
+  color: #fff; }
+
+.checkbox-custom:focus + .checkbox-custom-label {
+  /* focus style */ }
 
 #nav {
   color: #fff;
@@ -103,7 +138,29 @@ table {
     -webkit-justify-content: flex-start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-    margin: 0 0 15px 0; }
+    margin: -25px -50px 25px -50px;
+    padding: 25px 50px 25px 50px;
+    border-bottom-style: solid;
+    border-bottom-color: #DDD;
+    border-bottom-width: 1px; }
+    .card .card-header .left {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      margin-left: auto; }
+      .card .card-header .left .checked-count {
+        -webkit-align-self: center;
+        -ms-flex-item-align: center;
+        align-self: center;
+        margin-right: 10px;
+        color: #777;
+        font-style: oblique; }
+      .card .card-header .left .trash {
+        -webkit-align-self: center;
+        -ms-flex-item-align: center;
+        align-self: center;
+        font-size: 24px;
+        color: #E57373; }
   .card .pagination-wrap {
     display: -webkit-flex;
     display: -ms-flexbox;

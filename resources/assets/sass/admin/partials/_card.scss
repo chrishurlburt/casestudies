@@ -5,7 +5,26 @@
     .card-header {
         display: flex;
         justify-content: flex-start;
-        margin: 0 0 15px 0;
+        margin: -25px -50px 25px -50px;
+        padding: 25px 50px 25px 50px;
+        border-bottom-style: solid;
+        border-bottom-color: $light-gray;
+        border-bottom-width: 1px;
+        .left {
+            display: flex;
+            margin-left: auto;
+            .checked-count {
+                align-self: center;
+                margin-right: 10px;
+                color: #777;
+                font-style: oblique;
+            }
+            .trash {
+                align-self: center;
+                font-size: 24px;
+                color: $red;
+            }
+        }
     }
     .pagination-wrap {
         display: flex;

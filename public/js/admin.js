@@ -27,6 +27,27 @@
         },
     };
 
+    function deleteResources(formID, path, params) {
+
+        var form = $('#'+formID);
+        console.log(form);
+
+
+        form.attr("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.append(hiddenField);
+             }
+        }
+        form.submit();
+    }
+
     var app = {
         'common' : {
         //common fires on every page
@@ -98,6 +119,36 @@
                     });
                     return false;
                 });
+
+                $("input[type='checkbox']").click(function(){
+
+                    var checked = $("input[name='studies[]']:checked").length;
+
+                    if(!checked) {
+                        $('.checked-count').empty();
+                    } else {
+                        if(checked>1){
+                            $('.checked-count').text(checked+' items selected');
+                        } else {
+                            $('.checked-count').text(checked+' item selected');
+                        }
+                    }
+
+                });
+
+
+                $('.trash').click(function(){
+
+                    var checked = $("input[name='studies[]']:checked");
+                    var IDs = checked.map(function(){
+                        return $(this).val();
+                    }).get();
+                    var path = location.origin+'/admin/cases/'+IDs;
+
+                    deleteResources('form-delete',path,IDs);
+
+                });
+
             },
             finalize : function(){ }
         },

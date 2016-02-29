@@ -34,7 +34,7 @@ class StudiesController extends Controller
         // check if user has permission to access this page.
         if($this->checkAccess()) {
 
-            $studies = Study::where('draft', false)->latest()->paginate(20);
+            $studies = Study::where('draft', false)->with('user')->latest()->paginate(20);
 
             return view('layouts.admin.cases.manage')->with('studies', $studies);
 
@@ -105,35 +105,63 @@ class StudiesController extends Controller
      *
      * @return  \Illuminate\Http\Response
      */
-    public function destroy($slug)
+    public function destroy($id)
     {
-        // @TODO: soft deletes
+        $studies = Study::find(explode(',', $id));
 
-        $study = Study::where('slug', $slug)->firstOrFail();
-
-        if($study->draft) {
-        // study is a draft, any user can delete
-
-            $study->delete();
-
-            Session::flash('flash_message', 'The draft has been deleted.');
-            return redirect(route('admin.cases.drafts'));
-
-        } else {
-        // study is not a draft, check user permissions
-
+        if(!$studies->where('draft', false)->isEmpty()) {
+            // published studies in collection
             if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
             // user can delete
-                $study->delete();
+                Study::destroy($studies->lists('id')->toArray());
 
-                Session::flash('flash_message', 'The case study has been deleted.');
-
+                if($studies->count() > 1) {
+                    Session::flash('flash_message', 'The case studies have been deleted.');
+                } else {
+                    Session::flash('flash_message', 'The case study has been deleted.');
+                }
                 return redirect(route('admin.cases.index'));
-
             } else {
                 return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to delete case studies.');
             }
+
+        } else {
+            // only drafts in collection
+            Study::destroy($studies->lists('id')->toArray());
+
+            if($studies->count() > 1) {
+                Session::flash('flash_message', 'The drafts have been deleted.');
+            } else {
+                Session::flash('flash_message', 'The draft has been deleted.');
+            }
+
+            return redirect(route('admin.cases.drafts'));
         }
+
+
+        // if($study->draft) {
+        // // study is a draft, any user can delete
+
+        //     $study->delete();
+
+        //     Session::flash('flash_message', 'The draft has been deleted.');
+        //     return redirect(route('admin.cases.drafts'));
+
+        // } else {
+        // // study is not a draft, check user permissions
+
+        //     if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
+        //     // user can delete
+        //         $study->delete();
+
+        //         Session::flash('flash_message', 'The case study has been deleted.');
+
+        //         return redirect(route('admin.cases.index'));
+
+        //     } else {
+        //         return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to delete case studies.');
+        //     }
+        // }
     }
 
 
@@ -291,12 +319,7 @@ class StudiesController extends Controller
     public function drafts()
     {
 
-        // @TODO: pagination
-
-        $drafts = Study::where('draft', true)->latest()->paginate(20);
-
-
-        // $drafts = Study::where('draft', true)->latest()->get();
+        $drafts = Study::where('draft', true)->with('user')->latest()->paginate(20);
 
         return view('layouts.admin.cases.drafts')->with('drafts', $drafts);
 

@@ -97,4 +97,15 @@ class Study extends Model
         return $this->hasOne('App\Notification');
     }
 
+
+    /**
+     * Change to boolean.
+     *
+     * @return bool
+     */
+    public function getDraftAttribute($value)
+    {
+        return (bool) $value;
+    }
+
 }

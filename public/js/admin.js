@@ -10,9 +10,6 @@
  * always reference jQuery with $, even when in .noConflict() mode.
  * ======================================================================== */
 
-
- // @TODO: clear app search forms on back button
-
 (function($) {
 
     var ajax = {
@@ -27,11 +24,9 @@
         },
     };
 
-    function deleteResources(formID, path, params) {
+    function submitResources(formID, path, params) {
 
         var form = $('#'+formID);
-        console.log(form);
-
 
         form.attr("action", path);
 
@@ -46,6 +41,15 @@
              }
         }
         form.submit();
+    }
+
+    function getCheckedIds(name) {
+        var checked = $('input[name="'+name+'[]"]:checked');
+        var Ids = checked.map(function(){
+            return $(this).val();
+        }).get();
+
+        return Ids;
     }
 
     var app = {
@@ -81,6 +85,7 @@
                     $('form').attr('action', route);
 
                 });
+
             },
             finalize : function(){ }
         },
@@ -95,8 +100,6 @@
 
                 $('.case-study').click(function(e){
                     e.preventDefault();
-
-                    $('#study').modal('show');
 
                     var url = $(this).attr('href');
 
@@ -116,6 +119,9 @@
                         });
 
                         $('.edit').attr('href', url+'/edit');
+
+                        $('#study').modal('show');
+
                     });
                     return false;
                 });
@@ -138,15 +144,56 @@
 
 
                 $('.trash').click(function(){
+                    var IDs = getCheckedIds('studies');
 
-                    var checked = $("input[name='studies[]']:checked");
-                    var IDs = checked.map(function(){
-                        return $(this).val();
-                    }).get();
-                    var path = location.origin+'/admin/cases/'+IDs;
+                    if($(this).hasClass('forcedelete')) {
+                        var path = location.origin+'/admin/cases/trash/'+IDs;
+                    } else {
+                        var path = location.origin+'/admin/cases/'+IDs;
+                    }
 
-                    deleteResources('form-delete',path,IDs);
+                    submitResources('form-delete',path,IDs);
 
+                });
+
+                $('#studies-table').DataTable({
+                    "order": [[1,'desc']],
+                    "columns": [
+                        { "orderable": false },
+                        null,
+                        null,
+                        null,
+                        { "orderable": false }
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
+
+            },
+            finalize : function(){ }
+        },
+        'trashed_studies' : {
+            init     : function(){
+
+                $('#trashed-studies-table').DataTable({
+                    "order": [[1,'desc']],
+                    "columns": [
+                        { "orderable": false },
+                        null,
+                        null,
+                        null
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
+
+                $('.restore').click(function(){
+                    var IDs = getCheckedIds('studies');
+                    var path = location.origin+'/admin/cases/restore/'+IDs;
+
+                    submitResources('form-restore',path,IDs);
                 });
 
             },
@@ -173,7 +220,6 @@
                 $('.outcome').click(function(e){
                     e.preventDefault();
 
-                    $('#outcome').modal('show');
 
                     var url = $(this).attr('href');
 
@@ -191,11 +237,34 @@
 
                         $('.edit').attr('href', url+'/edit');
 
+                        $('#outcome').modal('show');
                     });
 
                     return false;
 
                 });
+
+                $('#outcomes-table').DataTable({
+                    "order": [[1,'desc']],
+                    "columns": [
+                        { "orderable": false },
+                        null,
+                        { "orderable": false },
+                        { "orderable": false }
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
+
+                $('.trash').click(function(){
+                    var IDs = getCheckedIds('outcomes');
+                    path = location.origin+'/admin/outcomes/'+IDs;
+
+                    submitResources('form-delete',path,IDs);
+                });
+
+
             },
             finalize : function(){ }
         },
@@ -203,8 +272,6 @@
             init     : function(){
                 $('.course').click(function(e){
                     e.preventDefault();
-
-                    $('#course').modal('show');
 
                     var url = $(this).attr('href');
 
@@ -221,6 +288,8 @@
                         }
 
                         $('.edit').attr('href', url+'/edit');
+
+                        $('#course').modal('show');
 
                     });
 

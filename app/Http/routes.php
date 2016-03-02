@@ -26,8 +26,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('cases/drafts', ['as' => 'admin.cases.drafts', 'uses' => 'StudiesController@drafts']);
     Route::get('cases/trash', ['as' => 'admin.cases.trash', 'uses' => 'StudiesController@trash']);
-    Route::get('cases/restore/{slug}', ['as' => 'admin.cases.restore', 'uses' => 'StudiesController@restore']);
-    Route::delete('cases/trash', ['as' => 'admin.cases.forceDestroy', 'uses' => 'StudiesController@forceDestroy']);
+    Route::put('cases/restore/{id}', ['as' => 'admin.cases.restore', 'uses' => 'StudiesController@restore']);
+    Route::delete('cases/trash/{id}', ['as' => 'admin.cases.forceDestroy', 'uses' => 'StudiesController@forceDestroy']);
     Route::resource('cases', 'StudiesController');
 
     Route::resource('outcomes', 'OutcomesController');

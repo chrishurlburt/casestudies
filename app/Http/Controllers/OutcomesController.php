@@ -35,7 +35,7 @@ class OutcomesController extends Controller
      */
     public function index()
     {
-            $outcomes = Outcome::latest()->get()->all();
+            $outcomes = Outcome::latest()->get();
 
             return view('layouts.admin.outcomes.manage')->with('outcomes', $outcomes);
     }
@@ -92,9 +92,17 @@ class OutcomesController extends Controller
      */
     public function destroy($id)
     {
-        $outcome = Outcome::destroy($id);
+        // $outcome = Outcome::destroy($id);
 
-        Helpers::flash('The learning outcome has been successfully deleted.');
+        $outcomes = Outcome::find(explode(',', $id));
+        Outcome::destroy($outcomes->lists('id')->toArray());
+
+        if($outcomes->count() > 1) {
+            Helpers::flash('The learning outcomes have been successfully deleted.');
+        } else {
+            Helpers::flash('The learning outcome has been successfully deleted.');
+        }
+
         return redirect(route('admin.outcomes.index'));
     }
 

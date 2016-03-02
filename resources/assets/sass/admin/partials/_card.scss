@@ -2,6 +2,12 @@
     padding: 25px 50px;
     background-color: #fff;
     box-shadow: $box-shadow;
+    p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 300px;
+    }
     .card-header {
         display: flex;
         justify-content: flex-start;
@@ -10,6 +16,11 @@
         border-bottom-style: solid;
         border-bottom-color: $light-gray;
         border-bottom-width: 1px;
+        .card-icon {
+            align-self: center;
+            font-size: 16px;
+            margin: 0 10px 0 0;
+        }
         .left {
             display: flex;
             margin-left: auto;
@@ -19,28 +30,24 @@
                 color: #777;
                 font-style: oblique;
             }
-            .trash {
+            .card-options {
+                font-size: 14px;
                 align-self: center;
-                font-size: 24px;
-                color: $red;
-            }
-        }
-    }
-    .pagination-wrap {
-        display: flex;
-        justify-content: flex-end;
-        .pagination li {
-            &.active {
-                span {
-                    background-color: $teal;
+                color: $charcoal;
+                a {
+                    color: $blue;
                 }
-            }
-            a {
-                border: none;
-                color: $teal;
-            }
-            span {
-                border: none;
+                .dropdown-menu {
+                    right: 0;
+                    left: unset;
+                    border-radius: 2px;
+                    .trash {
+                        color: $red;
+                    }
+                    .restore {
+                        color: $gray;
+                    }
+                }
             }
         }
     }

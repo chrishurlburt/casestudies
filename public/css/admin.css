@@ -4,8 +4,9 @@
 -----------------------------------
 */
 body {
-  background-color: #E0E0E0;
-  font-family: 'Open Sans', sans-serif; }
+  background-color: #e0e0e0;
+  font-family: 'Open Sans', sans-serif;
+  color: #333; }
 
 a {
   color: #4DB6AC; }
@@ -18,11 +19,11 @@ button.btn {
   margin: 10px; }
 
 button.btn-primary {
-  background-color: #00BCD4;
+  background-color: #2196F3;
   border: none;
   color: #fff; }
   button.btn-primary:hover, button.btn-primary:focus, button.btn-primary :active {
-    background-color: #00ACC1 !important;
+    background-color: #2196F3 !important;
     border: none; }
 
 button.btn-secondary {
@@ -31,6 +32,28 @@ button.btn-secondary {
   border: 1px solid #e7eaec; }
   button.btn-secondary:hover {
     background-color: #eee; }
+
+input {
+  transition: all 0.20s ease-in-out;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: solid 1px #e0e0e0;
+  border-radius: 2px;
+  font-weight: normal;
+  outline: none; }
+  input:focus {
+    box-shadow: 0 0 5px #51cbee;
+    border: 1px solid #51cbee;
+    color: #333;
+    font-weight: normal; }
+
+select {
+  border: 1px solid #111;
+  background: transparent;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: solid 1px #e0e0e0;
+  border-radius: 2px; }
 
 table {
   background-color: #fff; }
@@ -41,7 +64,7 @@ table {
     padding: 10px !important; }
 
 #page-wrapper {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
   padding-top: 0; }
 
 .checkbox-custom {
@@ -77,6 +100,163 @@ table {
 
 .checkbox-custom:focus + .checkbox-custom-label {
   /* focus style */ }
+
+/*!
+ * DataTables + Font Awesome integration
+ * License: MIT - http://datatables.net/license
+ */
+/*
+ * Sort styling
+ */
+table.dataTable thead th {
+  position: relative;
+  background-image: none !important;
+  /* Remove the DataTables bootstrap integration styling */ }
+
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  display: block;
+  font-family: FontAwesome; }
+
+table.dataTable thead th.sorting:after {
+  content: "\f0dc";
+  color: #ddd;
+  font-size: 0.8em;
+  padding-top: 0.12em; }
+
+table.dataTable thead th.sorting_asc:after {
+  content: "\f0de"; }
+
+table.dataTable thead th.sorting_desc:after {
+  content: "\f0dd"; }
+
+div.dataTables_scrollBody table.dataTable thead th.sorting:after,
+div.dataTables_scrollBody table.dataTable thead th.sorting_asc:after,
+div.dataTables_scrollBody table.dataTable thead th.sorting_desc:after {
+  content: ""; }
+
+/* In Bootstrap and Foundation the padding top is a little different from the DataTables stylesheet */
+table.table thead th.sorting:after,
+table.table thead th.sorting_asc:after,
+table.table thead th.sorting_desc:after {
+  top: 8px; }
+
+/*
+ * DataTables style pagination controls
+ */
+div.dataTables_paginate a.paginate_button.first,
+div.dataTables_paginate a.paginate_button.previous {
+  position: relative;
+  padding-left: 24px; }
+
+div.dataTables_paginate a.paginate_button.next,
+div.dataTables_paginate a.paginate_button.last {
+  position: relative;
+  padding-right: 24px; }
+
+div.dataTables_paginate a.first:before,
+div.dataTables_paginate a.previous:before {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  display: block;
+  font-family: FontAwesome; }
+
+div.dataTables_paginate a.next:after,
+div.dataTables_paginate a.last:after {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  display: block;
+  font-family: FontAwesome; }
+
+div.dataTables_paginate a.first:before {
+  content: "\f100"; }
+
+div.dataTables_paginate a.previous:before {
+  content: "\f104"; }
+
+div.dataTables_paginate a.next:after {
+  content: "\f105"; }
+
+div.dataTables_paginate a.last:after {
+  content: "\f101"; }
+
+/*
+ * Bootstrap and foundation style pagination controls
+ */
+div.dataTables_paginate li.first > a,
+div.dataTables_paginate li.previous > a {
+  position: relative;
+  padding-left: 24px; }
+
+div.dataTables_paginate li.next > a,
+div.dataTables_paginate li.last > a {
+  position: relative;
+  padding-right: 24px; }
+
+div.dataTables_paginate li.first a:before,
+div.dataTables_paginate li.previous a:before {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  display: block;
+  font-family: FontAwesome; }
+
+div.dataTables_paginate li.next a:after,
+div.dataTables_paginate li.last a:after {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  display: block;
+  font-family: FontAwesome; }
+
+div.dataTables_paginate li.first a:before {
+  content: "\f100"; }
+
+div.dataTables_paginate li.previous a:before {
+  content: "\f104"; }
+
+div.dataTables_paginate li.next a:after {
+  content: "\f105"; }
+
+div.dataTables_paginate li.last a:after {
+  content: "\f101"; }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  color: #fff !important;
+  border: none;
+  background: none;
+  background-color: #2196F3; }
+  .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #fff !important;
+    border: none;
+    background: none;
+    background-color: #2196F3; }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: #fff !important;
+  border: none;
+  background: none;
+  background-color: #2196F3; }
+
+/* In Foundation we don't want the padding like in bootstrap */
+div.columns div.dataTables_paginate li.first a:before,
+div.columns div.dataTables_paginate li.previous a:before,
+div.columns div.dataTables_paginate li.next a:after,
+div.columns div.dataTables_paginate li.last a:after {
+  top: 0; }
+
+.dataTables_wrapper label {
+  font-weight: 600; }
+
+.dataTables_wrapper .dataTable {
+  margin: 0 0 25px 0;
+  border-bottom: 1px solid #e0e0e0 !important; }
 
 #nav {
   color: #fff;
@@ -131,6 +311,11 @@ table {
   padding: 25px 50px;
   background-color: #fff;
   box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14); }
+  .card p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px; }
   .card .card-header {
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -141,8 +326,14 @@ table {
     margin: -25px -50px 25px -50px;
     padding: 25px 50px 25px 50px;
     border-bottom-style: solid;
-    border-bottom-color: #DDD;
+    border-bottom-color: #e0e0e0;
     border-bottom-width: 1px; }
+    .card .card-header .card-icon {
+      -webkit-align-self: center;
+      -ms-flex-item-align: center;
+      align-self: center;
+      font-size: 16px;
+      margin: 0 10px 0 0; }
     .card .card-header .left {
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -155,26 +346,40 @@ table {
         margin-right: 10px;
         color: #777;
         font-style: oblique; }
-      .card .card-header .left .trash {
+      .card .card-header .left .card-options {
+        font-size: 14px;
         -webkit-align-self: center;
         -ms-flex-item-align: center;
         align-self: center;
-        font-size: 24px;
-        color: #E57373; }
-  .card .pagination-wrap {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end; }
-    .card .pagination-wrap .pagination li.active span {
-      background-color: #4DB6AC; }
-    .card .pagination-wrap .pagination li a {
+        color: #333; }
+        .card .card-header .left .card-options a {
+          color: #2196F3; }
+        .card .card-header .left .card-options .dropdown-menu {
+          right: 0;
+          left: unset;
+          border-radius: 2px; }
+          .card .card-header .left .card-options .dropdown-menu .trash {
+            color: #E57373; }
+          .card .card-header .left .card-options .dropdown-menu .restore {
+            color: #848484; }
+
+.custom-modal .modal-dialog {
+  margin: 0;
+  width: 100%;
+  height: 100%; }
+  .custom-modal .modal-dialog .modal-content {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none; }
+    .custom-modal .modal-dialog .modal-content .modal-header {
       border: none;
-      color: #4DB6AC; }
-    .card .pagination-wrap .pagination li span {
-      border: none; }
+      padding: 0;
+      min-height: 75px; }
+      .custom-modal .modal-dialog .modal-content .modal-header .close {
+        margin: 10px 10px 0 0; }
+        .custom-modal .modal-dialog .modal-content .modal-header .close:focus {
+          outline: none; }
 
 #cases-form .btn {
   margin: 0 0 10px 0; }

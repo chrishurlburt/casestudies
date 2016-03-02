@@ -9,11 +9,9 @@ Overall:
   !-error handling
   -refactor all code for effeciency, maintainability, scalability and best practices (on going)
 
-
 Admin Dashboard:
 
   CASE STUDIES
-    !-implement sort and filter options (jQuery datatables)
     !-add fields to match survey (completed on time, etc.)
     -DRY out cases views (create & edit forms)
 
@@ -60,6 +58,7 @@ Completed:
   -fix custom url form request error message
   -tooltips
   -name attached to notifcation on main dashboard page
+  !-implement sort and filter options (jQuery datatables)
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git

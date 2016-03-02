@@ -9,6 +9,7 @@ use App\Http\Requests\StoreStudyRequest;
 use App\Http\Requests\UpdateStudyRequest;
 
 use App\Http\Controllers\Controller;
+use App\Helpers\Helpers;
 use \Auth;
 use \Sentinel;
 use \Session;
@@ -116,9 +117,9 @@ class StudiesController extends Controller
                 Study::destroy($studies->lists('id')->toArray());
 
                 if($studies->count() > 1) {
-                    Session::flash('flash_message', 'The case studies have been deleted.');
+                    Helpers::flash('The case studies have been deleted.');
                 } else {
-                    Session::flash('flash_message', 'The case study has been deleted.');
+                    Helpers::flash('The case study has been deleted.');
                 }
                 return redirect(route('admin.cases.index'));
             } else {
@@ -130,38 +131,13 @@ class StudiesController extends Controller
             Study::destroy($studies->lists('id')->toArray());
 
             if($studies->count() > 1) {
-                Session::flash('flash_message', 'The drafts have been deleted.');
+                Helpers::flash('The drafts have been deleted.');
             } else {
-                Session::flash('flash_message', 'The draft has been deleted.');
+                Helpers::flash('The draft has been deleted.');
             }
 
             return redirect(route('admin.cases.drafts'));
         }
-
-
-        // if($study->draft) {
-        // // study is a draft, any user can delete
-
-        //     $study->delete();
-
-        //     Session::flash('flash_message', 'The draft has been deleted.');
-        //     return redirect(route('admin.cases.drafts'));
-
-        // } else {
-        // // study is not a draft, check user permissions
-
-        //     if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
-        //     // user can delete
-        //         $study->delete();
-
-        //         Session::flash('flash_message', 'The case study has been deleted.');
-
-        //         return redirect(route('admin.cases.index'));
-
-        //     } else {
-        //         return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to delete case studies.');
-        //     }
-        // }
     }
 
 
@@ -171,16 +147,20 @@ class StudiesController extends Controller
      * @param  Request
      * @return  \Illuminate\Http\Response
      */
-    public function forceDestroy(\Illuminate\Http\Request $request)
+    public function forceDestroy($id)
     {
+        $studies = Study::onlyTrashed()->find(explode(',', $id));
 
-        $studies = Study::onlyTrashed()->findMany($request->input('studies'));
-
-        foreach($studies as $study) {
+        $studies->each(function($study){
             $study->forceDelete();
+        });
+
+        if($studies->count() > 1) {
+            Helpers::flash('The case studies have been permanently deleted.');
+        } else {
+            Helpers::flash('The case study has been permanently deleted.');
         }
 
-        Session::flash('flash_message', 'The case studies have been permanently deleted.');
         return redirect(route('admin.cases.trash'));
     }
 
@@ -239,20 +219,29 @@ class StudiesController extends Controller
 
     }
 
+
     /**
      * Restore a soft deleted study to a draft.
      *
      * @return \Illuminate\Http\Response
      */
-    public function restore($slug)
+    public function restore($id)
     {
-        $study = Study::withTrashed()->where('slug', $slug)->firstOrFail();
-        $study->draft = true;
-        $study->save();
 
-        $study->restore();
+        $studies = Study::withTrashed()->find(explode(',', $id));
 
-        $this->flash('The case study has been restored.');
+        $studies->each(function($study){
+            $study->draft = true;
+            $study->save();
+            $study->restore();
+        });
+
+        if($studies->count() > 1) {
+            Helpers::flash('The case studies have been restored.');
+        } else {
+            Helpers::flash('The case study has been restored.');
+        }
+
         return redirect(route('admin.cases.drafts'));
     }
 
@@ -493,10 +482,10 @@ class StudiesController extends Controller
         $notification = new Notification;
 
         if($study->draft) {
-            $this->flash('The draft has been added.');
+            Helpers::flash('The draft has been added.');
             $notification->notification = "A new draft has been added.";
         } else {
-            $this->flash('The case study has been published.');
+            Helpers::flash('The case study has been published.');
             $notification->notification = "A new case study has been published.";
         }
 
@@ -547,13 +536,13 @@ class StudiesController extends Controller
         $notification = new Notification;
 
         if(Request::has('update')) {
-            $this->flash('The case study has been updated.');
+            Helpers::flash('The case study has been updated.');
             $notification->notification = "A case study has been updated.";
         } else if(Request::has('publish-draft')) {
-            $this->flash('The draft has been published.');
+            Helpers::flash('The draft has been published.');
             $notification->notification = "A draft has been published.";
         } else {
-            $this->flash('The draft has been updated.');
+            Helpers::flash('The draft has been updated.');
             $notification->notification = "A draft has been updated.";
         }
 
@@ -599,18 +588,6 @@ class StudiesController extends Controller
         }
 
     }
-
-    /**
-     * Flash a message to the session
-     *
-     * @param string $message
-     * @return null
-     */
-    private function flash($message)
-    {
-        return Session::flash('flash_message', $message);
-    }
-
 }
 
 

@@ -13,19 +13,21 @@
     @include('layouts.admin.partials._success')
     @include('layouts.admin.partials._errors')
 
+    <section id="published-cases" class="card">
     @if($studies->isEmpty())
         <h3>There are no published studies to show.</h3>
     @else
-    <section id="published-cases" class="card">
+
         <div class="card-header">
             <a href="{{ route('admin.cases.create') }}"><button class="btn btn-primary">New Case Study</button></a>
             <a href="{{ route('admin.cases.drafts') }}"><button class="btn btn-secondary">Manage Drafts</button></a>
             <div class="left">
                 <span class="checked-count"></span>
-                <a href="#" class="trash"><i class="fa fa-trash"></i></a>
+                @include('layouts.admin.partials._card-header-menu', ['menu' => 'manage'])
             </div>
         </div>
-        <table class="table table-hover table-responsive" data-resource="case study">
+
+        <table id="studies-table" class="table table-hover table-responsive" data-resource="case study">
             <thead>
                 <tr>
                     <th></th>
@@ -47,18 +49,16 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="pagination-wrap">
-            {!! $studies->render() !!}
-        </div>
 
         {!! Form::open(['method' => 'DELETE', 'id' => 'form-delete']) !!}
         {!! Form::close() !!}
 
-    </section>
-    @endif
+        @include('layouts.admin.partials._study-modal')
+        @include('layouts.admin.partials._delete-modal')
 
-    @include('layouts.admin.partials._study-modal')
-    @include('layouts.admin.partials._delete-modal')
+    @endif
+    </section>
+
 </main>
 
 @stop

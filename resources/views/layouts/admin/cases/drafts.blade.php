@@ -21,10 +21,10 @@
         <a href="{{ route('admin.cases.create') }}"><button class="btn btn-primary">New Case Study</button></a>
         <div class="left">
             <span class="checked-count"></span>
-            <a href="#" class="trash"><i class="fa fa-trash"></i></a>
+            @include('layouts.admin.partials._card-header-menu', ['menu' => 'drafts'])
         </div>
     </div>
-    <table class="table table-hover table-responsive" data-resource="case study">
+    <table id="studies-table" class="table table-hover table-responsive" data-resource="case study">
         <thead>
             <tr>
                 <th></th>
@@ -46,8 +46,6 @@
         @endforeach
         </tbody>
     </table>
-
-    {!! $drafts->render() !!}
 
     {!! Form::open(['method' => 'DELETE', 'id' => 'form-delete']) !!}
     {!! Form::close() !!}

@@ -1,6 +1,7 @@
 body {
-    background-color: $gray;
+    background-color: $light-gray;
     font-family: 'Open Sans', sans-serif;
+    color: $charcoal;
 }
 
 a {
@@ -17,11 +18,11 @@ button {
         margin: 10px;
     }
     &.btn-primary {
-        background-color: $cyan;
+        background-color: $blue;
         border: none;
         color: #fff;
         &:hover, &:focus, :active {
-            background-color: $cyan-hover !important;
+            background-color: $blue !important;
             border: none;
         }
     }
@@ -33,6 +34,39 @@ button {
             background-color: #eee;
         }
     }
+}
+
+input {
+    -webkit-transition: all 0.20s ease-in-out;
+    -moz-transition: all 0.20s ease-in-out;
+    -ms-transition: all 0.20s ease-in-out;
+    -o-transition: all 0.20s ease-in-out;
+    transition: all 0.20s ease-in-out;
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: solid 1px $light-gray;
+    border-radius: 2px;
+    font-weight: normal;
+    outline: none;
+    &:focus {
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        border: 1px solid rgba(81, 203, 238, 1);
+        color: $charcoal;
+        font-weight: normal;
+    }
+
+}
+
+select {
+    border: 1px solid #111;
+    background: transparent;
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: solid 1px $light-gray;
+    border-radius: 2px;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // appearance: none;
 }
 
 table {
@@ -56,6 +90,6 @@ table {
 }
 
 #page-wrapper {
-    background-color: $gray;
+    background-color: $light-gray;
     padding-top: 0;
 }

@@ -275,13 +275,17 @@ div.columns div.dataTables_paginate li.last a:after {
         font-weight: 500; }
       #nav .side-nav li a:focus {
         background-color: transparent !important; }
-  #nav .navbar-right a {
+  #nav .navbar-right .dropdown a {
     color: #fff; }
-    #nav .navbar-right a:hover {
+    #nav .navbar-right .dropdown a:hover {
       background-color: transparent;
       color: #eee; }
-    #nav .navbar-right a:focus {
+    #nav .navbar-right .dropdown a:focus {
       background-color: transparent; }
+  #nav .navbar-right .dropdown .dropdown-menu {
+    color: #333; }
+    #nav .navbar-right .dropdown .dropdown-menu li a {
+      color: #333; }
 
 #heading {
   background-color: #fff;

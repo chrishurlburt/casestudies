@@ -1,22 +1,25 @@
 @extends('admin-base')
 
 @section('content')
+<main id="create-outcome">
+    <section id="heading">
+        @include('layouts.admin.partials._heading', ['heading' => 'Add New Learning Outcome'])
+        {!! Breadcrumbs::render('create-outcome') !!}
+    </section>
 
-<section id="heading">
-    @include('layouts.admin.partials._heading', ['heading' => 'Add New Learning Outcome'])
-    {!! Breadcrumbs::render('create-outcome') !!}
-</section>
-
-@include('layouts.admin.partials._success')
-@include('layouts.admin.partials._errors')
+    <section id="create-outcome-form" class="card">
+        @include('layouts.admin.partials._success')
+        @include('layouts.admin.partials._errors')
 
 
-{!! Form::open(['route' => 'admin.outcomes.store']) !!}
+        {!! Form::open(['route' => 'admin.outcomes.store']) !!}
 
-@include('layouts.admin.partials._outcomes-form')
+        @include('layouts.admin.partials._outcomes-form')
 
-{!! Form::submit('Add Learning Outcome', ['class' => 'btn btn-primary form-control']) !!}
+        {!! Form::submit('Add Learning Outcome', ['class' => 'btn btn-primary form-control']) !!}
 
-{!! Form::close() !!}
+        {!! Form::close() !!}
+    </section>
+</main>
 
 @stop

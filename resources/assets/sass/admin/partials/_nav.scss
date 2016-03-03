@@ -23,14 +23,22 @@
         }
     }
     .navbar-right {
-        a {
-            color: #fff;
-            &:hover {
-                background-color: transparent;
-                color: #eee;
+        .dropdown {
+            a {
+                color: #fff;
+                &:hover {
+                    background-color: transparent;
+                    color: #eee;
+                }
+                &:focus {
+                    background-color: transparent;
+                }
             }
-            &:focus {
-                background-color: transparent;
+            .dropdown-menu {
+                color: $charcoal;
+                li a {
+                    color: $charcoal;
+                }
             }
         }
     }

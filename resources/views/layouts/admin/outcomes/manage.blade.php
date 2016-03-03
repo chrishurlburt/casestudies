@@ -27,7 +27,7 @@
     <table id="outcomes-table" class="table table-hover table-responsive" data-resource="outcome">
         <thead>
             <tr>
-                <th></th>
+                <th><input name="master-check" type="checkbox" value="" class="checkbox-custom master-check" id="master-check" data-name="outcomes[]"><label class="checkbox-custom-label" for="master-check"></label></th>
                 <th>Title</th>
                 <th>Description</th>
                 <th></th>

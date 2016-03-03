@@ -149,9 +149,20 @@ class UsersController extends Controller
      */
     public function activate($id)
     {
-        $user = User::onlyTrashed()->where('id', $id)->restore();
+        $users = User::onlyTrashed()->whereIn('id', explode(',', $id))->restore();
 
-        Helpers::flash('The user has been successfully activated.');
+        if($users) {
+
+            if($users > 1) {
+                Helpers::flash('The users have been successfully activated.');
+            } else {
+                Helpers::flash('The user has been successfully activated.');
+            }
+
+        } else {
+            return redirect(route('admin.users.index'))->withErrors('User(s) could not be restored.');
+        }
+
         return redirect(route('admin.users.index'));
     }
 
@@ -187,10 +198,16 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $users = User::find(explode(',', $id));
 
-        Helpers::flash('The user has been successfully deactivated.');
+        User::destroy($users->lists('id')->toArray());
+
+        if($users->count() > 1) {
+            Helpers::flash('The users have been successfully deactivated.');
+        } else {
+            Helpers::flash('The user has been successfully deactivated.');
+        }
+
         return redirect(route('admin.users.index'));
     }
 

@@ -310,7 +310,8 @@ div.columns div.dataTables_paginate li.last a:after {
 .card {
   padding: 25px 50px;
   background-color: #fff;
-  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14); }
+  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14);
+  margin: 0 0 20px 0; }
   .card p {
     white-space: nowrap;
     overflow: hidden;

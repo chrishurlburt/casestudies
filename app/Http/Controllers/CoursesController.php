@@ -31,7 +31,7 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        $courses = Course::latest()->get()->all();
+        $courses = Course::latest()->get();
 
         return view('layouts.admin.courses.manage')->with('courses', $courses);
     }
@@ -131,9 +131,17 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-        $course = Course::destroy($id);
+        // $course = Course::destroy($id);
 
-        Helpers::flash('The course has been successfully deleted.');
+        $courses = Outcome::find(explode(',', $id));
+        Course::destroy($courses->lists('id')->toArray());
+
+        if($courses->count() > 1) {
+            Helpers::flash('The courses have been successfully deleted.');
+        } else {
+            Helpers::flash('The course has been successfully deleted.');
+        }
+
         return redirect(route('admin.courses.index'));
 
     }

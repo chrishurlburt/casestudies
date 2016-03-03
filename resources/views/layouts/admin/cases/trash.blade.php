@@ -28,7 +28,7 @@
         <table id="trashed-studies-table" class="table table-hover table-responsive" data-resource="draft">
             <thead>
                 <tr>
-                    <th></th>
+                    <th><input name="master-check" type="checkbox" value="" class="checkbox-custom master-check" id="master-check" data-name="studies[]"><label class="checkbox-custom-label" for="master-check"></label></th>
                     <th>Title</th>
                     <th>Author</th>
                     <th>Created</th>

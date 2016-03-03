@@ -3,28 +3,55 @@
 
 @section('content')
 
-<section id="heading">
-    @include('layouts.admin.partials._heading', ['heading' => 'Manage Users'])
-    {!! Breadcrumbs::render('manage-users') !!}
-</section>
+<main id="manage-users">
+    <section id="heading">
+        @include('layouts.admin.partials._heading', ['heading' => 'Manage Users'])
+        {!! Breadcrumbs::render('manage-users') !!}
+    </section>
 
-@include('layouts.admin.partials._success')
-@include('layouts.admin.partials._errors')
+    @include('layouts.admin.partials._success')
+    @include('layouts.admin.partials._errors')
 
-@include('layouts.admin.partials._users', ['users' => $users, 'deactivated' => false])
+    <section id="users" class="card">
 
-@if(!$usersTrashed->isEmpty())
-    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#deactivated" aria-expanded="false" aria-controls="collapseExample">
-        Show Deactivated Users
-    </a>
+        <div class="card-header">
+            <a href="{{ route('admin.cases.create') }}"><button class="btn btn-primary">New User</button></a>
+            <div class="left">
+                <span class="checked-count checked-count-users"></span>
+                @include('layouts.admin.partials._card-header-menu', ['menu' => 'users'])
+            </div>
+        </div>
 
-    <div class="collapse" id="deactivated">
+        @include('layouts.admin.partials._users', ['users' => $users, 'deactivated' => false])
+
+
+        {!! Form::open(['method' => 'DELETE', 'id' => 'form-delete']) !!}
+        {!! Form::close() !!}
+
+    </section>
+
+    @if(!$usersTrashed->isEmpty())
+    <section id="deactivated-users" class="card">
+
+        <div class="card-header">
+
+            <h4>Deactivated Users</h4>
+
+            <div class="left">
+                <span class="checked-count checked-count-deactivated-users"></span>
+                @include('layouts.admin.partials._card-header-menu', ['menu' => 'deactivated-users'])
+            </div>
+        </div>
 
         @include('layouts.admin.partials._users', ['users' => $usersTrashed, 'deactivated' => true])
 
-    </div>
-@endif
+        {!! Form::open(['method' => 'PUT', 'id' => 'form-reactivate']) !!}
+        {!! Form::close() !!}
 
+    </section>
+    @endif
+
+</main>
 
 @stop
 

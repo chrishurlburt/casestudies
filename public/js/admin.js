@@ -52,6 +52,33 @@
         return Ids;
     }
 
+    function setCheckedAmount(name, selector){
+        var checked = $('input[name="'+name+'[]"]:checked').length;
+
+        if(!checked) {
+            $(selector).empty();
+        } else {
+            if(checked>1){
+                $(selector).text(checked+' items selected');
+            } else {
+                $(selector).text(checked+' item selected');
+            }
+        }
+    }
+
+    function masterCheck(event) {
+
+        var id = '#'+$(event.target).prop('id');
+        checkNames = $(id).data('name');
+
+        if ($(id).is(':checked') ) {
+            $('input[name="'+checkNames+'"]').prop('checked', true);
+        } else {
+            $('input[name="'+checkNames+'"]').prop('checked', false);
+        }
+
+    }
+
     var app = {
         'common' : {
         //common fires on every page
@@ -85,6 +112,14 @@
                     $('form').attr('action', route);
 
                 });
+
+                // $('#master-check').click(function(){
+                //     if ( $( this ).is( ":checked" ) ) {
+                //         $('input[type="checkbox"]').prop('checked', true);
+                //     } else {
+                //         $('input[type="checkbox"]').prop('checked', false);
+                //     }
+                // });
 
             },
             finalize : function(){ }
@@ -126,22 +161,13 @@
                     return false;
                 });
 
-                $("input[type='checkbox']").click(function(){
-
-                    var checked = $("input[name='studies[]']:checked").length;
-
-                    if(!checked) {
-                        $('.checked-count').empty();
-                    } else {
-                        if(checked>1){
-                            $('.checked-count').text(checked+' items selected');
-                        } else {
-                            $('.checked-count').text(checked+' item selected');
-                        }
-                    }
-
+                $('.master-check').click(function(event){
+                    masterCheck(event);
                 });
 
+                $("input[type='checkbox']").click(function(){
+                    setCheckedAmount('studies', '.checked-count');
+                });
 
                 $('.trash').click(function(){
                     var IDs = getCheckedIds('studies');
@@ -249,7 +275,7 @@
                     "columns": [
                         { "orderable": false },
                         null,
-                        { "orderable": false },
+                        null,
                         { "orderable": false }
                     ],
                     "oLanguage": {
@@ -265,6 +291,14 @@
                 });
 
 
+                $('.master-check').click(function(event){
+                    masterCheck(event);
+                });
+
+                $("input[type='checkbox']").click(function(){
+                    setCheckedAmount('outcomes', '.checked-count');
+                });
+
             },
             finalize : function(){ }
         },
@@ -276,8 +310,6 @@
                     var url = $(this).attr('href');
 
                     ajax.get(url, function(data) {
-
-                        // console.log(data);
 
                         $('.course-name').empty().append(data.subject_name+' '+data.course_number);
 
@@ -296,26 +328,94 @@
                     return false;
 
                 });
+
+                $('#courses-table').DataTable({
+                    "order": [[1,'desc']],
+                    "columns": [
+                        { "orderable": false },
+                        null,
+                        null,
+                        { "orderable": false }
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
+
+                $('.trash').click(function(){
+                    var IDs = getCheckedIds('courses');
+                    path = location.origin+'/admin/courses/'+IDs;
+
+                    submitResources('form-delete',path,IDs);
+                });
+
+                $('.master-check').click(function(event){
+                    masterCheck(event);
+                });
+
+                $("input[type='checkbox']").click(function(){
+                    setCheckedAmount('courses', '.checked-count');
+                });
+
             },
             finalize : function(){ }
         },
         'manage_users' : {
             init : function(){
 
-                $('.deactivate').click(function(e){
-                    e.preventDefault();
+                $('.deactivate').click(function(){
+                    var IDs = getCheckedIds('users');
+                    path = location.origin+'/admin/users/'+IDs;
 
-                    var resource = $(this).closest('table').attr('data-resource');
+                    submitResources('form-delete',path,IDs);
+                });
 
-                    var route = $(this).attr('href');
+                $('.master-check').click(function(event){
+                    masterCheck(event);
+                });
 
-                    $('.warning-message').empty().append('Are you sure you want to deactivate '+resource+'?');
-                    $('.warning-desc').empty().append('This user can later be reactivated.');
-                    $('.btn-danger').empty().append('Deactivate');
+                $("input[type='checkbox']").click(function(){
+                    if($(this).prop('name') == 'deactivated_users[]' || $(this).data('name') == 'deactivated_users[]') {
+                        console.log('here');
+                        setCheckedAmount('deactivated_users', '.checked-count-deactivated-users');
+                    } else {
+                       setCheckedAmount('users', '.checked-count-users');
+                    }
+                });
 
-                    $('#delete').modal('show');
-                    $('form').attr('action', route);
+                $('#users-table').DataTable({
+                    "order": [[1,'desc']],
+                    "columns": [
+                        { "orderable": false },
+                        null,
+                        null,
+                        null,
+                        { "orderable": false }
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
 
+                $('#users-table-deactivated').DataTable({
+                    "order": [[1,'desc']],
+                    "columns": [
+                        { "orderable": false },
+                        null,
+                        null,
+                        null,
+                        { "orderable": false }
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
+
+                $('.reactivate').click(function(){
+                    var IDs = getCheckedIds('deactivated_users');
+                    path = location.origin+'/admin/users/activate/'+IDs;
+
+                    submitResources('form-reactivate',path,IDs);
                 });
 
             },

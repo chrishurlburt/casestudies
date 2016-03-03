@@ -37,7 +37,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('users/change-password/{id}', ['as' => 'admin.users.password.index', 'uses' => 'UsersController@password']);
     Route::put('users/change-password/{id}', ['as' => 'admin.users.password.update', 'uses' => 'UsersController@updatePassword']);
 
-    Route::get('/users/activate/{id}', ['as' => 'admin.users.activate', 'uses' => 'UsersController@activate']);
+    Route::put('/users/activate/{id}', ['as' => 'admin.users.activate', 'uses' => 'UsersController@activate']);
 
 });
 

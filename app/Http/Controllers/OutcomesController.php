@@ -92,8 +92,6 @@ class OutcomesController extends Controller
      */
     public function destroy($id)
     {
-        // $outcome = Outcome::destroy($id);
-
         $outcomes = Outcome::find(explode(',', $id));
         Outcome::destroy($outcomes->lists('id')->toArray());
 

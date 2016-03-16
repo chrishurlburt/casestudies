@@ -3,10 +3,8 @@
 <p>{{ $user->email }}</p>
 @endif
 
-<div class="form-group">
     <h3>First Name</h3>
     {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
-</div>
 
 <div class="form-group">
     <h3>Last Name</h3>

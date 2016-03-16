@@ -19,7 +19,7 @@
 
     <div class="card-header">
         <a href="{{ route('admin.cases.create') }}"><button class="btn btn-primary">New Case Study</button></a>
-        <div class="left">
+        <div class="right">
             <span class="checked-count"></span>
             @include('layouts.admin.partials._card-header-menu', ['menu' => 'drafts'])
         </div>

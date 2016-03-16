@@ -13,24 +13,24 @@ a {
   a:hover {
     color: #4DB6AC; }
 
-button.btn {
+button.btn, input.btn {
   border-radius: 2px;
   padding: 12px 24px;
   margin: 10px; }
 
-button.btn-primary {
+button.btn-primary, input.btn-primary {
   background-color: #2196F3;
   border: none;
   color: #fff; }
-  button.btn-primary:hover, button.btn-primary:focus, button.btn-primary :active {
+  button.btn-primary:hover, button.btn-primary:focus, button.btn-primary :active, input.btn-primary:hover, input.btn-primary:focus, input.btn-primary :active {
     background-color: #2196F3 !important;
     border: none; }
 
-button.btn-secondary {
+button.btn-secondary, input.btn-secondary {
   color: #333;
   background-color: #fff;
   border: 1px solid #e7eaec; }
-  button.btn-secondary:hover {
+  button.btn-secondary:hover, input.btn-secondary:hover {
     background-color: #eee; }
 
 input {
@@ -66,6 +66,17 @@ table {
 #page-wrapper {
   background-color: #e0e0e0;
   padding-top: 0; }
+
+.flexwrap {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
 
 .checkbox-custom {
   opacity: 0;
@@ -287,6 +298,28 @@ div.columns div.dataTables_paginate li.last a:after {
     #nav .navbar-right .dropdown .dropdown-menu li a {
       color: #333; }
 
+.nav-tabs {
+  margin: 0;
+  border: none; }
+  .nav-tabs li a {
+    margin: 0;
+    border: none;
+    color: #848484; }
+    .nav-tabs li a:hover {
+      color: #4DB6AC;
+      border: none;
+      background: none; }
+    .nav-tabs li a:focus {
+      background: none; }
+  .nav-tabs li.active a {
+    border: none;
+    box-shadow: inset 0px -3px 0px 0px #4db6ac;
+    color: #4DB6AC !important; }
+    .nav-tabs li.active a:focus {
+      border: none; }
+    .nav-tabs li.active a:hover {
+      border: none; }
+
 #heading {
   background-color: #fff;
   margin: 0 -25px 20px -25px;
@@ -321,7 +354,9 @@ div.columns div.dataTables_paginate li.last a:after {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 300px; }
-  .card .card-header {
+  .card a[href="#revisions"] {
+    color: #2196F3; }
+  .card .card-header, .card .card-footer {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
@@ -333,40 +368,47 @@ div.columns div.dataTables_paginate li.last a:after {
     border-bottom-style: solid;
     border-bottom-color: #e0e0e0;
     border-bottom-width: 1px; }
-    .card .card-header .card-icon {
+    .card .card-header.nav-tabs, .card .nav-tabs.card-footer {
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      padding-bottom: 0; }
+    .card .card-header .card-icon, .card .card-footer .card-icon {
       -webkit-align-self: center;
       -ms-flex-item-align: center;
       align-self: center;
       font-size: 16px;
       margin: 0 10px 0 0; }
-    .card .card-header .left {
+    .card .card-header .right, .card .card-footer .right {
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
-      margin-left: auto; }
-      .card .card-header .left .checked-count {
-        -webkit-align-self: center;
-        -ms-flex-item-align: center;
-        align-self: center;
+      margin-left: auto;
+      -webkit-align-self: center;
+      -ms-flex-item-align: center;
+      align-self: center; }
+      .card .card-header .right .checked-count, .card .card-footer .right .checked-count {
         margin-right: 10px;
         color: #777;
         font-style: oblique; }
-      .card .card-header .left .card-options {
+      .card .card-header .right .card-options, .card .card-footer .right .card-options {
         font-size: 14px;
-        -webkit-align-self: center;
-        -ms-flex-item-align: center;
-        align-self: center;
         color: #333; }
-        .card .card-header .left .card-options a {
+        .card .card-header .right .card-options a, .card .card-footer .right .card-options a {
           color: #2196F3; }
-        .card .card-header .left .card-options .dropdown-menu {
+        .card .card-header .right .card-options .dropdown-menu, .card .card-footer .right .card-options .dropdown-menu {
           right: 0;
           left: unset;
           border-radius: 2px; }
-          .card .card-header .left .card-options .dropdown-menu .trash {
+          .card .card-header .right .card-options .dropdown-menu .trash, .card .card-footer .right .card-options .dropdown-menu .trash {
             color: #E57373; }
-          .card .card-header .left .card-options .dropdown-menu .restore {
+          .card .card-header .right .card-options .dropdown-menu .restore, .card .card-footer .right .card-options .dropdown-menu .restore {
             color: #848484; }
+  .card .card-footer {
+    margin: 0;
+    padding: 25px 25px 0 25px;
+    border: none;
+    border-top: 1px solid #e0e0e0; }
 
 .custom-modal .modal-dialog {
   margin: 0;
@@ -386,18 +428,11 @@ div.columns div.dataTables_paginate li.last a:after {
         .custom-modal .modal-dialog .modal-content .modal-header .close:focus {
           outline: none; }
 
-#cases-form .btn {
-  margin: 0 0 10px 0; }
+#cases-form .popover-content {
+  word-break: break-all; }
 
 #cases-form .custom-url-warning {
   display: none; }
-
-#cases-form .outcomes-wrapper {
-  max-height: 250px;
-  overflow: scroll; }
-
-#cases-form .popover-content {
-  word-break: break-all; }
 
 #profile table, #user-profile table {
   width: 100%; }
@@ -425,5 +460,9 @@ div.columns div.dataTables_paginate li.last a:after {
 #profile tbody td, #profile thead th, #user-profile tbody td, #user-profile thead th {
   width: 50%;
   float: left; }
+
+.outcomes-list .outcomes-wrapper {
+  max-height: 250px;
+  overflow: scroll; }
 
 /*# sourceMappingURL=admin.css.map */

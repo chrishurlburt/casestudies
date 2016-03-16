@@ -4,9 +4,11 @@
 
 //admin interface partials
 @import 'admin/partials/_scaffolding';
+@import 'admin/partials/_utilities';
 @import 'admin/partials/_checkbox';
 @import 'admin/partials/_datatables';
 @import 'admin/partials/_nav';
+@import 'admin/partials/_tabs';
 @import 'admin/partials/_heading';
 @import 'admin/partials/_panel';
 @import 'admin/partials/_card';
@@ -14,3 +16,4 @@
 
 @import 'admin/partials/_case-form';
 @import 'admin/partials/_profile';
+@import 'admin/partials/_outcomes-list';

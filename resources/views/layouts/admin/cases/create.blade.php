@@ -14,42 +14,22 @@
 
     @include('layouts.admin.partials._success')
     @include('layouts.admin.partials._errors')
-    <section id="create-case" class="card">
-        <div class="row">
-                {!! Form::open(['route' => 'admin.cases.store']) !!}
-                <div class="col-lg-8">
 
-                   @include('layouts.admin.partials._cases-form')
+    <section id="create-case">
+        {!! Form::open(['route' => 'admin.cases.store']) !!}
 
-                </div>
+        @include('layouts.admin.partials._cases-form', ['create' => true])
 
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <h3>Custom URL</h3>
-                        {!! Form::text('slug', null, ['class' => 'form-control']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        <h3>Keywords <small>(Separate each with a comma)</small></h3>
-                        {!! Form::text('keywords', null, ['class' => 'form-control']) !!}
-                    </div>
-
-                    @include('layouts.admin.partials._cases-form-outcomes', ['create' => true])
-
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="form-group">
-
-                    @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
-                        {!! Form::submit('Publish Case Study', ['class' => 'btn btn-primary form-control', 'name' => 'publish']) !!}
-                    @endif
-                        {!! Form::submit('Save Draft', ['class' => 'btn btn-primary form-control', 'name' => 'draft']) !!}
-                    </div>
-                </div>
-
-                {!! Form::close() !!}
+        <div class="row card">
+            <div class="col-lg-12">
+                @if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish']))
+                    {!! Form::submit('Publish Case Study', ['class' => 'btn btn-primary', 'name' => 'publish']) !!}
+                @endif
+                    {!! Form::submit('Save Draft', ['class' => 'btn btn-secondary', 'name' => 'draft']) !!}
+            </div>
         </div>
+
+    {!! Form::close() !!}
     </section>
 
 </main>

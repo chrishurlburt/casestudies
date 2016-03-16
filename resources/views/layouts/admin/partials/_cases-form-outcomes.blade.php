@@ -1,5 +1,5 @@
 
-    <div class="form-group">
+    <div class="form-group outcomes-list">
 
         <h3>Learning Outcomes <small>(Check all that apply)</small></h3>
 

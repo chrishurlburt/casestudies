@@ -1,0 +1,36 @@
+.nav-tabs {
+    margin: 0;
+    border: none;
+    li {
+        a {
+            margin: 0;
+            border: none;
+            color: $gray;
+            &:hover {
+                color: $teal;
+                border: none;
+                background: none;
+            }
+            &:focus {
+                background: none;
+            }
+        }
+        &.active {
+            a {
+                border: none;
+                -webkit-box-shadow: inset 0px -3px 0px 0px rgba(77,182,172,1);
+                -moz-box-shadow: inset 0px -3px 0px 0px rgba(77,182,172,1);
+                box-shadow: inset 0px -3px 0px 0px rgba(77,182,172,1);
+                color: $teal !important;
+                &:focus {
+                    border: none;
+                }
+                &:hover {
+                    border: none;
+                }
+            }
+        }
+    }
+
+
+}

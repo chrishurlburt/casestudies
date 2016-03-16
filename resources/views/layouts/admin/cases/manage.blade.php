@@ -21,7 +21,7 @@
         <div class="card-header">
             <a href="{{ route('admin.cases.create') }}"><button class="btn btn-primary">New Case Study</button></a>
             <a href="{{ route('admin.cases.drafts') }}"><button class="btn btn-secondary">Manage Drafts</button></a>
-            <div class="left">
+            <div class="right">
                 <span class="checked-count"></span>
                 @include('layouts.admin.partials._card-header-menu', ['menu' => 'manage'])
             </div>
@@ -42,7 +42,7 @@
                     <tr>
                         <td><input name="studies[]" type="checkbox" value="{{ $study->id }}" class="checkbox-custom" id="c{{ $study->id }}"><label class="checkbox-custom-label" for="c{{ $study->id }}"></label></td>
                         <td><a href="{{ route('admin.cases.show', ['slug' => $study->slug]) }}" data-toggle="modal" data-target="#study" class="case-study">{{ $study->title }}</a></td>
-                        <td>{{ $study->user->first_name.' '.$study->user->last_name }}
+                        <td>{{ $study->user->first_name.' '.$study->user->last_name }}</td>
                         <td>{{ date('F d, Y', strtotime($study->created_at)) }}</td>
                         <td><a href="{{ route('admin.cases.edit', ['slug' => $study->slug]) }}"><i class="fa fa-pencil"></i></a></td>
                     </tr>

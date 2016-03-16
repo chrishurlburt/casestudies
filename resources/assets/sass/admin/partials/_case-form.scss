@@ -1,20 +1,11 @@
 #cases-form {
 
-    .btn {
-        margin: 0 0 10px 0;
+    .popover-content {
+        word-break: break-all;
     }
 
     .custom-url-warning {
         display: none;
-    }
-
-    .outcomes-wrapper {
-        max-height: 250px;
-        overflow: scroll;
-    }
-
-    .popover-content {
-        word-break: break-all;
     }
 
 }

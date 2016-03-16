@@ -1,5 +1,6 @@
 @extends('admin-base')
 
+@section('bodyclass', 'course_editor')
 
 @section('content')
 <main id="create-course">
@@ -12,12 +13,23 @@
     @include('layouts.admin.partials._errors')
 
     <section id="create-course-form" class="card">
-        {!! Form::open(['route' => 'admin.courses.store']) !!}
+        <div class="row">
+            {!! Form::open(['route' => 'admin.courses.store']) !!}
 
-        @include('layouts.admin.partials._courses-form')
-        {!! Form::submit('Add Course', ['class' => 'btn btn-primary form-control']) !!}
+            <div class="col-lg-8">
+                @include('layouts.admin.partials._courses-form')
+            </div>
 
-        {!! Form::close() !!}
+            <div class="col-lg-4">
+                @include('layouts.admin.partials._cases-form-outcomes', ['create' => true])
+            </div>
+
+            <div class="card-footer">
+                {!! Form::submit('Add Course', ['class' => 'btn btn-primary']) !!}
+            </div>
+
+            {!! Form::close() !!}
+        </div>
     </section>
 </main>
 

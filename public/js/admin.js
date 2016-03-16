@@ -86,7 +86,7 @@
 
                 tinymce.init({
                     selector: '.editor',
-                    min_height: 250,
+                    min_height: 350,
                     menubar: false,
                     plugins: 'autolink link',
                     toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link unlink'
@@ -112,14 +112,6 @@
                     $('form').attr('action', route);
 
                 });
-
-                // $('#master-check').click(function(){
-                //     if ( $( this ).is( ":checked" ) ) {
-                //         $('input[type="checkbox"]').prop('checked', true);
-                //     } else {
-                //         $('input[type="checkbox"]').prop('checked', false);
-                //     }
-                // });
 
             },
             finalize : function(){ }
@@ -356,6 +348,14 @@
                 $("input[type='checkbox']").click(function(){
                     setCheckedAmount('courses', '.checked-count');
                 });
+
+            },
+            finalize : function(){ }
+        },
+        'course_editor' : {
+            init     : function(){
+
+                $('.learning-outcome').popover();
 
             },
             finalize : function(){ }

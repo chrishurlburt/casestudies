@@ -421,6 +421,50 @@
             },
             finalize : function() {}
         },
+        'profile' : {
+            init    : function() {
+                $('#user-studies-table').DataTable({
+                    "order": [[1,'desc']],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
+            },
+            finalize : function() { }
+        },
+        'notifications' : {
+            init    : function() {
+                $('#notifications-table').DataTable({
+                    "order": [[1,'desc']],
+                    "columns": [
+                        { "orderable": false },
+                        null,
+                        null,
+                        null
+                    ],
+                    "oLanguage": {
+                        "sSearch": "Search"
+                    }
+                });
+
+                $('.delete').click(function(){
+                    var IDs = getCheckedIds('notifications');
+                    path = location.origin+'/admin/notifications/'+IDs;
+
+                    submitResources('form-delete',path,IDs);
+                });
+
+                $('.master-check').click(function(event){
+                    masterCheck(event);
+                });
+
+                $("input[type='checkbox']").click(function(){
+                    setCheckedAmount('notifications', '.checked-count');
+                });
+
+            },
+            finalize : function() { }
+        },
 
         // front-end app js
 

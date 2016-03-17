@@ -17,7 +17,7 @@
     @else
 
     <div class="card-header">
-        <a href="{{ route('admin.courses.create') }}"><button class="btn btn-primary">New Course</button></a>
+        <a href="{{ route('admin.courses.create') }}"><button type="button" class="btn btn-primary">New Course</button></a>
         <div class="right">
             <span class="checked-count"></span>
             @include('layouts.admin.partials._card-header-menu', ['menu' => 'courses'])

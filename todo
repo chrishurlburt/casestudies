@@ -3,21 +3,31 @@
 
 Overall:
   -UI/UX design
+    Views:
+      -login
+      -404 page/other error pages
+      -landing page
+      -search results
+      -single study
+  -CASTEL branding
   -bug testing (on going)
   !-refactor queries to leverage eager loading
-  !-tighten up and finalize form validation
   !-error handling
   -refactor all code for effeciency, maintainability, scalability and best practices (on going)
+  -landing page access from dashboard
 
 Admin Dashboard:
 
   CASE STUDIES
     !-add fields to match survey (completed on time, etc.)
-    -DRY out cases views (create & edit forms)
 
   USERS:
     !-warn users before they deactivate themselves or change their own permissions. ajax to get logged in user, create warning modal
     -more user permission layers(super admin, etc.)
+
+  MISC:
+    -full outcome/course descriptions in modals
+    -error/success messages UI
 
 Search Engine:
 
@@ -37,6 +47,15 @@ Search Engine:
   OTHER PAGES:
     *-case study submition page
     *-about page
+
+
+
+
+
+
+
+
+
 
 Completed:
   -rework app routing from search page to results page
@@ -58,6 +77,8 @@ Completed:
   -fix custom url form request error message
   -tooltips
   -name attached to notifcation on main dashboard page
+  -DRY out cases views (create & edit forms)
+  -update learning outcomes on update course view
   !-implement sort and filter options (jQuery datatables)
     DIGITALOCEAN
     -provision for LAMP server and redis server
@@ -68,7 +89,7 @@ Completed:
     -set up google analytics
     -SEO
 
-Name:
-  -RWU CM Case Studies to support Expernential Learning (CASTEL)
+  Name:
+    -RWU CM Case Studies to support Expernential Learning (CASTEL)
 
 

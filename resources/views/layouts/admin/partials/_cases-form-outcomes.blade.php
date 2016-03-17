@@ -11,7 +11,7 @@
                             {!! Form::checkbox('outcomes[]', $outcome->id) !!}
                             {!! $outcome->name !!}
                         @else
-                            {!! Form::checkbox('outcomes[]', $outcome->id, in_array($outcome->id, $study->outcomes()->lists('outcome_id')->toArray())) !!}
+                            {!! Form::checkbox('outcomes[]', $outcome->id, in_array($outcome->id, $data->outcomes()->lists('outcome_id')->toArray())) !!}
                             {!! $outcome->name !!}
                         @endif
                     </label>

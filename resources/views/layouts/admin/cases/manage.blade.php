@@ -19,8 +19,8 @@
     @else
 
         <div class="card-header">
-            <a href="{{ route('admin.cases.create') }}"><button class="btn btn-primary">New Case Study</button></a>
-            <a href="{{ route('admin.cases.drafts') }}"><button class="btn btn-secondary">Manage Drafts</button></a>
+            <a href="{{ route('admin.cases.create') }}"><button type="button" class="btn btn-primary">New Case Study</button></a>
+            <a href="{{ route('admin.cases.drafts') }}"><button type="button" class="btn btn-secondary">Manage Drafts</button></a>
             <div class="right">
                 <span class="checked-count"></span>
                 @include('layouts.admin.partials._card-header-menu', ['menu' => 'manage'])

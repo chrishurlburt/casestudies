@@ -13,8 +13,9 @@
 
         @include('layouts.admin.partials._outcomes-form')
 
-        {!! Form::submit('Update Learning Outcome', ['class' => 'btn btn-primary form-control']) !!}
-
+        <div class="card-footer">
+            {!! Form::submit('Update Learning Outcome', ['class' => 'btn btn-primary']) !!}
+        </div>
         {!! Form::close() !!}
     </section>
 </main>

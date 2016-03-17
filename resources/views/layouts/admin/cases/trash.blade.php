@@ -16,7 +16,7 @@
             <h3>There are no studies in the trash.</h3>
         @else
         <div class="card-header">
-            <a href="{{ route('admin.cases.drafts') }}"><button class="btn btn-primary">View Drafts</button></a>
+            <a href="{{ route('admin.cases.drafts') }}"><button type="button" class="btn btn-primary">View Drafts</button></a>
             <div class="right">
                 <span class="checked-count"></span>
 

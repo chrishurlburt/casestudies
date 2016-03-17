@@ -15,7 +15,7 @@
     <section id="users" class="card">
 
         <div class="card-header">
-            <a href="{{ route('admin.cases.create') }}"><button class="btn btn-primary">New User</button></a>
+            <a href="{{ route('admin.users.create') }}"><button class="btn btn-primary">New User</button></a>
             <div class="right">
                 <span class="checked-count checked-count-users"></span>
                 @include('layouts.admin.partials._card-header-menu', ['menu' => 'users'])

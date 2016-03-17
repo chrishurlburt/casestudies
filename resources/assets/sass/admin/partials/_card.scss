@@ -29,15 +29,16 @@
             font-size: 16px;
             margin: 0 10px 0 0;
         }
+        .checked-count {
+            align-self: center;
+            margin-right: 10px;
+            color: #777;
+            font-style: oblique;
+        }
         .right {
             display: flex;
             margin-left: auto;
             align-self: center;
-            .checked-count {
-                margin-right: 10px;
-                color: #777;
-                font-style: oblique;
-            }
             .card-options {
                 font-size: 14px;
                 color: $charcoal;
@@ -63,7 +64,7 @@
     }
     .card-footer {
         @extend .card-header;
-        margin: 0;
+        margin: 25px 0 0;
         padding: 25px 25px 0 25px;
         border: none;
         border-top: 1px solid $light-gray;

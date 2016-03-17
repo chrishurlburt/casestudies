@@ -16,7 +16,7 @@
     <section id="edit-case">
             {!! Form::model($study, ['method' => 'PUT', 'route' => ['admin.cases.update', $study->slug]]) !!}
 
-                @include('layouts.admin.partials._cases-form', ['create' => false])
+                @include('layouts.admin.partials._cases-form', ['create' => false, 'data' => $study])
 
                 <div class="card">
                     <div class="form-group">

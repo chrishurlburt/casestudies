@@ -119,7 +119,8 @@ class AdminController extends Controller
      */
     public function notifications()
     {
-        $notifications = Auth::user()->notifications()->get()->all();
+
+        $notifications = Auth::user()->notifications()->get();
 
         return view('layouts.admin.notifications.manage')->with('notifications', $notifications);
 
@@ -131,11 +132,21 @@ class AdminController extends Controller
      *
      * @return  null
      */
-    public function destroyNotification(Request $request)
+    public function destroyNotification($id)
     {
-        Auth::user()->notifications()->detach($request->input('notifications'));
 
-        return redirect(route('admin.notifications'))->with(Helpers::flash('The selected notifications have been deleted.'));
+        $notifications = Notification::find(explode(',', $id));
+        Auth::user()->notifications()->detach($notifications->lists('id')->toArray());
+
+        // Notification::destroy($notifications->lists('id')->toArray());
+
+        if($notifications->count() > 1) {
+            Helpers::flash('The notifications have been successfully deleted.');
+        } else {
+            Helpers::flash('The notificatio has been successfully deleted.');
+        }
+
+        return redirect(route('admin.notifications'));
     }
 
 }

@@ -16,7 +16,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']);
 
     route::get('notifications', ['as' => 'admin.notifications', 'uses' => 'AdminController@notifications']);
-    route::delete('notifications', ['as' => 'admin.notifications.destroy', 'uses' => 'AdminController@destroyNotification']);
+    route::delete('notifications/{id}', ['as' => 'admin.notifications.destroy', 'uses' => 'AdminController@destroyNotification']);
 
     route::get('profile', ['as' => 'admin.profile', 'uses' => 'AdminController@profile']);
 

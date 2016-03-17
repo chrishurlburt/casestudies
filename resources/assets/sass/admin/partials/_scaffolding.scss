@@ -54,6 +54,9 @@ input {
         color: $charcoal;
         font-weight: normal;
     }
+    &[type="radio"] {
+        margin: 5px 2px 0 6px;
+    }
 
 }
 
@@ -64,9 +67,6 @@ select {
     margin: 5px 1px 3px 0px;
     border: solid 1px $light-gray;
     border-radius: 2px;
-    // -webkit-appearance: none;
-    // -moz-appearance: none;
-    // appearance: none;
 }
 
 table {

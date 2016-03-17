@@ -16,7 +16,7 @@
     @include('layouts.admin.partials._errors')
 
     <section id="create-case">
-        {!! Form::open(['route' => 'admin.cases.store']) !!}
+    {!! Form::open(['route' => 'admin.cases.store']) !!}
 
         @include('layouts.admin.partials._cases-form', ['create' => true])
 

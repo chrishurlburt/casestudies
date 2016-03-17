@@ -46,6 +46,8 @@ input {
     border: 1px solid #51cbee;
     color: #333;
     font-weight: normal; }
+  input[type="radio"] {
+    margin: 5px 2px 0 6px; }
 
 select {
   border: 1px solid #111;
@@ -379,6 +381,13 @@ div.columns div.dataTables_paginate li.last a:after {
       align-self: center;
       font-size: 16px;
       margin: 0 10px 0 0; }
+    .card .card-header .checked-count, .card .card-footer .checked-count {
+      -webkit-align-self: center;
+      -ms-flex-item-align: center;
+      align-self: center;
+      margin-right: 10px;
+      color: #777;
+      font-style: oblique; }
     .card .card-header .right, .card .card-footer .right {
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -387,10 +396,6 @@ div.columns div.dataTables_paginate li.last a:after {
       -webkit-align-self: center;
       -ms-flex-item-align: center;
       align-self: center; }
-      .card .card-header .right .checked-count, .card .card-footer .right .checked-count {
-        margin-right: 10px;
-        color: #777;
-        font-style: oblique; }
       .card .card-header .right .card-options, .card .card-footer .right .card-options {
         font-size: 14px;
         color: #333; }
@@ -405,7 +410,7 @@ div.columns div.dataTables_paginate li.last a:after {
           .card .card-header .right .card-options .dropdown-menu .restore, .card .card-footer .right .card-options .dropdown-menu .restore {
             color: #848484; }
   .card .card-footer {
-    margin: 0;
+    margin: 25px 0 0;
     padding: 25px 25px 0 25px;
     border: none;
     border-top: 1px solid #e0e0e0; }
@@ -433,33 +438,6 @@ div.columns div.dataTables_paginate li.last a:after {
 
 #cases-form .custom-url-warning {
   display: none; }
-
-#profile table, #user-profile table {
-  width: 100%; }
-
-#profile thead, #profile tbody, #profile tr, #profile td, #profile th, #user-profile thead, #user-profile tbody, #user-profile tr, #user-profile td, #user-profile th {
-  display: block; }
-
-#profile tr:after, #user-profile tr:after {
-  content: ' ';
-  display: block;
-  visibility: hidden;
-  clear: both; }
-
-#profile thead th, #user-profile thead th {
-  height: 30px;
-  /*text-align: left;*/ }
-
-#profile tbody, #user-profile tbody {
-  height: 250px;
-  overflow-y: auto; }
-
-#profile thead, #user-profile thead {
-  /* fallback */ }
-
-#profile tbody td, #profile thead th, #user-profile tbody td, #user-profile thead th {
-  width: 50%;
-  float: left; }
 
 .outcomes-list .outcomes-wrapper {
   max-height: 250px;

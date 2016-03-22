@@ -1,0 +1,22 @@
+#search {
+    @include flexwrap(column);
+    padding-top: 0;
+    .keyword {
+        width: 60%;
+        .keyword-search {
+            @include flexwrap(row);
+            .search {
+                width: 75px;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            .keyword-search-field {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
+    .other-search-options {
+        width: 60%;
+    }
+}

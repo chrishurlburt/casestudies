@@ -10,7 +10,7 @@
                     @else
                     {!! Form::checkbox('courses[]', $course->id) !!}
                     @endif
-                    {!! $course->name !!}
+                    {!! $course->subject_name.' '.$course->course_number !!}
                 </label>
             </div>
         @endforeach

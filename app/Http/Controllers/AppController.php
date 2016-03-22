@@ -30,10 +30,12 @@ class AppController extends Controller
     {
         Session::forget(['search','results','studies_by_outcome','studies_by_course','outcomes_checked','courses_checked']);
 
+        $studies = Study::latest()->get()->take(5);
         $outcomes = Outcome::latest()->get()->all();
         $courses = Course::latest()->get()->all();
 
         return view('layouts.app.landing')->with([
+            'studies'  => $studies,
             'outcomes' => $outcomes,
             'courses'  => $courses
         ]);

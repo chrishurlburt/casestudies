@@ -1,81 +1,44 @@
 @extends('base')
-
-@section('content')
-
 @section('bodyclass', 'landing')
 
-@if($errors->any())
-    <ul class="alert alert-danger">
-        @foreach($errors->all() as $error)
+@section('content')
+<main id="landing-page">
 
-        <li>{{ $error }}</li>
+    @include('layouts.app.partials._nav')
 
-        @endforeach
-    </ul>
-@endif
+    <header id="hero">
+        <figure>
+            <img src="img/rwu-logo.png" class="logo" alt="logo" />
+        </figure>
+    </header>
 
-<h1>RWU Construction Management Case Studies</h1>
+    @if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
 
-<a href="/admin">Log in</a>
+            <li>{{ $error }}</li>
 
-<div class="row">
-    <div class="col-lg-12">
-        {!! Form::open(['route' => 'app.search']) !!}
-
-        <div class="form-group">
-            <h3>Keyword Search <small>(Enter keywords separated by comma or space)</small></h3>
-            <div class="row">
-                <div class="col-lg-8">
-                {!! Form::text('keywords', null, ['class' => 'form-control']) !!}
-                </div>
-                <div class="col-lg-4">
-                {!! Form::submit('Search Keywords', ['class' => 'btn btn-primary form-control']) !!}
-                </div>
-            </div>
-        </div>
-
-
-
-        {!! Form::close() !!}
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        {!! Form::open(['route' => 'app.search']) !!}
-
-            <div class="form-group">
-                <h3>Outcome Search</h3>
-            </div>
-
-            @include('layouts.app.partials._outcomes')
-
-        {!! Form::submit('Search Outcomes', ['class' => 'btn btn-primary form-control']) !!}
-
-        {!! Form::close() !!}
-    </div>
-
-    <div class="col-sm-12 col-md-6 col-lg-6">
-        {!! Form::open(['route' => 'app.search']) !!}
-
-            <div class="form-group">
-                <h3>Courses Search</h3>
-            </div>
-
-            @foreach($courses as $course)
-                <div class="checkbox">
-                    <label for="courses">
-                        {!! Form::checkbox('courses[]', $course->id) !!}
-                        {!! $course->subject_name.' '.$course->course_number !!}
-                    </label>
-                </div>
             @endforeach
+        </ul>
+    @endif
 
-        {!! Form::submit('Search Courses', ['class' => 'btn btn-primary form-control']) !!}
+    @include('layouts.app.partials._search')
 
-        {!! Form::close() !!}
-    </div>
+    <section id="latest">
+        <div class="latest">
+            <h3>Latest Case Studies</h3>
+            @foreach($studies as $study)
+                <article>
+                    <a href="/study/{{ $study->slug }}">{!! $study->title !!}</a></p>
+                </article>
+            @endforeach
+            <a href="#">View All Case Studies <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </section>
 
-</div>
+    <footer>
 
+    </footer>
+
+</main>
 @stop

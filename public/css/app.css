@@ -1,2 +1,75 @@
+section {
+  padding: 25px 0; }
+
+#hero {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: 51px 0 0 0;
+  padding: 75px 75px; }
+
+#search {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding-top: 0; }
+  #search .keyword {
+    width: 60%; }
+    #search .keyword .keyword-search {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center; }
+      #search .keyword .keyword-search .search {
+        width: 75px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0; }
+      #search .keyword .keyword-search .keyword-search-field {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0; }
+  #search .other-search-options {
+    width: 60%; }
+
+#latest {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  #latest .latest {
+    width: 60%; }
 
 /*# sourceMappingURL=app.css.map */

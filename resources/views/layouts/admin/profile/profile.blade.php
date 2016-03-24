@@ -1,28 +1,29 @@
 @extends('admin-base')
+@section('bodyclass', 'profile')
 
 @section('content')
 
-@include('layouts.admin.partials._heading', ['heading' => $user->first_name.' '.$user->last_name ])
-
-{!! Breadcrumbs::render('user-profile', $user) !!}
+<section id="heading">
+    @include('layouts.admin.partials._heading', ['heading' => $user->first_name.' '.$user->last_name ])
+    {!! Breadcrumbs::render('user-profile', $user) !!}
+</section>
 
 <main id="user-profile">
-  <h3>Email</h3>
-  <p>{{ $user->email }}</p>
 
-  <h3>Case Studies</h3>
+    @include('layouts.admin.partials._account-info', ['auth_user' => false])
 
-  @if(collect($studies)->isEmpty())
-    <p>This user has not posted any case studies.</p>
-  @else
-    @include('layouts.admin.partials._user-studies')
-  @endif
-
+    <section id="user-studies" class="card">
+        <div class="card-header">
+            <h3>Case Studies</h3>
+        </div>
+        @if(collect($studies)->isEmpty())
+            <h3>This user has not added any case studies.</h3>
+        @else
+            @include('layouts.admin.partials._user-studies')
+        @endif
+    </section>
 
 </main>
-
-
-
 
 
 @stop

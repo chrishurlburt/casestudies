@@ -1,0 +1,13 @@
+.alert {
+    border: none;
+    border-radius: 0;
+    box-shadow: $box-shadow;
+    color: #fff;
+    &.alert-success {
+        background-color: $success;
+    }
+    &.alert-danger {
+        padding-left: 30px;
+        background-color: $failure;
+    }
+}

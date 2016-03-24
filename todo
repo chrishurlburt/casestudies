@@ -27,7 +27,6 @@ Admin Dashboard:
 
   MISC:
     -full outcome/course descriptions in modals
-    -error/success messages UI
 
 Search Engine:
 
@@ -80,6 +79,7 @@ Completed:
   -DRY out cases views (create & edit forms)
   -update learning outcomes on update course view
   !-implement sort and filter options (jQuery datatables)
+  -error/success messages UI
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git

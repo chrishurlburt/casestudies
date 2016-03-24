@@ -37,7 +37,7 @@
 
             <h4>Deactivated Users</h4>
 
-            <div class="left">
+            <div class="right">
                 <span class="checked-count checked-count-deactivated-users"></span>
                 @include('layouts.admin.partials._card-header-menu', ['menu' => 'deactivated-users'])
             </div>

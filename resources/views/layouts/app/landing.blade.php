@@ -7,10 +7,16 @@
     @include('layouts.app.partials._nav')
 
     <header id="hero">
-        <figure>
+<!--         <figure>
             <img src="img/rwu-logo.png" class="logo" alt="logo" />
-        </figure>
+        </figure> -->
     </header>
+
+    <section id="title">
+        <div class="container">
+            <p class="title-text">Case Studies To Support Experiential Learning (CASTEL)</p>
+        </div>
+    </section>
 
     @if($errors->any())
         <ul class="alert alert-danger">

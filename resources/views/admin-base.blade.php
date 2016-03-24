@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
         <link href="/css/sb-admin.css" rel="stylesheet">
-        <link href="/css/admin.css" rel="stylesheet">
+        <link href="{{ elixir("css/admin.css") }}" rel="stylesheet">
 
         <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 

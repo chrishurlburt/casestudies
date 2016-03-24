@@ -1,5 +1,6 @@
 #hero {
-    @include flexwrap(row)
+    @include flexwrap(row);
+    background: center no-repeat url('../img/hero.png') #05375F;
     margin: 51px 0 0 0;
     padding: 75px 75px;
 }

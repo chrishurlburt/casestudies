@@ -1,22 +1,26 @@
 @extends('base')
 @section('bodyclass', 'landing')
+@section('page_id', 'landing-page')
 
 @section('content')
-<main id="landing-page">
 
     @include('layouts.app.partials._nav')
 
     <header id="hero">
-<!--         <figure>
-            <img src="img/rwu-logo.png" class="logo" alt="logo" />
-        </figure> -->
-    </header>
 
-    <section id="title">
-        <div class="container">
-            <p class="title-text">Case Studies To Support Experiential Learning (CASTEL)</p>
-        </div>
-    </section>
+        <section class="logo">
+            <figure>
+                <img src="img/rwu_white.gif" alt="logo" />
+            </figure>
+        </section>
+
+        @include('layouts.app.partials._search')
+
+            <a href="#latest" class="down-section">
+                <i class="fa fa-angle-double-down"></i>
+            </a>
+
+    </header>
 
     @if($errors->any())
         <ul class="alert alert-danger">
@@ -28,15 +32,14 @@
         </ul>
     @endif
 
-    @include('layouts.app.partials._search')
 
     <section id="latest">
         <div class="latest">
             <h3>Latest Case Studies</h3>
             @foreach($studies as $study)
-                <article>
-                    <a href="/study/{{ $study->slug }}">{!! $study->title !!}</a></p>
-                </article>
+
+                @include('layouts.app.partials._study-listing', ['study' => $study])
+
             @endforeach
             <a href="#">View All Case Studies <i class="fa fa-arrow-right"></i></a>
         </div>
@@ -46,5 +49,4 @@
 
     </footer>
 
-</main>
 @stop

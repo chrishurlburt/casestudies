@@ -4,6 +4,13 @@
 
 //app interface partials
 @import 'app/partials/_scaffolding';
+
+//general partials -- used throughout the app
+@import 'app/partials/general/_nav';
+@import 'app/partials/general/_button';
+@import 'app/partials/general/_check-group';
+@import 'app/partials/general/_study-listing';
+
 //landing page
 @import 'app/partials/landing/_header';
 @import 'app/partials/landing/_title';

@@ -438,6 +438,19 @@ class StudiesController extends Controller
       return $text;
     }
 
+    /**
+     * Create an excerpt.
+     *
+     *
+     * @param string $text
+     * @param int $max_length
+     * @return string
+     */
+    private function makeExcerpt($text, $max_length)
+    {
+        return substr(strip_tags((string)$text), 0, $max_length).'...';
+    }
+
 
     /**
      * Store a case study in the DB.
@@ -448,16 +461,13 @@ class StudiesController extends Controller
      */
     private function storeStudy($input, $isDraft)
     {
-        // @TODO: keywords can be entered delimited by comma or space.
-        // on frontend search, spaces are delimiters so they must be
-        // on the backend, too.
-
         $study = new Study;
 
         $study->title = $input['title'];
         $study->problem = $input['problem'];
         $study->solution = $input['solution'];
         $study->analysis = $input['analysis'];
+        $study->excerpt = $this->makeExcerpt($study->problem, 500);
         $study->draft = $isDraft;
 
         // make a slug
@@ -509,6 +519,7 @@ class StudiesController extends Controller
         $study->problem = $input['problem'];
         $study->solution = $input['solution'];
         $study->analysis = $input['analysis'];
+        $study->excerpt = $this->makeExcerpt($study->problem, 500);
         $study->draft = $isDraft;
 
         // make a slug

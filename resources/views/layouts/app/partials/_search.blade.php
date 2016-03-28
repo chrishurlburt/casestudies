@@ -1,10 +1,9 @@
 <section id="search">
 
     {!! Form::open(['route' => 'app.search', 'class' => 'keyword']) !!}
-        <h3>Keyword Search <small>(Enter keywords separated by comma or space)</small></h3>
         <div class="form-group keyword-search">
-            <input type="search" name="keywords" class="form-control keyword-search-field">
-            <button type="submit" class="btn btn-primary form-control search">
+            <input type="search" name="keywords" placeholder="Keyword Search" class="form-control keyword-search-field">
+            <button type="submit" class="search">
                 <i class="fa fa-search"></i>
             </button>
 
@@ -18,32 +17,25 @@
 
                     {!! Form::open(['route' => 'app.search']) !!}
 
-                        <div class="form-group">
-                            <h3>Outcome Search</h3>
-                        </div>
+                        <h3>Outcome Search</h3>
 
                         @include('layouts.app.partials._outcomes')
 
-                        {!! Form::submit('Search Outcomes', ['class' => 'btn btn-primary form-control']) !!}
+                        <button type="submit" class="btn btn-primary">
+                            Search Outcomes
+                        </button>
 
                         {!! Form::close() !!}
 
                         {!! Form::open(['route' => 'app.search']) !!}
 
-                        <div class="form-group">
-                            <h3>Courses Search</h3>
-                        </div>
+                        <h3>Courses Search</h3>
 
-                        @foreach($courses as $course)
-                            <div class="checkbox">
-                                <label for="courses">
-                                    {!! Form::checkbox('courses[]', $course->id) !!}
-                                    {!! $course->subject_name.' '.$course->course_number !!}
-                                </label>
-                            </div>
-                        @endforeach
+                        @include('layouts.app.partials._courses')
 
-                        {!! Form::submit('Search Courses', ['class' => 'btn btn-primary form-control']) !!}
+                        <button type="submit" class="btn btn-primary">
+                            Search Courses
+                        </button>
 
                     {!! Form::close() !!}
 

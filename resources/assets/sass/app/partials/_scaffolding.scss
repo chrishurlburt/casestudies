@@ -1,7 +1,17 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
 body {
-    // background-color: #bcd4ee;
+    font-family: 'Lato', sans-serif;
 }
 
 section {
     padding: 25px 0;
+}
+
+#landing-page {
+    height: 100%;
+    width: 100%;
 }

@@ -1,0 +1,20 @@
+.btn {
+    padding: 10px 15px;
+    min-width: 155px;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    transition: background-color .2s ease;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: $gold;
+    &:hover, &:active, &:focus {
+        background-color: $dark-gold;
+        &:active, :focus {
+            background-color: $dark-gold;
+        }
+    }
+
+}

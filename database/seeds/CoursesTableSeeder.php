@@ -15,8 +15,9 @@ class CoursesTableSeeder extends Seeder
         $faker = Faker::create();
         foreach(range(1,12) as $index) {
             DB::table('courses')->insert([
-                'name'         => $faker->sentence($nbWords = rand(3, 6)),
-                'description'  => $faker->sentence($nbWords = rand(6, 12))
+                'subject_name'   => $faker->word,
+                'course_number'  => $faker->randomNumber($nbDigits = 3),
+                'course_name'    => $faker->sentence($nbWords = rand(6, 12))
             ]);
         }
     }

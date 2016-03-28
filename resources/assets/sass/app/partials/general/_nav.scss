@@ -1,0 +1,29 @@
+.navbar {
+    min-height: 32px !important;
+    max-height: 32px;
+    &.navbar-default {
+        background-color: #222;
+        border: none;
+    }
+    .navbar-nav {
+        li {
+            a {
+                padding-top: 5px !important;
+                padding-bottom: 5px !important;
+                &:hover {
+                    color: #ddd;
+                }
+            }
+            &.active {
+                a {
+                    background-color: #000;
+                    color: #fff;
+                    &:hover, :active, :focus {
+                        background-color: #000;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

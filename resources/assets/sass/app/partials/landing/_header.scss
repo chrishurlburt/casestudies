@@ -1,6 +1,31 @@
 #hero {
-    @include flexwrap(row);
-    background: center no-repeat url('../img/hero.png') #05375F;
-    margin: 51px 0 0 0;
-    padding: 75px 75px;
+    @include flexwrap(column);
+    // background: center no-repeat url('https://images.unsplash.com/photo-1438089966501-33bb60deddf6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=2560&h=1700&fit=crop&s=b1f316a9695e4e2289e532aab108b4ab') #05375F;
+    // background: center no-repeat url('https://images.unsplash.com/photo-1453847350175-b971869973d0?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=e39e05e3593eacc6616fd97ed500b30a') #05375F;
+    background: center no-repeat url('../../img/hero.jpg') #05375F;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    .down-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 50%;
+        margin-left: -35px;
+        color: #fff;
+        width: 70px;
+        height: 70px;
+        margin-top: 15px;
+        border: 2px solid #fff;
+        border-radius: 100%;
+        font-size: 32px;
+        color: #fff;
+        transition: all .3s ease-in-out;
+        &:hover {
+            background-color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            transform: scale(1.1);
+        }
+    }
 }

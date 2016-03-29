@@ -470,17 +470,6 @@
 
             },
             finalize : function() { }
-        },
-
-        // front-end app js
-
-        'landing' : {
-            init     : function(){
-
-                $('.learning-outcome').popover();
-
-            },
-            finalize : function(){ }
         }
     };
 

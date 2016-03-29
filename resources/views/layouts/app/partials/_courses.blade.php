@@ -1,4 +1,4 @@
-<div class="check-group">
+<div class="scrollable check-group">
     @foreach($courses as $course)
         <div class="checkbox">
             <label for="courses">

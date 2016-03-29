@@ -16,5 +16,27 @@
             background-color: $dark-gold;
         }
     }
+}
 
+.btn-secondary {
+    color: $blue;
+    background-color: transparent;
+    border: 2px solid $blue;
+    a {
+        color: $blue;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    &:hover, &:active, &:focus {
+        color: #fff;
+        background-color: $blue;
+        a {
+            color: #fff;
+        }
+        &:active, :focus {
+            color: #fff;
+            background-color: $blue;
+        }
+    }
 }

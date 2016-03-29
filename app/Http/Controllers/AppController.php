@@ -30,7 +30,7 @@ class AppController extends Controller
     {
         Session::forget(['search','results','studies_by_outcome','studies_by_course','outcomes_checked','courses_checked']);
 
-        $studies = Study::latest()->get()->take(5);
+        $studies = Study::latest()->where('draft', false)->get()->take(5);
         $outcomes = Outcome::latest()->get()->all();
         $courses = Course::latest()->get()->all();
 

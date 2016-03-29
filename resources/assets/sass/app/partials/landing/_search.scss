@@ -39,6 +39,9 @@
             form {
                 padding: 10px;
                 width: 50%;
+                .check-group {
+                    @include scrollable(250px);
+                }
             }
         }
     }

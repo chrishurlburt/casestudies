@@ -4,11 +4,21 @@ html, body {
 }
 
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    color: $blue;
 }
 
 section {
-    padding: 25px 0;
+    padding: 25px;
+    .section-title {
+        color: #333;
+        text-align: center;
+        margin: 25px 0 50px 0;
+        font-size: 64px;
+    }
 }
 
 #landing-page {

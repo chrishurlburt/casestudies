@@ -1,8 +1,11 @@
 .study-listing {
-    margin: 25px 0;
+    padding: 25px 15px 0;
     .study-title {
         margin: 0 0 6px 0;
         font-size: 24px;
+        a {
+            color: $blue;
+        }
     }
     .meta-data {
         margin: 0;
@@ -10,8 +13,18 @@
         font-size: 14px;
     }
     .excerpt {
+        font-family: $serif;
         margin: 15px 0;
+        a {
+            font-family: $sans-serif;
+        }
     }
-
+    &:after {
+        content: ' ';
+        display: block;
+        margin: 25px 0 0;
+        background-color: $gray;
+        height: 1px;
+    }
 
 }

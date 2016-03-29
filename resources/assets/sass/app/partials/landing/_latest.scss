@@ -1,6 +1,9 @@
 #latest {
-    @include flexwrap(column);
-    .latest {
-        width: 60%;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 200px;
+    .view-all {
+        align-self: flex-end;
+        font-size: 16px;
     }
 }

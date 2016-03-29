@@ -34,19 +34,21 @@
 
 
     <section id="latest">
-        <div class="latest">
-            <h3>Latest Case Studies</h3>
+
+        <h3 class="section-title">Latest Case Studies</h3>
+
             @foreach($studies as $study)
 
                 @include('layouts.app.partials._study-listing', ['study' => $study])
 
             @endforeach
-            <a href="#">View All Case Studies <i class="fa fa-arrow-right"></i></a>
-        </div>
+
+            <a href="#" class="view-all">View All Case Studies <i class="fa fa-arrow-right"></i></a>
     </section>
 
-    <footer>
-
+    <footer id="footer">
+        <p>Copyright 2016, <a href="rwu.edu">Roger Williams University</a> • One Old Ferry Road, Bristol, RI 02809</p>
+        <p>1-800-458-7144 • 401-253-1040</p>
     </footer>
 
 @stop

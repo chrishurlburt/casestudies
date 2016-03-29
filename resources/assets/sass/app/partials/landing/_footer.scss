@@ -1,0 +1,11 @@
+#footer {
+    @include flexwrap(column);
+    padding: 10px 0 0 0;
+    background-color: $blue;
+    color: #fff;
+    font-size: 12px;
+    a {
+        color: #fff;
+        text-decoration: underline;
+    }
+}

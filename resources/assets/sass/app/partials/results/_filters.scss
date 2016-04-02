@@ -1,0 +1,8 @@
+#filters {
+    .btn-secondary {
+        @include btn-secondary($gold)
+        &.reset {
+            width: 100%;
+        }
+    }
+}

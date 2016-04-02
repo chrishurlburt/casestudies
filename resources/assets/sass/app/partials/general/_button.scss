@@ -8,35 +8,9 @@
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: $gold;
-    &:hover, &:active, &:focus {
-        background-color: $dark-gold;
-        &:active, :focus {
-            background-color: $dark-gold;
-        }
-    }
+    @include btn-primary($gold)
 }
 
 .btn-secondary {
-    color: $blue;
-    background-color: transparent;
-    border: 2px solid $blue;
-    a {
-        color: $blue;
-        &:hover {
-            text-decoration: none;
-        }
-    }
-    &:hover, &:active, &:focus {
-        color: #fff;
-        background-color: $blue;
-        a {
-            color: #fff;
-        }
-        &:active, :focus {
-            color: #fff;
-            background-color: $blue;
-        }
-    }
+    @include btn-secondary($blue);
 }

@@ -21,6 +21,9 @@
                     border-radius: 0;
                     height: 50px;
                     font-size: 18px;
+                    &:focus {
+                        box-shadow: none;
+                    }
                 }
             }
         }
@@ -33,4 +36,3 @@
         }
     }
 }
-

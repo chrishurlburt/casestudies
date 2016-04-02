@@ -1,28 +1,38 @@
 @extends('base')
+@section('bodyclass', 'results')
+@section('page_id', 'results-page')
 
 @section('content')
 
-@section('bodyclass', 'results')
+<header id="header">
+    @include('layouts.app.partials._search')
+</header>
 
-<h1>Search Results for: </h1>
-<h4>{{ $search['terms'] }}</h4>
-<hr />
+<section id="results-data" class="row">
+    <p class="results-count">{{ $studies->total() }} result(s) for '{{ $search['terms'] }}' - Page {{ $studies->currentPage() }} of {{ ceil($studies->total() / $studies->perPage()) }}</p>
+</section>
 
-@if(!$studies->isEmpty())
-<div class="row">
-    <div class="col-lg-8">
-
+<section id="results-main" class="row">
+    <section id="results" class="col-lg-8">
         <div class="row">
-            <div class="col-lg-12">
-                @foreach($studies as $study)
-                    <a href="{{ route('app.single', ['slug' => $study->slug]) }}"><h4>{{ $study->title }}</h4></a>
-                @endforeach
-            </div>
+
+                @if($studies->isEmpty())
+                    <h3>No studies to show for the selected filter options.</h3>
+                @else
+                    @foreach($studies as $study)
+                        <div class="col-lg-12">
+                            @include('layouts.app.partials._study-listing', ['study' => $study])
+                        </div>
+                    @endforeach
+                @endif
         </div>
 
-    </div>
+        <div class="pagination-wrap">
+            {!! $studies->render() !!}
+        </div>
+    </section>
 
-    <div class="col-lg-4">
+    <section id="filters" class="col-lg-4">
 
         @if($search['type'] == 'outcomes')
             @include('layouts.app.filters.courses')
@@ -35,16 +45,8 @@
 
         @include('layouts.app.filters.reset')
 
-    </div>
+    </section>
 
-</div>
-
-<div class="row">
-    <div class="col-lg-offset-3">
-        {!! $studies->render() !!}
-    </div>
-</div>
-
-@endif
+</section>
 
 @stop

@@ -1,0 +1,21 @@
+#header {
+    @include flexwrap(column)
+    padding: 25px 0;
+    border-bottom: solid 1px $lightgray;
+    background-color: $lightlightgray;
+    #search {
+        padding: 0;
+        .other-search-options a {
+            color: $blue;
+        }
+        #search-options {
+            width: 100%;
+            padding: 0 25px;
+            .search-well {
+                margin: 0 -25px 0 -25px;
+                color: #333;
+                background-color: $lightgray;
+            }
+        }
+    }
+}

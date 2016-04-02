@@ -209,10 +209,6 @@ class AppController extends Controller
         $studies_unfiltered = Session::get('results');
         $search = Session::get('search');
 
-        // @TODO: refactor the way checked filter states are recorded.
-
-        // @TODO: if there's no results for a filter, say no results found.
-
         // @TODO: maybe filters should have their own class.
 
         switch(Request::input()):
@@ -385,7 +381,10 @@ class AppController extends Controller
             return false;
         } else {
 
-            $keywords = Keyword::whereIn('id', $keywordIds)->with('studies')->get();
+            $keywords = Keyword::whereIn('id', $keywordIds)->with(array('studies'=>function($query){
+                $query->where('draft', false);
+            }))->get();
+
             $studies = $keywords->pluck('studies');
 
             $studies_processed = $this->processCollection($studies);
@@ -424,7 +423,9 @@ class AppController extends Controller
         } else {
 
             // get studies from outcomes
-            $outcomes = Outcome::whereIn('id', $outcomeIds)->with('studies')->get();
+            $outcomes = Outcome::whereIn('id', $outcomeIds)->with(array('studies'=>function($query){
+                $query->where('draft', false);
+            }))->get();
             $studies = $outcomes->pluck('studies');
 
             $studies_processed = $this->processCollection($studies);

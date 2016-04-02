@@ -1,0 +1,17 @@
+.pagination {
+    li {
+        a {
+            border: none;
+            color: $blue;
+        }
+        &.active span {
+            background-color: $gold;
+            &:hover {
+                background-color: $gold;
+            }
+        }
+    }
+    span {
+        border: none !important;
+    }
+}

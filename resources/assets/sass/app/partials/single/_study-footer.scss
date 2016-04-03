@@ -1,0 +1,34 @@
+#study-footer {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid $lightgray;
+    border-bottom: 1px solid $lightgray;
+    padding: 0 0;
+    margin: 70px 250px;
+    .footer-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 33%;
+        border-right: 1px solid $lightgray;
+        &:nth-child(3) {
+            border-right: none;
+        }
+        ul {
+            padding: 0;
+            margin: 0 0 20px 0;
+            &.keywords {
+                li {
+                    display: inline;
+                    .label-default {
+                        background-color: $blue;
+                        &.label {
+                            line-height: 2.2;
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -13,16 +13,26 @@
 @import 'app/partials/general/_search';
 @import 'app/partials/general/_search-options';
 @import 'app/partials/general/_study-listing';
+@import 'app/partials/general/_footer';
 
 //landing page
+#landing-page {
 @import 'app/partials/landing/_header';
-@import 'app/partials/landing/_title';
 @import 'app/partials/landing/_search';
 @import 'app/partials/landing/_latest';
-@import 'app/partials/landing/_footer';
+}
 
 //results page
+#results-page {
 @import 'app/partials/results/_header';
 @import 'app/partials/results/_results-data';
 @import 'app/partials/results/_results';
 @import 'app/partials/results/_filters';
+}
+
+//single study
+#single-page {
+@import 'app/partials/single/_header';
+@import 'app/partials/single/_study-section';
+@import 'app/partials/single/_study-footer';
+}

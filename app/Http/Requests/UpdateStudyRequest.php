@@ -44,13 +44,21 @@ class UpdateStudyRequest extends Request
                 // that is already in use. However, the validation must exclude
                 // the current title from the uniqueness test so that it can
                 // be updated with the same title.
-                'title'    => 'required|unique:studies,title,'.$study->id.'|min:10|string',
-                'problem'  => 'required',
-                'solution' => 'required',
-                'analysis' => 'required',
-                'keywords' => 'required',
-                'outcomes' => 'required',
-                'slug'     => 'unique:studies,slug,'.$study->id.'|min:5|string'
+                'title'              => 'required|unique:studies,title,'.$study->id.'|min:10|string',
+                'problem'            => 'required',
+                'solution'           => 'required',
+                'analysis'           => 'required',
+                'keywords'           => 'required',
+                'outcomes'           => 'required',
+                'slug'               => 'unique:studies,slug,'.$study->id.'|min:5|string',
+                'schedule_impact'    => 'in:yes,no',
+                'budget_impact'      => 'in:yes,no',
+                'delivery_method'    => 'min:10,max:50',
+                'estimated_schedule' => 'integer|min:1,max:3',
+                'contract_value'     => 'regex:/[0-9]+(,[0-9]+)*/|min:4,max:12',
+                'market_sector'      => 'string|min:5,max:45',
+                'topic'              => 'string|min:5,max:50',
+                'location'           => 'string|min:4,max:20'
             ];
 
         } else if($this->has('update-draft') || $this->has('redraft')) {

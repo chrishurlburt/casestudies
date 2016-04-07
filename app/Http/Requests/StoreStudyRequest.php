@@ -39,13 +39,21 @@ class StoreStudyRequest extends Request
         } else if($this->has('publish')) {
 
             return [
-                'title'    => 'required|unique:studies,title|min:10',
-                'problem'  => 'required',
-                'solution' => 'required',
-                'analysis' => 'required',
-                'slug'     => 'unique:studies,slug',
-                'keywords' => 'required',
-                'outcomes' => 'required'
+                'title'              => 'required|unique:studies,title|min:10',
+                'problem'            => 'required',
+                'solution'           => 'required',
+                'analysis'           => 'required',
+                'slug'               => 'unique:studies,slug',
+                'keywords'           => 'required',
+                'outcomes'           => 'required',
+                'schedule_impact'    => 'in:yes,no',
+                'budget_impact'      => 'in:yes,no',
+                'delivery_method'    => 'min:10,max:50',
+                'estimated_schedule' => 'integer|min:1,max:3',
+                'contract_value'     => 'regex:/[0-9]+(,[0-9]+)*/|min:4,max:12',
+                'market_sector'      => 'string|min:5,max:45',
+                'topic'              => 'string|min:5,max:50',
+                'location'           => 'string|min:4,max:20'
             ];
 
         } else

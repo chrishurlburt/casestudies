@@ -43,7 +43,9 @@
 
             @endforeach
 
-            <a href="#" class="view-all">View All Case Studies <i class="fa fa-arrow-right"></i></a>
+            <a href="{{ route('app.results.all') }}" class="view-all">View All Case Studies <i class="fa fa-arrow-right"></i></a>
     </section>
+
+    @include('layouts.app.partials._footer')
 
 @stop

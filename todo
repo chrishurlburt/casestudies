@@ -5,10 +5,6 @@ Overall:
   -UI/UX design
     Views:
       -login
-      -404 page/other error pages
-      -landing page
-      -search results
-      -single study
   -CASTEL branding
   -bug testing (on going)
   !-refactor queries to leverage eager loading
@@ -17,9 +13,6 @@ Overall:
   -landing page access from dashboard
 
 Admin Dashboard:
-
-  CASE STUDIES
-    !-add fields to match survey (completed on time, etc.)
 
   USERS:
     !-warn users before they deactivate themselves or change their own permissions. ajax to get logged in user, create warning modal
@@ -30,22 +23,16 @@ Admin Dashboard:
 
 Search Engine:
 
-  LANDING:
-    -"view all" studies option
-
   RESULTS:
     -search terms
-    -handle situation with no results after filter
-    -include exceprt, date and other info for each study in results
-    -sort options(date, author, etc)
-
-  SINGLE STUDY:
-    -what options should this page include?
-    -what should a case study look like?
 
   OTHER PAGES:
     *-case study submition page
     *-about page
+
+
+
+
 
 
 
@@ -78,8 +65,11 @@ Completed:
   -name attached to notifcation on main dashboard page
   -DRY out cases views (create & edit forms)
   -update learning outcomes on update course view
+  -404 page/other error pages
   !-implement sort and filter options (jQuery datatables)
   -error/success messages UI
+  -include exceprt, date and other info for each study in results
+  -handle situation with no results after filter
     DIGITALOCEAN
     -provision for LAMP server and redis server
     -develop automated deployment workflow via git
@@ -88,7 +78,13 @@ Completed:
     GOOGLE ANALYTICS
     -set up google analytics
     -SEO
-
+      LANDING:
+    -"view all" studies option
+    SINGLE STUDY:
+    -what options should this page include?
+    -what should a case study look like?
+    CASE STUDIES
+    !-add fields to match survey (completed on time, etc.)
   Name:
     -RWU CM Case Studies to support Expernential Learning (CASTEL)
 

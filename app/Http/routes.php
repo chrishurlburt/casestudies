@@ -59,6 +59,7 @@ Route::post('/', ['as' => 'app.search', 'uses' => 'AppController@search']);
 
 Route::get('/results', ['as' => 'app.results', 'uses' => 'AppController@results']);
 Route::put('/results', ['as' => 'app.results.filter', 'uses' => 'AppController@filter']);
+Route::get('/all', ['as' => 'app.results.all', 'uses' => 'AppController@all']);
 
 Route::get('/study/{slug}', ['as' => 'app.single', 'uses' => 'AppController@single']);
 

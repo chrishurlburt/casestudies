@@ -38,7 +38,7 @@
             @include('layouts.app.filters.courses')
         @elseif($search['type'] == 'courses')
             @include('layouts.app.filters.outcomes')
-        @elseif($search['type'] == 'keywords')
+        @elseif($search['type'] == 'keywords' || $search['type'] == 'all')
             @include('layouts.app.filters.outcomes')
             @include('layouts.app.filters.courses')
         @endif
@@ -48,5 +48,7 @@
     </section>
 
 </section>
+
+@include('layouts.app.partials._footer')
 
 @stop

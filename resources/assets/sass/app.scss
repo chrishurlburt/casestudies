@@ -6,6 +6,8 @@
 @import 'app/partials/_scaffolding';
 
 //general partials -- used throughout the app
+@import 'app/partials/general/_error';
+@import 'app/partials/general/_login';
 @import 'app/partials/general/_nav';
 @import 'app/partials/general/_button';
 @import 'app/partials/general/_pagination';
@@ -35,4 +37,5 @@
 @import 'app/partials/single/_header';
 @import 'app/partials/single/_study-section';
 @import 'app/partials/single/_study-footer';
+@import 'app/partials/single/_background';
 }

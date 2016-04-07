@@ -44,6 +44,33 @@ class AppController extends Controller
 
 
     /**
+     * View all case studies.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+            $studies = Study::latest()->where('draft', false)->get();
+            $search = [
+                'terms' => 'All Case Studies',
+                'type'  => 'all'
+            ];
+
+            Session::put([
+                'results' => $studies,
+                'search' => $search
+            ]);
+
+            $studies = $this->paginate(Study::latest()->where('draft', false)->get(), '/all');
+
+            return view('layouts.app.results')->with([
+                'studies' => $studies,
+                'search'  => $search
+            ]);
+    }
+
+
+    /**
      * Display results of a search.
      *
      * @return \Illuminate\Http\Response
@@ -141,7 +168,7 @@ class AppController extends Controller
 
             case $SearchRequest->has('outcomes'):
 
-                $search_terms = "outcomes go here";
+                $search_terms = "";
                 $studies = $this->outcomesSearch($SearchRequest);
 
                 if($studies && !$studies->isEmpty()) {
@@ -165,7 +192,7 @@ class AppController extends Controller
 
             case $SearchRequest->has('courses'):
 
-                $search_terms = "courses go here";
+                $search_terms = "";
                 $studies = $this->coursesSearch($SearchRequest);
 
                 if($studies && !$studies->isEmpty()) {
@@ -205,7 +232,6 @@ class AppController extends Controller
      */
     public function filter()
     {
-        $filter = Request::all();
         $studies_unfiltered = Session::get('results');
         $search = Session::get('search');
 
@@ -538,13 +564,13 @@ class AppController extends Controller
      * @param int $items
      * @return LengthAwarePaginator
      */
-    private function paginate($items)
+    private function paginate($items, $path = '/results')
     {
         $page = Input::get('page');
         $perPage = 5;
 
         $paginated = new LengthAwarePaginator($items->forPage($page,$perPage), $items->count(), $perPage, $page);
-        $paginated->setPath('/results');
+        $paginated->setPath($path);
 
         return $paginated;
     }

@@ -1,4 +1,6 @@
 @extends('base')
+@section('bodyclass', 'login')
+@section('page_id', 'login-page')
 
 @section('content')
 <div class="container-fluid">

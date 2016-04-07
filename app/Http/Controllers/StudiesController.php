@@ -463,12 +463,20 @@ class StudiesController extends Controller
     {
         $study = new Study;
 
-        $study->title = $input['title'];
-        $study->problem = $input['problem'];
-        $study->solution = $input['solution'];
-        $study->analysis = $input['analysis'];
-        $study->excerpt = $this->makeExcerpt($study->problem, 500);
-        $study->draft = $isDraft;
+        $study->title              = $input['title'];
+        $study->problem            = $input['problem'];
+        $study->solution           = $input['solution'];
+        $study->analysis           = $input['analysis'];
+        $study->excerpt            = $this->makeExcerpt($study->problem, 500);
+        $study->schedule_impact    = $input['schedule_impact'];
+        $study->budget_impact      = $input['budget_impact'];
+        $study->delivery_method    = $input['delivery_method'];
+        $study->estimated_schedule = $input['estimated_schedule'];
+        $study->contract_value     = $input['contract_value'];
+        $study->market_sector      = $input['market_sector'];
+        $study->topic              = $input['topic'];
+        $study->location           = $input['location'];
+        $study->draft              = $isDraft;
 
         // make a slug
         if(empty($input['slug'])) {
@@ -515,12 +523,21 @@ class StudiesController extends Controller
     private function updateStudy($study, $input, $isDraft)
     {
         // setup the study
-        $study->title = $input['title'];
-        $study->problem = $input['problem'];
-        $study->solution = $input['solution'];
-        $study->analysis = $input['analysis'];
-        $study->excerpt = $this->makeExcerpt($study->problem, 500);
-        $study->draft = $isDraft;
+        $study->title              = $input['title'];
+        $study->problem            = $input['problem'];
+        $study->solution           = $input['solution'];
+        $study->analysis           = $input['analysis'];
+        $study->excerpt            = $this->makeExcerpt($study->problem, 500);
+        $study->draft              = $isDraft;
+        $study->schedule_impact    = $input['schedule_impact'];
+        $study->budget_impact      = $input['budget_impact'];
+        $study->delivery_method    = $input['delivery_method'];
+        $study->estimated_schedule = $input['estimated_schedule'];
+        $study->contract_value     = $input['contract_value'];
+        $study->market_sector      = $input['market_sector'];
+        $study->topic              = $input['topic'];
+        $study->location           = $input['location'];
+        $study->draft              = $isDraft;
 
         // make a slug
         if(empty($input['slug'])) {

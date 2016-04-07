@@ -19,6 +19,14 @@ class CreateStudiesTable extends Migration
             $table->text('solution');
             $table->text('analysis');
             $table->text('excerpt');
+            $table->string('schedule_impact')->nullable();
+            $table->string('budget_impact')->nullable();
+            $table->string('delivery_method')->nullable();
+            $table->integer('estimated_schedule')->nullable();
+            $table->string('contract_value')->nullable();
+            $table->string('market_sector')->nullable();
+            $table->string('topic')->nullable();
+            $table->string('location')->nullable();
             $table->string('slug');
             $table->boolean('draft');
             $table->integer('user_id')->unsigned();

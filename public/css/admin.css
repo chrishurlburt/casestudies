@@ -448,7 +448,8 @@ div.columns div.dataTables_paginate li.last a:after {
   word-break: break-all; }
 
 #cases-form .custom-url-warning {
-  display: none; }
+  display: none;
+  background-color: #FFD80B; }
 
 .outcomes-list .outcomes-wrapper {
   max-height: 250px;

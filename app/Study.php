@@ -44,9 +44,34 @@ class Study extends Model
         'problem',
         'solution',
         'analysis',
+        'excerpt',
         'slug',
         'draft',
+        'schedule_impact',
+        'budget_impact',
+        'delivery_method',
+        'estimated_schedule',
+        'contract_value',
+        'market_sector',
+        'topic',
+        'location'
     ];
+
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function($study)
+        {
+            foreach ($study->toArray() as $name => $value) {
+                if (empty($value) && $study->{$name} !== $study->draft) {
+                    $study->{$name} = null;
+                }
+            }
+            return true;
+        });
+    }
 
 
     /**
@@ -106,6 +131,87 @@ class Study extends Model
     public function getDraftAttribute($value)
     {
         return (bool) $value;
+    }
+
+
+    /**
+     * Change to uppercase.
+     *
+     * @return bool
+     */
+    public function getTopicAttribute($value)
+    {
+        return $this->prepareString($value);
+    }
+
+
+    /**
+     * Change to uppercase.
+     *
+     * @return bool
+     */
+    public function getLocationAttribute($value)
+    {
+        return $this->prepareString($value);
+    }
+
+
+    /**
+     * Change to uppercase.
+     *
+     * @return bool
+     */
+    public function getScheduleImpactAttribute($value)
+    {
+        return $this->prepareString($value);
+    }
+
+
+    /**
+     * Change to uppercase.
+     *
+     * @return bool
+     */
+    public function getBudgetImpactAttribute($value)
+    {
+        return $this->prepareString($value);
+    }
+
+
+    /**
+     * Change to uppercase.
+     *
+     * @return bool
+     */
+    public function getMarketSectorAttribute($value)
+    {
+        return $this->prepareString($value);
+    }
+
+
+    /**
+     * Change to uppercase.
+     *
+     * @return bool
+     */
+    public function getDeliveryMethodAttribute($value)
+    {
+        return $this->prepareString($value);
+    }
+
+
+    /**
+     * Words first letter to uppercase if string is not null.
+     *
+     * @return string
+     */
+    private function prepareString($value)
+    {
+        if($value) {
+            return ucwords($value);
+        }
+
+        return $value;
     }
 
 }

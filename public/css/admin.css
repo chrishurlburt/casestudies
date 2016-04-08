@@ -65,9 +65,11 @@ table {
   table tbody tr td {
     padding: 10px !important; }
 
-#page-wrapper {
-  background-color: #e0e0e0;
-  padding-top: 0; }
+.wrapper {
+  padding: 0; }
+  @media (min-width: 768px) {
+    .wrapper {
+      padding-left: 225px; } }
 
 .flexwrap {
   display: -webkit-flex;
@@ -324,14 +326,15 @@ div.columns div.dataTables_paginate li.last a:after {
 
 #heading {
   background-color: #fff;
-  margin: 0 -25px 20px -25px;
+  margin: 0 0 20px 0;
+  padding: 20px;
   box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14); }
   #heading .page-title {
-    margin: 20px 20px 10px 20px; }
+    margin: 0 0 10px 0; }
     #heading .page-title.dashboard-heading {
-      margin: 31px 20px 32px 20px; }
+      margin: 12px 0; }
   #heading .breadcrumb {
-    margin: 0 20px 20px 20px;
+    margin: 0;
     padding: 0;
     background-color: transparent; }
 
@@ -345,12 +348,14 @@ div.columns div.dataTables_paginate li.last a:after {
     border-top: 0px;
     border-left: 0px;
     border-right: 0px; }
+  .panel h3 {
+    margin: 10px; }
 
 .card {
   padding: 25px 50px;
   background-color: #fff;
   box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14);
-  margin: 0 0 20px 0; }
+  margin: 10px 20px 20px 20px; }
   .card p {
     white-space: nowrap;
     overflow: hidden;

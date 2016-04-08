@@ -1,10 +1,11 @@
 @extends('admin-base')
 @section('bodyclass', 'manage_outcomes')
+@section('sectionid', 'manage-outcomes')
 
 @section('content')
 
 <section id="heading">
-    @include('layouts.admin.partials._heading', ['heading' => 'Manage Learning Outcomes'])
+    <h3 class="page-title">Manage Learning Outcomes</h3>
     {!! Breadcrumbs::render('manage-outcomes') !!}
 </section>
 
@@ -53,7 +54,5 @@
 
     @endif
 </section>
-
-
 
 @stop

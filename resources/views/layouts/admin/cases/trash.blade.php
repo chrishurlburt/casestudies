@@ -1,20 +1,20 @@
 @extends('admin-base')
-
 @section('bodyclass', 'manage_case_studies trashed_studies')
+@section('sectionid', 'manage-trashed')
 
 @section('content')
-<main id="manage-trashed">
-    <section id="heading">
-        @include('layouts.admin.partials._heading', ['heading' => 'Trashed Studies'])
-        {!! Breadcrumbs::render('trash') !!}
-    </section>
+<section id="heading">
+    <h3 class="page-title">Trashed Studies</h3>
+    {!! Breadcrumbs::render('trash') !!}
+</section>
 
-    @include('layouts.admin.partials._success')
-    @include('layouts.admin.partials._errors')
-    <section id="trashed-cases" class="card">
-        @if($studies->isEmpty())
-            <h3>There are no studies in the trash.</h3>
-        @else
+@include('layouts.admin.partials._success')
+@include('layouts.admin.partials._errors')
+
+<section id="trashed-cases" class="card">
+    @if($studies->isEmpty())
+        <h3>There are no studies in the trash.</h3>
+    @else
         <div class="card-header">
             <a href="{{ route('admin.cases.drafts') }}"><button type="button" class="btn btn-primary">View Drafts</button></a>
             <div class="right">
@@ -57,8 +57,7 @@
         @include('layouts.admin.partials._study-modal')
 
     @endif
-    </section>
-</main>
+</section>
 
 
 @stop

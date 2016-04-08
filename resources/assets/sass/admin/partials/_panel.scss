@@ -1,5 +1,4 @@
 .panel {
-
     border-radius: 0;
     box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14);
     .panel-heading {
@@ -10,5 +9,8 @@
         border-top: 0px;
         border-left: 0px;
         border-right: 0px;
+    }
+    h3 {
+        margin: 10px;
     }
 }

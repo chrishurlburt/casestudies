@@ -1,18 +1,18 @@
 @extends('admin-base')
+@section('bodyclass', 'create_outcome')
+@section('sectionid', 'create-outcome')
 
 @section('content')
-<main id="create-outcome">
-    <section id="heading">
-        @include('layouts.admin.partials._heading', ['heading' => 'Add New Learning Outcome'])
-        {!! Breadcrumbs::render('create-outcome') !!}
-    </section>
+<section id="heading">
+    <h3 class="page-title">Add New Learning Outcome</h3>
+    {!! Breadcrumbs::render('create-outcome') !!}
+</section>
 
-    <section id="create-outcome-form" class="card">
-        @include('layouts.admin.partials._success')
-        @include('layouts.admin.partials._errors')
+<section id="create-outcome-form" class="card">
+    @include('layouts.admin.partials._success')
+    @include('layouts.admin.partials._errors')
 
-
-        {!! Form::open(['route' => 'admin.outcomes.store']) !!}
+    {!! Form::open(['route' => 'admin.outcomes.store']) !!}
 
         @include('layouts.admin.partials._outcomes-form')
 
@@ -20,8 +20,7 @@
         {!! Form::submit('Add Learning Outcome', ['class' => 'btn btn-primary']) !!}
         </div>
 
-        {!! Form::close() !!}
-    </section>
-</main>
+    {!! Form::close() !!}
+</section>
 
 @stop

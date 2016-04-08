@@ -89,7 +89,9 @@ table {
     }
 }
 
-#page-wrapper {
-    background-color: $light-gray;
-    padding-top: 0;
+.wrapper {
+    padding: 0;
+    @media (min-width: 768px) {
+        padding-left: 225px;
+    }
 }

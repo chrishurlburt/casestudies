@@ -20,21 +20,13 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     </head>
     <body class="@yield('bodyclass')">
-        <div id="wrapper">
+        @include('layouts.admin.partials._nav')
 
-            @include('layouts.admin.partials._nav')
+        <main id="@yield('sectionid')" class="wrapper container-fluid">
 
-                <div id="page-wrapper">
+            @yield('content')
 
-                    <div class="container-fluid">
-
-                        @yield('content')
-
-                    </div>
-                    <!-- /.container-fluid -->
-                </div>
-                <!-- /#page-wrapper -->
-        </div>
+        </main>
         <!-- /#wrapper -->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

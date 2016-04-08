@@ -1,36 +1,35 @@
 @extends('admin-base')
-
 @section('bodyclass', 'course_editor')
+@section('sectionid', 'create-course')
+
 
 @section('content')
-<main id="create-course">
-    <section id="heading">
-        @include('layouts.admin.partials._heading', ['heading' => 'Add New Course'])
-        {!! Breadcrumbs::render('create-course') !!}
-    </section>
+<section id="heading">
+    <h3 class="page-title">Add New Course</h3>
+    {!! Breadcrumbs::render('create-course') !!}
+</section>
 
-    @include('layouts.admin.partials._success')
-    @include('layouts.admin.partials._errors')
+@include('layouts.admin.partials._success')
+@include('layouts.admin.partials._errors')
 
-    <section id="create-course-form" class="card">
-        <div class="row">
-            {!! Form::open(['route' => 'admin.courses.store']) !!}
+<section id="create-course-form" class="card">
+    <div class="row">
+        {!! Form::open(['route' => 'admin.courses.store']) !!}
 
-            <div class="col-lg-8">
-                @include('layouts.admin.partials._courses-form')
-            </div>
-
-            <div class="col-lg-4">
-                @include('layouts.admin.partials._cases-form-outcomes', ['create' => true])
-            </div>
-
-            <div class="card-footer">
-                {!! Form::submit('Add Course', ['class' => 'btn btn-primary']) !!}
-            </div>
-
-            {!! Form::close() !!}
+        <div class="col-lg-8">
+            @include('layouts.admin.partials._courses-form')
         </div>
-    </section>
-</main>
+
+        <div class="col-lg-4">
+            @include('layouts.admin.partials._cases-form-outcomes', ['create' => true])
+        </div>
+
+        <div class="card-footer">
+            {!! Form::submit('Add Course', ['class' => 'btn btn-primary']) !!}
+        </div>
+
+        {!! Form::close() !!}
+    </div>
+</section>
 
 @stop

@@ -1,16 +1,15 @@
 @extends('admin-base')
-
 @section('bodyclass', 'manage_case_studies')
+@section('sectionid', 'manage-drafts')
 
 @section('content')
-<main id="manage-drafts">
-    <section id="heading">
-        @include('layouts.admin.partials._heading', ['heading' => 'Manage Drafts'])
-        {!! Breadcrumbs::render('drafts') !!}
-    </section>
+<section id="heading">
+    <h3 class="page-title">Manage Drafts</h3>
+    {!! Breadcrumbs::render('drafts') !!}
+</section>
 
-    @include('layouts.admin.partials._success')
-    @include('layouts.admin.partials._errors')
+@include('layouts.admin.partials._success')
+@include('layouts.admin.partials._errors')
 
 <section id="drafted-cases" class="card">
     @if($drafts->isEmpty())
@@ -54,5 +53,4 @@
 
     @include('layouts.admin.partials._study-modal')
     @include('layouts.admin.partials._delete-modal')
-</main>
 @stop

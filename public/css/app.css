@@ -495,41 +495,6 @@ section, header {
     font-family: "Droid Serif", sans-serif;
     line-height: 1.5; }
 
-#single-page #study-footer {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  padding: 0 0; }
-  #single-page #study-footer .footer-block {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    width: 33%;
-    border-right: 1px solid #eee; }
-    #single-page #study-footer .footer-block:nth-child(3) {
-      border-right: none; }
-    #single-page #study-footer .footer-block ul {
-      padding: 0;
-      margin: 0 0 20px 0; }
-      #single-page #study-footer .footer-block ul.keywords li {
-        display: inline; }
-        #single-page #study-footer .footer-block ul.keywords li .label-default {
-          background-color: #05375f; }
-          #single-page #study-footer .footer-block ul.keywords li .label-default.label {
-            line-height: 2.2;
-            font-size: 14px; }
-
 #single-page #background {
   display: -webkit-flex;
   display: -ms-flexbox;

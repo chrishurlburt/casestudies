@@ -5,6 +5,12 @@
     a {
         color: #fff;
     }
+    .top-nav {
+        padding: 0;
+        @media (min-width: 768px) {
+            padding: 0 10px;
+        }
+    }
     .side-nav {
         top: 50px;
         background-color: $grayblue;
@@ -36,6 +42,10 @@
             }
             .dropdown-menu {
                 color: $charcoal;
+                width: 100vh;
+                @media (min-width: 768px) {
+                    width: 300px;
+                }
                 li a {
                     color: $charcoal;
                 }

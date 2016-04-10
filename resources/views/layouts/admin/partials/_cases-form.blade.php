@@ -121,18 +121,20 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label>Project Schedule Impacted</label><br />
-                {!! Form::radio('schedule_impact', 'yes') !!}
+
+                <input name="schedule_impact" type="radio" value="yes" @if(!$create && $study->schedule_impact == "Yes")checked="checked"@endif>
                 {!! Form::label('schedule_impact', 'Yes') !!}
-                {!! Form::radio('schedule_impact', 'no') !!}
+                <input name="schedule_impact" type="radio" value="no" @if(!$create && $study->schedule_impact == "No" || $create)checked="checked"@endif>
                 {!! Form::label('schedule_impact', 'No') !!}
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 <label>Project Budget Impacted</label><br />
-                {!! Form::radio('budget_impact', 'yes') !!}
+
+                <input name="budget_impact" type="radio" value="yes" @if(!$create && $study->budget_impact == "Yes")checked="checked"@endif>
                 {!! Form::label('budget_impact', 'Yes') !!}
-                {!! Form::radio('budget_impact', 'no') !!}
+                <input name="budget_impact" type="radio" value="no" @if(!$create && $study->budget_impact == "No" || $create) checked="checked" @endif>
                 {!! Form::label('budget_impact', 'No') !!}
             </div>
         </div>

@@ -48,12 +48,25 @@ class StudiesController extends Controller
 
 
     /**
+    * Create a new case study.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function create()
+    {
+        $outcomes = Outcome::latest()->get()->all();
+
+        return view('layouts.admin.cases.create')->with('outcomes', $outcomes);
+    }
+
+
+    /**
     * Store a new case study.
     *
     * @param StoreDraftRequest $StoreDraftRequest
     * @return Response
     */
-    public function store(StoreStudyRequest $StoreStudyRequest)
+    public function store(StoreStudyRequest $StoreStudyRequest, Study $study)
     {
 
         if($StoreStudyRequest->has('publish')) {
@@ -64,7 +77,7 @@ class StudiesController extends Controller
             if($user->hasAccess(['publish'])) {
 
                 // user is authorized to publish
-                $this->storeStudy($StoreStudyRequest->all(), false);
+                $this->saveStudy($study, $StoreStudyRequest->all(), false);
 
                 return redirect(route('admin.cases.index'));
 
@@ -79,7 +92,7 @@ class StudiesController extends Controller
 
             // must be a draft if not publish. request validation will have
             // already determined it must be either publish or draft.
-            $this->storeStudy($StoreStudyRequest->all(), true);
+            $this->saveStudy($study, $StoreStudyRequest->all(), true);
 
             return redirect(route('admin.cases.drafts'));
 
@@ -89,15 +102,89 @@ class StudiesController extends Controller
 
 
     /**
-    * Create a new case study.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function create()
+     * Update a case study.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateStudyRequest $UpdateStudyRequest, $slug)
     {
+        $user = Sentinel::findById(Auth::user()->id);
+        $study = Study::where('slug', $slug)->firstOrFail();
+        $input = $UpdateStudyRequest->all();
+
+        // @TODO: refactor to switch
+
+        if($UpdateStudyRequest->has('publish-draft')) {
+            // check if user has permissions to publish.
+            if($user->hasAccess(['publish'])) {
+                // user has permission to publish
+
+                $this->saveStudy($study, $input, false);
+                return redirect(route('admin.cases.index'));
+
+            } else {
+                //user doesn't have permission to publish
+                return redirect(route('admin.cases.edit'))->withErrors('You do not have permission to publish.')->withInput($UpdateStudyRequest->all());
+            }
+
+        } else if($UpdateStudyRequest->has('update-draft') || $UpdateStudyRequest->has('redraft')) {
+            // update a draft or revert a published one to a draft.
+            $this->saveStudy($study, $input, true);
+            return redirect(route('admin.cases.drafts'));
+
+        } else {
+            // UpdateStudyRequest->has('update')
+            // updating a published study
+
+            if($user->hasAccess(['publish'])) {
+
+                $this->saveStudy($study, $input, false);
+
+                return redirect(route('admin.cases.index'));
+
+            } else {
+                //user doesn't have permission to update a pubished case study.
+                 return redirect(route('admin.cases.edit', $slug))->withErrors('You do not have permission to update a published study.')->withInput($UpdateStudyRequest->all());
+
+            }
+
+        }
+
+    }
+
+
+    /**
+     * Edit a case study
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($slug)
+    {
+
+        $study = Study::where('slug', $slug)->firstOrFail();
+        $keywords = $this->stringifyKeywords($study->keywords()->get());
         $outcomes = Outcome::latest()->get()->all();
 
-        return view('layouts.admin.cases.create')->with('outcomes', $outcomes);
+        if($study->draft) {
+        // any user can edit a draft, no permissions check.
+            return view('layouts.admin.cases.edit')->with('study', $study)->with([
+                'keywords' => $keywords,
+                'outcomes' => $outcomes
+            ]);
+        } else {
+        // it's not a draft, make sure the user has permission to edit non-drafts.
+            if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
+            // user can edit published studies
+                return view('layouts.admin.cases.edit')->with([
+                    'study'    => $study,
+                    'keywords' => $keywords,
+                    'outcomes' => $outcomes
+                ]);
+            } else {
+            // user cannot edit published studies.
+                return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to edit a published study.');
+            }
+        }
     }
 
 
@@ -166,61 +253,6 @@ class StudiesController extends Controller
 
 
     /**
-     * Update a case study.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateStudyRequest $UpdateStudyRequest, $slug)
-    {
-
-        $user = Sentinel::findById(Auth::user()->id);
-        $study = Study::where('slug', $slug)->firstOrFail();
-        $input = $UpdateStudyRequest->all();
-
-        // @TODO: refactor to switch
-        // @TODO: make user sure permissions are being checked correctly.
-
-        if($UpdateStudyRequest->has('publish-draft')) {
-            // check if user has permissions to publish.
-            if($user->hasAccess(['publish'])) {
-                // user has permission to publish
-
-                // @TODO: refactor to recieve entire form request
-                $this->updateStudy($study, $input, false);
-                return redirect(route('admin.cases.index'));
-
-            } else {
-                //user doesn't have permission to publish
-                return redirect(route('admin.cases.edit'))->withErrors('You do not have permission to publish.')->withInput($UpdateStudyRequest->all());
-            }
-
-        } else if($UpdateStudyRequest->has('update-draft') || $UpdateStudyRequest->has('redraft')) {
-            // update a draft or revert a published one to a draft.
-            $this->updateStudy($study, $input, true);
-            return redirect(route('admin.cases.drafts'));
-
-        } else {
-            // UpdateStudyRequest->has('update')
-            // updating a published study
-
-            if($user->hasAccess(['publish'])) {
-
-                $this->updateStudy($study, $input, false);
-
-                return redirect(route('admin.cases.index'));
-
-            } else {
-                //user doesn't have permission to update a pubished case study.
-                 return redirect(route('admin.cases.edit', $slug))->withErrors('You do not have permission to update a published study.')->withInput($UpdateStudyRequest->all());
-
-            }
-
-        }
-
-    }
-
-
-    /**
      * Restore a soft deleted study to a draft.
      *
      * @return \Illuminate\Http\Response
@@ -266,41 +298,6 @@ class StudiesController extends Controller
 
 
     /**
-     * Edit a case study
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($slug)
-    {
-
-        $study = Study::where('slug', $slug)->firstOrFail();
-        $keywords = $this->stringifyKeywords($study->keywords()->get());
-        $outcomes = Outcome::latest()->get()->all();
-
-        if($study->draft) {
-        // any user can edit a draft, no permissions check.
-            return view('layouts.admin.cases.edit')->with('study', $study)->with([
-                'keywords' => $keywords,
-                'outcomes' => $outcomes
-            ]);
-        } else {
-        // it's not a draft, make sure the user has permission to edit non-drafts.
-            if(Sentinel::findById(Auth::user()->id)->hasAccess(['publish'])) {
-            // user can edit published studies
-                return view('layouts.admin.cases.edit')->with([
-                    'study'    => $study,
-                    'keywords' => $keywords,
-                    'outcomes' => $outcomes
-                ]);
-            } else {
-            // user cannot edit published studies.
-                return redirect(route('admin.cases.drafts'))->withErrors('You do not have permission to edit a published study.');
-            }
-        }
-    }
-
-
-    /**
     * Show all the drafts.
     *
     * @return  \Illuminate\Http\Response
@@ -325,6 +322,87 @@ class StudiesController extends Controller
         $studies = Study::onlyTrashed()->get();
 
         return view('layouts.admin.cases.trash')->with('studies', $studies);
+    }
+
+
+    /**
+     * Save a case study.
+     *
+     * @param  object $study
+     * @param  array $input
+     * @param  bool $isDraft
+     * @return null
+     */
+    private function saveStudy($study, $input, $isDraft)
+    {
+        $study->title              = $input['title'];
+        $study->problem            = $input['problem'];
+        $study->solution           = $input['solution'];
+        $study->analysis           = $input['analysis'];
+        $study->excerpt            = $this->makeExcerpt($study->problem, 500);
+        $study->schedule_impact    = $input['schedule_impact'];
+        $study->budget_impact      = $input['budget_impact'];
+        $study->delivery_method    = $input['delivery_method'];
+        $study->estimated_schedule = $input['estimated_schedule'];
+        $study->contract_value     = $input['contract_value'];
+        $study->market_sector      = $input['market_sector'];
+        $study->topic              = $input['topic'];
+        $study->location           = $input['location'];
+        $study->draft              = $isDraft;
+
+        if(empty($input['slug'])) {
+            $study->slug = $this->slugify($study->title);
+        } else {
+            $study->slug = $this->slugify($input['slug']);
+        }
+
+        Auth::user()->studies()->save($study);
+
+        $this->syncKeywords($study, $this->storeKeywords($input['keywords']));
+
+        if(Request::has('outcomes')) {
+            $this->syncOutcomes($study, $input['outcomes']);
+        } else {
+            $study->outcomes()->detach();
+        }
+
+        $notification = new Notification;
+
+        switch (Request::input()):
+
+            case Request::has('publish'):
+            //add new published study
+                Helpers::flash('The case study has been published.');
+                $notification->notification = "A new case study has been published.";
+            break;
+
+            case Request::has('draft'):
+            //add New Draft
+                Helpers::flash('The draft has been added.');
+                $notification->notification = "A new draft has been added.";
+            break;
+
+            case Request::has('publish-draft'):
+            //publish a draft
+                Helpers::flash('The draft has been published.');
+                $notification->notification = "A draft has been published.";
+            break;
+
+            case Request::has('update'):
+            //update published Study
+                Helpers::flash('The case study has been updated.');
+                $notification->notification = "A case study has been updated.";
+            break;
+
+            case Request::has('update-draft'):
+            //update draft
+                Helpers::flash('The draft has been updated.');
+                $notification->notification = "A draft has been updated.";
+            break;
+
+        endswitch;
+
+        $this->notifier($notification, $study, Sentinel::findRoleBySlug('admin')->users()->get());
     }
 
 
@@ -453,132 +531,6 @@ class StudiesController extends Controller
 
 
     /**
-     * Store a case study in the DB.
-     *
-     * @param  array $input
-     * @param  bool $isDraft
-     * @return null
-     */
-    private function storeStudy($input, $isDraft)
-    {
-        $study = new Study;
-
-        $study->title              = $input['title'];
-        $study->problem            = $input['problem'];
-        $study->solution           = $input['solution'];
-        $study->analysis           = $input['analysis'];
-        $study->excerpt            = $this->makeExcerpt($study->problem, 500);
-        $study->schedule_impact    = $input['schedule_impact'];
-        $study->budget_impact      = $input['budget_impact'];
-        $study->delivery_method    = $input['delivery_method'];
-        $study->estimated_schedule = $input['estimated_schedule'];
-        $study->contract_value     = $input['contract_value'];
-        $study->market_sector      = $input['market_sector'];
-        $study->topic              = $input['topic'];
-        $study->location           = $input['location'];
-        $study->draft              = $isDraft;
-
-        // make a slug
-        if(empty($input['slug'])) {
-            $study->slug = $this->slugify($study->title);
-        } else {
-            $study->slug = $this->slugify($input['slug']);
-        }
-
-        // save the study
-        Auth::user()->studies()->save($study);
-
-        // save keywords if not already in the DB and sync
-        $this->syncKeywords($study, $this->storeKeywords($input['keywords']));
-
-        // sync learning outcomes (drafts might not have learning outcomes)
-        if(Request::has('outcomes')) {
-            $this->syncOutcomes($study, $input['outcomes']);
-        }
-
-        // set success messages and notifications
-        $notification = new Notification;
-
-        if($study->draft) {
-            Helpers::flash('The draft has been added.');
-            $notification->notification = "A new draft has been added.";
-        } else {
-            Helpers::flash('The case study has been published.');
-            $notification->notification = "A new case study has been published.";
-        }
-
-        // send notifications
-        $this->notifier($notification, $study, Sentinel::findRoleBySlug('admin')->users()->get());
-    }
-
-
-    /**
-     * Update a case study in the DB.
-     *
-     * @param  object $study
-     * @param  array $input
-     * @param  bool $isDraft
-     * @return null
-     */
-    private function updateStudy($study, $input, $isDraft)
-    {
-        // setup the study
-        $study->title              = $input['title'];
-        $study->problem            = $input['problem'];
-        $study->solution           = $input['solution'];
-        $study->analysis           = $input['analysis'];
-        $study->excerpt            = $this->makeExcerpt($study->problem, 500);
-        $study->draft              = $isDraft;
-        $study->schedule_impact    = $input['schedule_impact'];
-        $study->budget_impact      = $input['budget_impact'];
-        $study->delivery_method    = $input['delivery_method'];
-        $study->estimated_schedule = $input['estimated_schedule'];
-        $study->contract_value     = $input['contract_value'];
-        $study->market_sector      = $input['market_sector'];
-        $study->topic              = $input['topic'];
-        $study->location           = $input['location'];
-        $study->draft              = $isDraft;
-
-        // make a slug
-        if(empty($input['slug'])) {
-            $study->slug = $this->slugify($study->title);
-        } else {
-            $study->slug = $this->slugify($input['slug']);
-        }
-
-        // update the study
-        $study->save();
-
-        // save keywords if not already in the DB and sync
-        $this->syncKeywords($study, $this->storeKeywords($input['keywords']));
-
-        // @TODO: once params are adjusted, use form request object not request facade.
-        if(Request::has('outcomes')) {
-        // sync learning outcomes
-            $this->syncOutcomes($study, $input['outcomes']);
-        } else {
-            $study->outcomes()->detach();
-        }
-
-        //set success messages and notifications
-        $notification = new Notification;
-
-        if(Request::has('update')) {
-            Helpers::flash('The case study has been updated.');
-            $notification->notification = "A case study has been updated.";
-        } else if(Request::has('publish-draft')) {
-            Helpers::flash('The draft has been published.');
-            $notification->notification = "A draft has been published.";
-        } else {
-            Helpers::flash('The draft has been updated.');
-            $notification->notification = "A draft has been updated.";
-        }
-
-        $this->notifier($notification, $study, Sentinel::findRoleBySlug('admin')->users()->get());
-
-    }
-
-    /**
      * Send a notification to a group of a users.
      *
      * @param Notification $notification
@@ -590,7 +542,6 @@ class StudiesController extends Controller
         $notification->study()->associate($study);
         $notification->save();
 
-        //attaches notification to users
         foreach($users as $user) {
             // dont send a notification to the author
             if($user->id !== Auth::user()->id) {

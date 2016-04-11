@@ -35,7 +35,7 @@ class StudiesController extends Controller
         // check if user has permission to access this page.
         if($this->checkAccess()) {
 
-            $studies = Study::where('draft', false)->with('user')->latest()->paginate(20);
+            $studies = Study::where('draft', false)->with('user')->latest()->get();
 
             return view('layouts.admin.cases.manage')->with('studies', $studies);
 
@@ -304,8 +304,7 @@ class StudiesController extends Controller
     */
     public function drafts()
     {
-
-        $drafts = Study::where('draft', true)->with('user')->latest()->paginate(20);
+        $drafts = Study::where('draft', true)->with('user')->latest()->get();
 
         return view('layouts.admin.cases.drafts')->with('drafts', $drafts);
 

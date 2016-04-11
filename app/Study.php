@@ -65,7 +65,7 @@ class Study extends Model
         static::saving(function($study)
         {
             foreach ($study->toArray() as $name => $value) {
-                if (empty($value) && $study->{$name} !== $study->draft) {
+                if (empty($value) && ($name !== "draft" || $name !== "analysis")) {
                     $study->{$name} = null;
                 }
             }

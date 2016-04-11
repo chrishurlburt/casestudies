@@ -131,9 +131,7 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-        // $course = Course::destroy($id);
-
-        $courses = Outcome::find(explode(',', $id));
+        $courses = Course::find(explode(',', $id));
         Course::destroy($courses->lists('id')->toArray());
 
         if($courses->count() > 1) {

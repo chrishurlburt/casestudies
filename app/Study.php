@@ -58,19 +58,51 @@ class Study extends Model
     ];
 
 
+    /**
+     * Attributes that can be set to null.
+     *
+     * @var array
+     */
+    protected $nullable = [
+        'schedule_impact',
+        'budget_impact',
+        'delivery_method',
+        'estimated_schedule',
+        'contract_value',
+        'market_sector',
+        'topic',
+        'location'
+    ];
+
+
+    /**
+     * Listen for save event.
+     *
+     * @return bool
+     */
     public static function boot()
     {
         parent::boot();
 
         static::saving(function($study)
         {
-            foreach ($study->toArray() as $name => $value) {
-                if (empty($value) && ($name !== "draft" || $name !== "analysis")) {
-                    $study->{$name} = null;
-                }
-            }
-            return true;
+            self::setNullables($study);
         });
+    }
+
+
+    /**
+     * Set empty nullable fields to null.
+     *
+     * @param object $model
+     */
+    protected static function setNullables($model)
+    {
+        foreach($model->nullable as $field) {
+            if(empty($model->{$field})) {
+                $model->{$field} = null;
+            }
+        }
     }
 
 

@@ -35,7 +35,7 @@
                     <td><input name="notifications[]" type="checkbox" value="{{ $notification->id }}" class="checkbox-custom" id="c{{ $notification->id }}"><label class="checkbox-custom-label" for="c{{ $notification->id }}"></label></td>
                     <td>{{ $notification->notification }}</td>
                     <td><a href="{{ route('admin.cases.show', ['slug' => $notification->study->slug]) }}" data-toggle="modal" data-target="#study" class="case-study"> {{ $notification->study->title }} </a></td>
-                    <td>{{ $notification->created_at }}</td>
+                    <td>{{ date('F d, Y - h:i A', strtotime($notification->created_at)) }}</td>
                 </tr>
             @endforeach
         </tbody>

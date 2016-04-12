@@ -89,7 +89,8 @@
                     min_height: 350,
                     menubar: false,
                     plugins: 'autolink link',
-                    toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link unlink'
+                    toolbar: 'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | link unlink',
+                    content_css: "/css/tinymce.css",
                 });
 
                 $('.delete').click(function(e){
@@ -468,6 +469,22 @@
                     setCheckedAmount('notifications', '.checked-count');
                 });
 
+            },
+            finalize : function() { }
+        },
+        'studies_settings' : {
+            init    : function() {
+                $('#reseturls').click(function(e){
+
+                    e.preventDefault();
+                    $('#reseturlform').submit(false);
+
+                    $('#urls').modal('show');
+                    $('.reset').click(function(){
+                        document.getElementById("reseturlform").submit();
+                    });
+
+                });
             },
             finalize : function() { }
         }

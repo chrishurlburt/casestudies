@@ -131,6 +131,17 @@ Breadcrumbs::register('change-password', function($breadcrumbs, $id){
 });
 
 /**
+ * Settings crumbs
+ */
+Breadcrumbs::register('study-settings', function($breadcrumbs){
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Case Study Settings', route('admin.settings.studies'));
+
+});
+
+
+/**
  * Profile crumbs
  */
 Breadcrumbs::register('notifications', function($breadcrumbs)

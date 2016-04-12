@@ -67,5 +67,16 @@
         </li>
         @endif
 
+        @if(Sentinel::findById(Auth::user()->id)->hasAccess(['admin.users.index']))
+        <li>
+            <a href="javascript:;" data-toggle="collapse" data-target="#settings"><i class="fa fa-cog"></i> Settings <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="settings" class="collapse in">
+                <li>
+                    <a href="{{ route('admin.settings.studies') }}">Case Studies</a>
+                </li>
+            </ul>
+        </li>
+        @endif
+
     </ul>
 </div>

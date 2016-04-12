@@ -325,6 +325,36 @@ class StudiesController extends Controller
 
 
     /**
+     * Show settings page for case studies.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function settings()
+    {
+        return view('layouts.admin.settings.studies');
+    }
+
+
+    /**
+     * Regenerate all case studies slugs from their titles.
+     *
+     * @return
+     */
+    public function resetURLs()
+    {
+        $studies = Study::all();
+
+        $studies = $studies->each(function($study){
+            $study->slug = $this->slugify($study->title);
+            $study->save();
+        });
+
+        Helpers::flash('URLs have been reset for all case studies.');
+        return redirect(route('admin.settings.studies'));
+    }
+
+
+    /**
      * Save a case study.
      *
      * @param  object $study
@@ -514,6 +544,7 @@ class StudiesController extends Controller
         }
       return $text;
     }
+
 
     /**
      * Create an excerpt.

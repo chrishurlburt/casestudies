@@ -380,7 +380,15 @@ class StudiesController extends Controller
         $study->draft              = $isDraft;
 
         if(empty($input['slug'])) {
-            $study->slug = $this->slugify($study->title);
+            $slug = $this->slugify($study->title);
+
+
+            if(Study::where('slug', $slug)->first()) {
+                $slug = $slug.'-new';
+            }
+
+            $study->slug = $slug;
+
         } else {
             $study->slug = $this->slugify($input['slug']);
         }
@@ -481,6 +489,7 @@ class StudiesController extends Controller
         $study->outcomes()->sync($outcomes);
     }
 
+
     /**
      * Sync keywords with a study.
      *
@@ -580,6 +589,7 @@ class StudiesController extends Controller
         }
     }
 
+
     /**
      * Check if a user has access to a route.
      *
@@ -587,7 +597,6 @@ class StudiesController extends Controller
      */
     private function checkAccess()
     {
-
         $user = Sentinel::findById(Auth::user()->id);
 
         if($user->hasAccess([Request::route()->getName()])) {

@@ -3,7 +3,10 @@
     padding-top: 0;
     width: 100%;
     .search-wrap {
-        width: 50%;
+        width: 100%;
+        @media (min-width: 992px) {
+            width: 50%;
+        }
         .keyword {
             width: 100%;
             .keyword-search {

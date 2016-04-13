@@ -1,7 +1,10 @@
 #latest {
     display: flex;
     flex-direction: column;
-    padding: 25px 200px;
+    padding: 0;
+    @media (min-width: 768px) {
+        padding: 25px 200px;
+    }
     .view-all {
         margin: 25px 0 0;
         align-self: flex-end;

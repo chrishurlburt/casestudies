@@ -6,6 +6,11 @@
     background-size: cover;
     height: 100%;
     width: 100%;
+    .logo {
+        figure img {
+            width: 100%;
+        }
+    }
     .down-section {
         display: flex;
         align-items: center;

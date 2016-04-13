@@ -12,7 +12,9 @@ a {
 }
 
 section, header {
-    padding: 25px;
+    @media (min-width: 768px) {
+        padding: 25px;
+    }
     .section-title {
         color: #333;
         text-align: center;

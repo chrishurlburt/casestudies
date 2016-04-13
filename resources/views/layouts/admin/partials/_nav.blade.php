@@ -25,6 +25,9 @@
                     </li>
                     <li class="divider"></li>
                     <li>
+                        <a href="{{ route('app.landing') }}"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Home</a>
+                    </li>
+                    <li>
                         <a href="/auth/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                     </li>
                 </ul>

@@ -156,6 +156,28 @@ class Study extends Model
 
 
     /**
+     * Change to lower case.
+     *
+     * @return  string
+     */
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = strtolower($value);
+    }
+
+
+    /**
+     * Change first letter of each word to uppercase.
+     *
+     * @return  string
+     */
+    public function getTitleAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+
+    /**
      * Change to boolean.
      *
      * @return bool

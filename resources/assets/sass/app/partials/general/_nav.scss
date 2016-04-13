@@ -1,6 +1,8 @@
 .navbar {
-    min-height: 32px !important;
-    max-height: 32px;
+    @media (min-width: 992px) {
+        min-height: 32px !important;
+        max-height: 32px;
+    }
     &.navbar-default {
         background-color: #222;
         border: none;
@@ -8,8 +10,10 @@
     .navbar-nav {
         li {
             a {
-                padding-top: 5px !important;
-                padding-bottom: 5px !important;
+                @media (min-width: 992px) {
+                    padding-top: 5px !important;
+                    padding-bottom: 5px !important;
+                }
                 &:hover {
                     color: #ddd;
                 }

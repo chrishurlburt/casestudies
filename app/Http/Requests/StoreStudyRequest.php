@@ -27,6 +27,12 @@ class StoreStudyRequest extends Request
      */
     public function rules()
     {
+        // Remove whitespace to prevent nearly duplicate titles/slugs. There is probably
+        // a better place to do this, maybe on the Request class.
+        $input = $this->all();
+        $input['title'] = trim($input['title']);
+        $input['slug']  = trim($input['slug']);
+        $this->replace($input);
 
         if($this->has('draft')) {
 

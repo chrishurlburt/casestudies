@@ -28,7 +28,12 @@ class UpdateStudyRequest extends Request
      */
     public function rules()
     {
-        // @TODO: identical titles can be added if extra spaces are added.
+        // Remove whitespace to prevent nearly duplicate titles/slugs. There is probably
+        // a better place to do this, maybe on the Request class.
+        $input = $this->all();
+        $input['title'] = trim($input['title']);
+        $input['slug']  = trim($input['slug']);
+        $this->replace($input);
 
         // If the slug is updated, request will be unable to find the study
         // by the new slug because it doesn't exist in the DB yet. To correct this,

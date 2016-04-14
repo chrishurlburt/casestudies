@@ -9,7 +9,7 @@
     <ul class="subnav">
         <li><a href="#problem">Problem</a></li>
         <li><a href="#solution">Solution</a></li>
-        <li><a href="#analysis">Analysis</a></li>
+        @if($study->analysis)<li><a href="#analysis">Analysis</a></li>@endif
         <li><a href="#background">Background</a></li>
     </ul>
 
@@ -25,10 +25,12 @@
     <p>{!! $study->solution !!}</p>
 </section>
 
+@if($study->analysis)
 <section id="analysis" class="study-section">
     <h2 class="study-section-title">Analysis</h2>
     <p>{!! $study->analysis !!}</p>
 </section>
+@endif
 
 <section id="background" class="study-section">
     <h2 class="study-section-title">Background Information</h2>

@@ -48,7 +48,6 @@ class StoreStudyRequest extends Request
                 'title'              => 'required|unique:studies,title|min:10',
                 'problem'            => 'required',
                 'solution'           => 'required',
-                'analysis'           => 'required',
                 'slug'               => 'unique:studies,slug',
                 'keywords'           => 'required',
                 'outcomes'           => 'required',

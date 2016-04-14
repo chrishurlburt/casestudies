@@ -52,7 +52,6 @@ class UpdateStudyRequest extends Request
                 'title'              => 'required|unique:studies,title,'.$study->id.'|min:10|string',
                 'problem'            => 'required',
                 'solution'           => 'required',
-                'analysis'           => 'required',
                 'keywords'           => 'required',
                 'outcomes'           => 'required',
                 'slug'               => 'unique:studies,slug,'.$study->id.'|min:5|string',

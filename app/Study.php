@@ -178,6 +178,39 @@ class Study extends Model
 
 
     /**
+     * Strip tags.
+     *
+     * @return  string
+     */
+    public function getProblemAttribute($value)
+    {
+        return strip_tags($value, '<p><h2><h3><h4><h5><h6><strong><em><blockquote><sup><sub><code><br>');
+    }
+
+
+    /**
+     * Strip tags.
+     *
+     * @return  string
+     */
+    public function getSolutionAttribute($value)
+    {
+        return strip_tags($value, '<p><h2><h3><h4><h5><h6><strong><em><blockquote><sup><sub><code><br>');
+    }
+
+
+    /**
+     * Strip tags.
+     *
+     * @return  string
+     */
+    public function getAnalysisAttribute($value)
+    {
+        return strip_tags($value, '<p><h2><h3><h4><h5><h6><strong><em><blockquote><sup><sub><code><br>');
+    }
+
+
+    /**
      * Change to boolean.
      *
      * @return bool

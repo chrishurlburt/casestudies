@@ -17,17 +17,17 @@
 
 <section id="problem" class="study-section">
     <h2 class="study-section-title">Problem</h2>
-    {!! $study->problem !!}
+    <p>{!! $study->problem !!}</p>
 </section>
 
 <section id="solution" class="study-section">
     <h2 class="study-section-title">Solution</h2>
-    {!! $study->solution !!}
+    <p>{!! $study->solution !!}</p>
 </section>
 
 <section id="analysis" class="study-section">
     <h2 class="study-section-title">Analysis</h2>
-    {!! $study->analysis !!}
+    <p>{!! $study->analysis !!}</p>
 </section>
 
 <section id="background" class="study-section">

@@ -104,7 +104,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label>Estimated Schedule In Months</label>
-                <input type="number" name="estimated_schedule" min="1">
+                <input type="number" name="estimated_schedule" min="1" @if(!$create)value="{{ $study->estimated_schedule }}"@endif>
             </div>
         </div>
 

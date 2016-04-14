@@ -1,5 +1,5 @@
 <select name="location">
-    <option></option>
+    <option @if(!$create)value="{{ $study->location }}">{{ $study->location }}@else>@endif</option>
     <option value="alabama">Alabama</option>
     <option value="alaska">Alaska</option>
     <option value="arizona">Arizona</option>
